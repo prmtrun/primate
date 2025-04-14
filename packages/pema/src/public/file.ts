@@ -1,1 +1,1 @@
-export { default } from "#type/file";
+export { default } from "#file";

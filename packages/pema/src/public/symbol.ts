@@ -1,1 +1,1 @@
-export { default } from "#type/symbol";
+export { default } from "#symbol";

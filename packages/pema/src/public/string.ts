@@ -1,1 +1,1 @@
-export { default } from "#type/string";
+export { default } from "#string";

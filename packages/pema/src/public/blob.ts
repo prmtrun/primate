@@ -1,1 +1,1 @@
-export { default } from "#type/blob";
+export { default } from "#blob";

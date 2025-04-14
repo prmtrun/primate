@@ -1,1 +1,1 @@
-export { default } from "#type/number";
+export { default } from "#number";

@@ -1,0 +1,62 @@
+import type Infer from "#Infer";
+import Validated from "#Validated";
+import expected from "#expected";
+import { type Schema } from "#schema";
+import PrintableGeneric from "@rcompat/type/PrintableGeneric";
+
+const member_error = (i: unknown, key?: string) => {
+  return key === undefined
+    ? `[${i}]`
+    : `${key}[${i}]`;
+}
+
+const error = (message: string, key?: string) => {
+  return key === undefined
+    ? message
+    : `${key}: ${message}`;
+}
+
+const is = <T>(x: unknown, validator: (t: unknown) => boolean): x is T => validator(x);
+
+export default class ArrayType<T extends Validated<unknown>>
+  extends Validated<Infer<T>[], "ArrayType">
+  implements PrintableGeneric<T> {
+  #subtype: T;
+
+  get Type(): T {
+    return undefined as unknown as T;
+  }
+
+  constructor(subtype: T) {
+    super();
+    this.#subtype = subtype;
+  }
+
+  get name() {
+    return "array";
+  }
+
+  validate(x: unknown, key?: string): Infer<this> {
+    if (!is<T[]>(x, _ => !!x && Array.isArray(x))) {
+      throw new Error(error(expected("array", x), key));
+    }
+
+    let last = 0;
+    x.forEach((v, i) => {
+      // sparse array check
+      if (i > last) {
+        throw new Error(error(expected(this.#subtype.name, undefined), `[${last}]`));
+      }
+      const validator = this.#subtype;
+      validator.validate(v, `${member_error(i, key)}` as string);
+      last++;
+    });
+
+    // sparse array with end slots
+    if (x.length > last) {
+        throw new Error(error(expected(this.#subtype.name, undefined), `[${last}]`));
+    }
+
+    return x as never;
+  }
+}

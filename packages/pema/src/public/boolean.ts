@@ -1,1 +1,1 @@
-export { default } from "#type/boolean";
+export { default } from "#boolean";

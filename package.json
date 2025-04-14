@@ -9,14 +9,15 @@
     "upgrade": "pnpm -r update -i -L",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "test": "tsx --conditions=apekit ./node_modules/debris/src/bin.js"
+    "test": "npx proby"
   },
   "private": true,
   "devDependencies": {
-    "apekit": "^0.0.9",
-    "debris": "^0.14.0",
+    "@rcompat/test": "^0.1.2",
+    "@rcompat/type": "^0.1.0",
+    "apekit": "^0.0.13",
     "esbuild": "^0.25.2",
-    "tsx": "^4.19.3",
+    "proby": "^0.1.0",
     "typescript": "^5.8.3"
   }
 }

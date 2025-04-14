@@ -1,1 +1,1 @@
-export { default } from "#type/date";
+export { default } from "#date";
