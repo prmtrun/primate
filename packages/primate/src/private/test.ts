@@ -1,5 +1,5 @@
 import verbs from "@primate/core/http/verbs";
-import type Dictionary from "@rcompat/record/Dictionary";
+import type Dictionary from "@rcompat/type/Dictionary";
 
 export type Body = string | Dictionary<string> | Dictionary<string>[];
 

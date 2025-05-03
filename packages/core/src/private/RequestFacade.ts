@@ -1,6 +1,6 @@
 import type Body from "#Body";
-import type Dictionary from "@rcompat/record/Dictionary";
-import type PartialDictionary from "@rcompat/record/PartialDictionary";
+import type Dictionary from "@rcompat/type/Dictionary";
+import type PartialDictionary from "@rcompat/type/PartialDictionary";
 
 type PartialStringDictionary = PartialDictionary<string>;
 

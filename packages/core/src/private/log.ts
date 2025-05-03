@@ -6,7 +6,7 @@ import green from "@rcompat/cli/color/green";
 import red from "@rcompat/cli/color/red";
 import yellow from "@rcompat/cli/color/yellow";
 import print from "@rcompat/cli/print";
-import type StringLike from "@rcompat/string/StringLike";
+import type StringLike from "@rcompat/type/StringLike";
 
 const url = "https://primate.run/error";
 const slice_length = "@primate/".length;

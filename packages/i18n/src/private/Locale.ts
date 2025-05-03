@@ -1,4 +1,4 @@
-import type PartialDictionary from "@rcompat/record/PartialDictionary";
+import type PartialDictionary from "@rcompat/type/PartialDictionary";
 
 type Locale = PartialDictionary<string>;
 

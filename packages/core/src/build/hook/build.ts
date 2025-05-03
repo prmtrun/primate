@@ -3,12 +3,10 @@ import config_filename from "#config-filename";
 import log from "@primate/core/log";
 import cascade from "@rcompat/async/cascade";
 import dim from "@rcompat/cli/color/dim";
-import collect from "@rcompat/fs/collect";
 import FileRef from "@rcompat/fs/FileRef";
-import join from "@rcompat/fs/join";
 import manifest from "@rcompat/package/manifest";
 import root from "@rcompat/package/root";
-import type Dictionary from "@rcompat/record/Dictionary";
+import type Dictionary from "@rcompat/type/Dictionary";
 import stringify from "@rcompat/record/stringify";
 import copy_includes from "./copy-includes.js";
 import $router from "./router.js";
@@ -43,7 +41,7 @@ const write_directories = async (build_directory: FileRef, app: BuildApp) => {
   const location = app.config("location");
   for (const name of app.server_build) {
     const d = app.runpath(location.server, name);
-    const e = await Promise.all((await collect(d, js_re, { recursive: true }))
+    const e = await Promise.all((await FileRef.collect(d, js_re, { recursive: true }))
       .map(async path => `${path}`.replace(d.toString(), _ => "")));
     const files_js = `
     const ${name} = [];
@@ -59,7 +57,7 @@ const write_directories = async (build_directory: FileRef, app: BuildApp) => {
 const write_components = async (build_directory: FileRef, app: BuildApp) => {
   const location = app.config("location");
   const d2 = app.runpath(location.server, location.components);
-  const e = await Promise.all((await collect(d2, js_re, { recursive: true }))
+  const e = await Promise.all((await FileRef.collect(d2, js_re, { recursive: true }))
     .map(async path => `${path}`.replace(d2.toString(), _ => "")));
   const components_js = `
 const components = [];
@@ -104,10 +102,10 @@ export default app;
 
 const post = async (app: BuildApp) => {
   const location = app.config("location");
-  const defaults = join(import.meta.url, "../../defaults");
+  const defaults = FileRef.join(import.meta.url, "../../defaults");
 
   // stage routes
-  await app.stage(app.path.routes, join(location.server, location.routes));
+  await app.stage(app.path.routes, FileRef.join(location.server, location.routes));
 
   // stage components, transforming defines
   await app.stage(app.path.components, location.components, true);
@@ -118,15 +116,15 @@ const post = async (app: BuildApp) => {
       ?.(directory, path.debase(`${directory}/`));
   }
   // copy framework pages
-  await app.stage(defaults, join(location.server, location.pages));
+  await app.stage(defaults, FileRef.join(location.server, location.pages));
   // overwrite transformed pages to build
-  await app.stage(app.path.pages, join(location.server, location.pages));
+  await app.stage(app.path.pages, FileRef.join(location.server, location.pages));
 
   // copy static files to build/server/static
-  await app.stage(app.path.static, join(location.server, location.static));
+  await app.stage(app.path.static, FileRef.join(location.server, location.static));
 
   // publish JavaScript and CSS files
-  const imports = await collect(app.path.static, /\.(?:css)$/u, {});
+  const imports = await FileRef.collect(app.path.static, /\.(?:css)$/u, {});
   await Promise.all(imports.map(async file => {
     const src = file.debase(app.path.static);
     app.build.export(`import "./${location.static}${src}";`);

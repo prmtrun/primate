@@ -2,11 +2,11 @@ import invalid_type from "#db/error/invalid-type";
 import no_primary_key from "#db/error/no-primary-key";
 import no_store_directory from "#db/error/no-store-directory";
 import primary from "#db/primary";
-import type Dictionary from "@rcompat/record/Dictionary";
 import type { BuildAppHook } from "#module-loader";
-import join from "@rcompat/fs/join";
+import FileRef from "@rcompat/fs/FileRef";
 import empty from "@rcompat/record/empty";
 import entries from "@rcompat/record/entries";
+import type Dictionary from "@rcompat/type/Dictionary";
 
 type Type = {
   base: string;
@@ -49,7 +49,7 @@ export default (directory: string): BuildAppHook => async (app, next) => {
       && no_primary_key(primary, name, "export const ambiguous = true;");
   }));
 
-  await app.stage(app.root.join(directory), join(location.server, directory));
+  await app.stage(app.root.join(directory), FileRef.join(location.server, directory));
 
   app.server_build.push("stores");
 

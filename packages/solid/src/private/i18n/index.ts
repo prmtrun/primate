@@ -1,6 +1,6 @@
 import AppContext from "#context/app";
 import resolve from "@primate/i18n/resolve";
-import type Dictionary from "@rcompat/record/Dictionary";
+import type Dictionary from "@rcompat/type/Dictionary";
 import { useContext } from "solid-js";
 import locale_store from "./locale.js";
 

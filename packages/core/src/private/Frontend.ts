@@ -3,7 +3,7 @@ import type Props from "#frontend/Props";
 import type RequestFacade from "#RequestFacade";
 import type ResponseLike from "#ResponseLike";
 import type { ServeApp } from "#serve/app";
-import type Dictionary from "@rcompat/record/Dictionary";
+import type Dictionary from "@rcompat/type/Dictionary";
 
 type Frontend = (name: string, props?: Props, options?: Options)
   => (app: ServeApp, transfer: Dictionary, request: RequestFacade)

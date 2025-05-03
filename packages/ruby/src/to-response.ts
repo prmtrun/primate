@@ -2,9 +2,9 @@ import HANDLER_PROPERTY from "#handler-property";
 import error from "@primate/core/handler/error";
 import redirect from "@primate/core/handler/redirect";
 import view from "@primate/core/handler/view";
-import type ResponseLike from "@primate/core/ResponseLike";
 import type ResponseFunction from "@primate/core/ResponseFunction";
-import type Dictionary from "@rcompat/record/Dictionary";
+import type ResponseLike from "@primate/core/ResponseLike";
+import type Dictionary from "@rcompat/type/Dictionary";
 
 const handlers = { view, redirect, error };
 type Handler = keyof typeof handlers;

@@ -14,8 +14,8 @@ import route from "./route.js";
 import session_hook from "#session/hook";
 
 type GuardError = {
-   response: Exclude<ResponseLike, void>,
-   type: symbol
+  response: Exclude<ResponseLike, void>;
+  type: symbol;
 };
 
 const guard_error = Symbol("guard_error");

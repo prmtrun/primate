@@ -1,5 +1,5 @@
+import type Dictionary from "@rcompat/type/Dictionary";
 import storage from "./storage.js";
-import type Dictionary from "@rcompat/record/Dictionary";
 
 const TEXT_PLAIN = "text/plain";
 const APPLICATION_JSON = "application/json";

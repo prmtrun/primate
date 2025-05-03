@@ -3,12 +3,12 @@ import type { Config } from "#config";
 import type Mode from "#Mode";
 import module_loader from "#module-loader";
 import Build from "@rcompat/build";
-import type { default as FileRef, Path } from "@rcompat/fs/FileRef";
-import join from "@rcompat/fs/join";
-import type Dictionary from "@rcompat/record/Dictionary";
+import FileRef from "@rcompat/fs/FileRef";
+import type Path from "@rcompat/fs/Path";
 import entries from "@rcompat/record/entries";
 import exclude from "@rcompat/record/exclude";
 import get from "@rcompat/record/get";
+import type Dictionary from "@rcompat/type/Dictionary";
 import { web } from "./targets/index.js";
 
 export const symbols = {
@@ -98,7 +98,7 @@ export default async (root: FileRef, config: Config, mode: Mode = "development")
             replaced.replaceAll(key, substitution as string), text);
 
         await Promise.all((await source.collect()).map(async abs_path => {
-          const rel_path = join(directory, abs_path.debase(source));
+          const rel_path = FileRef.join(directory, abs_path.debase(source));
           const target = target_base.join(rel_path.debase(directory));
           await target.directory.create();
           await target.write(mapper(await abs_path.text()));

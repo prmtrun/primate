@@ -3,7 +3,7 @@ import optional_route from "#error/optional-route";
 import rest_route from "#error/rest-route";
 import type FileRef from "@rcompat/fs/FileRef";
 import Router from "@rcompat/fs/router";
-import type Dictionary from "@rcompat/record/Dictionary";
+import type Dictionary from "@rcompat/type/Dictionary";
 
 const error_entries = Object.entries({
   DoubleRoute: double_route,

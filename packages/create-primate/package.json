@@ -16,19 +16,19 @@
   },
   "dependencies": {
     "@clack/prompts": "^0.10.1",
-    "@rcompat/args": "^0.5.0",
-    "@rcompat/cli": "^0.7.0",
-    "@rcompat/fs": "^0.11.5",
+    "@rcompat/args": "^0.6.0",
+    "@rcompat/cli": "^0.8.0",
+    "@rcompat/fs": "^0.12.3",
     "@rcompat/object": "^0.5.0",
-    "@rcompat/package": "^0.10.1",
-    "@rcompat/record": "^0.6.2"
+    "@rcompat/package": "^0.11.0",
+    "@rcompat/record": "^0.7.0"
   },
   "type": "module",
   "scripts": {
     "deps": "scripts/peerdeps.js"
   },
   "devDependencies": {
-    "@angular/core": "^19.2.5",
+    "@angular/core": "^19.2.9",
     "@primate/angular": "workspace:^",
     "@primate/eta": "workspace:^",
     "@primate/go": "workspace:^",
@@ -52,12 +52,12 @@
     "@primate/vue": "workspace:^",
     "@primate/webc": "workspace:^",
     "eta": "^3.5.0",
-    "marko": "^5.37.25",
+    "marko": "^5.37.29",
     "primate": "workspace:^",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "solid-js": "^1.9.1",
-    "svelte": "^5.25.9",
+    "solid-js": "^1.9.6",
+    "svelte": "^5.28.2",
     "voby": "^0.58.1",
     "vue": "^3.5.11"
   }

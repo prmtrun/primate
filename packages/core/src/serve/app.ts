@@ -13,7 +13,6 @@ import type RouteSpecial from "#RouteSpecial";
 import dim from "@rcompat/cli/color/dim";
 import crypto from "@rcompat/crypto";
 import FileRef from "@rcompat/fs/FileRef";
-import join from "@rcompat/fs/join";
 import Router from "@rcompat/fs/router";
 import type Conf from "@rcompat/http/Conf";
 import { html } from "@rcompat/http/mime";
@@ -21,7 +20,7 @@ import serve from "@rcompat/http/serve";
 import type Server from "@rcompat/http/Server";
 import Status from "@rcompat/http/Status";
 import is from "@rcompat/invariant/is";
-import type Dictionary from "@rcompat/record/Dictionary";
+import type Dictionary from "@rcompat/type/Dictionary";
 import empty from "@rcompat/record/empty";
 import entries from "@rcompat/record/entries";
 import get from "@rcompat/record/get";
@@ -95,7 +94,7 @@ const hash = async (data: string, algorithm = "sha-384") => {
   const prefix = algorithm.replace("-", _ => "");
   return`${prefix}-${btoa(String.fromCharCode(...new Uint8Array(bytes)))}`;
 };
-  
+
 const s_http = Symbol("s_http");
 
 interface PublishOptions {
@@ -269,7 +268,7 @@ export default async (rootfile: string, build: Options): Promise<ServeApp> => {
     async publish({ src, code, type = "", inline = false }) {
       if (inline || type === "style") {
         this.assets.push({
-          src: join(http.static.root, src ?? "").path,
+          src: FileRef.join(http.static.root, src ?? "").path,
           code: inline ? code : "",
           type,
           inline,

@@ -7,7 +7,7 @@ import type { ServeApp } from "#serve/app";
 import map from "@rcompat/async/map";
 import { json } from "@rcompat/http/mime";
 import Status from "@rcompat/http/Status";
-import type Dictionary from "@rcompat/record/Dictionary";
+import type Dictionary from "@rcompat/type/Dictionary";
 
 type Options<Comp> = {
   app: ServeApp,

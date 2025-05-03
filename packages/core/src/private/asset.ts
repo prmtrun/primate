@@ -1,4 +1,4 @@
-import type Dictionary from "@rcompat/record/Dictionary";
+import type Dictionary from "@rcompat/type/Dictionary";
 
 export default interface Asset {
   src?: string,

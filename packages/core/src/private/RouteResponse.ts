@@ -1,5 +1,5 @@
-import type MaybePromise from "pema/MaybePromise";
 import type ResponseLike from "#ResponseLike";
+import type MaybePromise from "@rcompat/type/MaybePromise";
 
 type RouteResponse = MaybePromise<ResponseLike> | void;
 

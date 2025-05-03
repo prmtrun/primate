@@ -1,10 +1,10 @@
 import type { LogLevel } from "#loglevel";
 import type { Module } from "#module-loader";
-import type { Path } from "@rcompat/fs/FileRef";
-import type Dictionary from "@rcompat/record/Dictionary";
-import type { BuildOptions } from "esbuild";
-import type SessionManager from "#session/Manager";
 import InMemorySessionManager from "#session/InMemoryManager";
+import type SessionManager from "#session/Manager";
+import type Path from "@rcompat/fs/Path";
+import type Dictionary from "@rcompat/type/Dictionary";
+import type { BuildOptions } from "esbuild";
 
 type CSPProperties = "script-src" | "style-src";
 

@@ -1,5 +1,6 @@
 import handler from "#handler";
-import stream, { type Streamable } from "@rcompat/fs/stream";
+import stream from "@rcompat/fs/stream";
+import type Streamable from "@rcompat/fs/Streamable";
 import { bin } from "@rcompat/http/mime";
 
 /**

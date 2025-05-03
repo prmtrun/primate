@@ -5,8 +5,9 @@ import stream from "#handler/stream";
 import text from "#handler/text";
 import type ResponseFunction from "#ResponseFunction";
 import type ResponseLike from "#ResponseLike";
-import s_streamable from "@rcompat/fs/symbols/streamable";
+import s_streamable from "@rcompat/fs/s_streamable";
 import proper from "@rcompat/record/proper";
+import type UnknownFunction from "@rcompat/type/UnknownFunction";
 
 type Constructor<T> = { new (...args: never): T };
 type Streamable<T> = { stream: () => ReadableStream<T> };
@@ -18,7 +19,7 @@ const is_streamable =
 const is_url = is_instance(URL);
 const is_readablestream = is_instance(ReadableStream);
 
-type MatchResult<T extends ReadonlyArray<Function>> = {
+type MatchResult<T extends ReadonlyArray<UnknownFunction>> = {
   [K in keyof T]:
     readonly [
       T[K],
@@ -30,7 +31,7 @@ type MatchResult<T extends ReadonlyArray<Function>> = {
     ]
 }
 
-function match<T extends ReadonlyArray<Function>>(m: MatchResult<T>): MatchResult<T> {
+function match<T extends ReadonlyArray<UnknownFunction>>(m: MatchResult<T>): MatchResult<T> {
   return m;
 }
 // [if, then]

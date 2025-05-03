@@ -1,7 +1,7 @@
 import log from "#log";
 import type { LogLevel } from "#loglevel";
 import FileRef from "@rcompat/fs/FileRef";
-import type StringLike from "@rcompat/string/StringLike";
+import type StringLike from "@rcompat/type/StringLike";
 
 export default (level: LogLevel) =>
   (module: string) =>

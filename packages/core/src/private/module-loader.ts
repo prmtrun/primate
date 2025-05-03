@@ -7,7 +7,7 @@ import type { BuildApp } from "#build/app";
 import type RequestFacade from "#RequestFacade";
 import type { ServeApp } from "#serve/app";
 import type FileRef from "@rcompat/fs/FileRef";
-import type MaybePromise from "pema/MaybePromise";
+import type MaybePromise from "@rcompat/type/MaybePromise";
 import * as hooks from "./hooks.js";
 
 export type Hook<I, O = I> = (t: I, next?: Hook<I, O>) => MaybePromise<O | void>;

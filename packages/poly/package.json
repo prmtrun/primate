@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@primate/core": "workspace:^",
-    "@rcompat/fs": "^0.11.5"
+    "@rcompat/fs": "^0.12.3"
   },
   "peerDependencies": {
     "@primate/i18n": "workspace:^",
@@ -68,8 +68,5 @@
       "default": "./lib/public/default.js"
     },
     "./*": "./lib/public/*.js"
-  },
-  "devDependencies": {
-    "@rcompat/record": "^0.6.2"
   }
 }

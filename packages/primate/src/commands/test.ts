@@ -3,11 +3,11 @@ import build from "@primate/core/build";
 import green from "@rcompat/cli/color/green";
 import red from "@rcompat/cli/color/red";
 import root from "@rcompat/package/root";
-import type Dictionary from "@rcompat/record/Dictionary";
 import entries from "@rcompat/record/entries";
 import equals from "@rcompat/test/equals";
 import includes from "@rcompat/test/includes";
-import type MaybePromise from "pema/MaybePromise";
+import type Dictionary from "@rcompat/type/Dictionary";
+import type MaybePromise from "@rcompat/type/MaybePromise";
 import serve from "./serve.js";
 
 const directory  = "test";

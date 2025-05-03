@@ -1,6 +1,6 @@
 import type SessionData from "#session/Data";
 import type Session from "#session/Session";
-import type MaybePromise from "pema/MaybePromise";
+import type MaybePromise from "@rcompat/type/MaybePromise";
 
 export default abstract class SessionManager<
   Id extends string = string,

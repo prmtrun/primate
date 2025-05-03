@@ -13,10 +13,10 @@
   },
   "private": true,
   "devDependencies": {
-    "@rcompat/test": "^0.1.2",
-    "@rcompat/type": "^0.1.0",
-    "apekit": "^0.0.13",
-    "esbuild": "^0.25.2",
+    "@rcompat/test": "^0.1.14",
+    "@rcompat/type": "^0.1.7",
+    "apekit": "^0.0.14",
+    "esbuild": "^0.25.3",
     "proby": "^0.1.0",
     "typescript": "^5.8.3"
   }

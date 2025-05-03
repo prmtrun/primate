@@ -4,17 +4,19 @@
     "baseUrl": "${configDir}",
     "target": "esnext",
     "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "moduleResolution": "Bundler",
     "strict": true,
     "skipLibCheck": true,
     "customConditions": ["apekit"],
     "erasableSyntaxOnly": true,
     "paths": {
-      "#components/*": ["components/*"]
+      "#component/*": ["components/*"],
+      "#store/*": ["stores/*"]
     }
   },
   "include": [
     "${configDir}/routes",
+    "${configDir}/stores",
     "${configDir}/test",
     "${configDir}/primate.config.js",
     "${configDir}/primate.config.ts"

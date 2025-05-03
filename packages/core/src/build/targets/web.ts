@@ -1,4 +1,3 @@
-import collect from "@rcompat/fs/collect";
 import FileRef from "@rcompat/fs/FileRef";
 import type App from "#App";
 
@@ -20,7 +19,7 @@ export default async (app: App): Promise<void> => {
       };
     });
   const d = app.runpath(location.server, location.pages);
-  const pages = await Promise.all((await collect(d, html, { recursive: true }))
+  const pages = await Promise.all((await FileRef.collect(d, html, { recursive: true }))
     .map(async file => `${file.debase(d)}`.slice(1)));
   const pages_str = pages.map(page =>
     `"${page}": await load_text(import.meta.url,

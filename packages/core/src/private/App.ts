@@ -2,9 +2,9 @@ import type { Config } from "#config";
 import type module_loader from "#module-loader";
 import type RouteFunction from "#RouteFunction";
 import type FileRef from "@rcompat/fs/FileRef";
-import type Dictionary from "@rcompat/record/Dictionary";
 import type get from "@rcompat/record/get";
-import type MaybePromise from "pema/MaybePromise";
+import type Dictionary from "@rcompat/type/Dictionary";
+import type MaybePromise from "@rcompat/type/MaybePromise";
 
 export type TargetHandler = (app: App) => MaybePromise<void>;
 export type BindFn = (directory: FileRef, file: FileRef) => MaybePromise<undefined>;

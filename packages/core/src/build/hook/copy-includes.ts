@@ -1,5 +1,5 @@
 import type { BuildApp } from "#build/app";
-import join from "@rcompat/fs/join";
+import FileRef from "@rcompat/fs/FileRef";
 
 export default async (app: BuildApp, type: string) => {
   const includes = app.config("build.includes");
@@ -12,7 +12,7 @@ export default async (app: BuildApp, type: string) => {
       .map(async include => {
         const path = app.root.join(include);
         if (await path.exists()) {
-          const target = join(type, include);
+          const target = FileRef.join(type, include);
           await app.stage(path, target);
         }
       }));

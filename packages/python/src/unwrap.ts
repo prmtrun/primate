@@ -1,5 +1,5 @@
 import type { PyProxy } from "pyodide/ffi";
-import type Dictionary from "@rcompat/record/Dictionary";
+import type Dictionary from "@rcompat/type/Dictionary";
 
 type DictConverter = Iterable<[
   key: string,

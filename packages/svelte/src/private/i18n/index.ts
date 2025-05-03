@@ -2,7 +2,7 @@ import context_name from "#context-name";
 import type Context from "#i18n/Context";
 import locale_store from "#i18n/locale";
 import resolve from "@primate/i18n/resolve";
-import type Dictionary from "@rcompat/record/Dictionary";
+import type Dictionary from "@rcompat/type/Dictionary";
 import { getContext } from "svelte";
 import { derived } from "svelte/store";
 

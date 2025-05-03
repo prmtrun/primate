@@ -1,6 +1,6 @@
 import type BodyInit from "#BodyInit";
 import type { ServeApp } from "#serve/app";
-import type MaybePromise from "pema/MaybePromise";
+import type MaybePromise from "@rcompat/type/MaybePromise";
 
 export default <T>(mime: string, mapper: (input: T) => BodyInit[0]) =>
   (body: T, options?: ResponseInit): (app: ServeApp) => MaybePromise<Response> =>

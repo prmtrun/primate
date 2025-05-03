@@ -1,8 +1,8 @@
 import root_selector from "#client/root-selector";
 import { Component, reflectComponentType } from "@angular/core";
 import type Props from "@primate/core/frontend/Props";
-import type Dictionary from "@rcompat/record/Dictionary";
 import stringify from "@rcompat/record/stringify";
+import type Dictionary from "@rcompat/type/Dictionary";
 
 type ComponentType = typeof Component;
 

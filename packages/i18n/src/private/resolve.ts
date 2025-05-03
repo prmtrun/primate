@@ -1,5 +1,5 @@
-import type Dictionary from "@rcompat/record/Dictionary";
 import type Locale from "#Locale";
+import type Dictionary from "@rcompat/type/Dictionary";
 
 export default (locale: Locale, key: string, placeholders?: Dictionary<string>) => {
   const value = locale[key];

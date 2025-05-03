@@ -1,6 +1,6 @@
 import type { BuildApp } from "#build/app";
 import type FileRef from "@rcompat/fs/FileRef";
-import type MaybePromise from "pema/MaybePromise";
+import type MaybePromise from "@rcompat/type/MaybePromise";
 
 export default interface CompileOptions {
   extension: string;

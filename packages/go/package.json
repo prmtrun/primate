@@ -26,13 +26,13 @@
   },
   "dependencies": {
     "@primate/core": "workspace:^",
-    "@rcompat/cli": "^0.7.0",
-    "@rcompat/env": "^0.6.1",
-    "@rcompat/fs": "^0.11.5",
-    "@rcompat/invariant": "^0.7.0",
-    "@rcompat/runtime": "^0.3.0",
-    "@rcompat/stdio": "^0.8.0",
-    "@rcompat/string": "^0.6.1"
+    "@rcompat/cli": "^0.8.0",
+    "@rcompat/env": "^0.7.0",
+    "@rcompat/fs": "^0.12.3",
+    "@rcompat/invariant": "^0.8.1",
+    "@rcompat/runtime": "^0.4.0",
+    "@rcompat/stdio": "^0.9.0",
+    "@rcompat/string": "^0.7.0"
   },
   "peerDependencies": {
     "primate": "workspace:^"
@@ -54,8 +54,5 @@
       "default": "./lib/default.js"
     },
     "./*": "./lib/*.js"
-  },
-  "devDependencies": {
-    "@rcompat/record": "^0.6.2"
   }
 }

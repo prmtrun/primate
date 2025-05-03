@@ -1,5 +1,5 @@
-import type Serializable from "@rcompat/record/Serializable";
-import type Dictionary from "@rcompat/record/Dictionary";
+import type Dictionary from "@rcompat/type/Dictionary";
+import type Serializable from "@rcompat/type/Serializable";
 
 type Data = Dictionary<Serializable>;
 

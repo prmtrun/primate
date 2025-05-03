@@ -1,4 +1,4 @@
-import type Dictionary from "@rcompat/record/Dictionary";
+import type Dictionary from "@rcompat/type/Dictionary";
 import spa from "./spa.js";
 
 type Init = {

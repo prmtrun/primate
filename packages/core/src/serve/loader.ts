@@ -1,6 +1,6 @@
 import asset from "#serve/asset";
 import FileRef from "@rcompat/fs/FileRef";
-import type Dictionary from "@rcompat/record/Dictionary";
+import type Dictionary from "@rcompat/type/Dictionary";
 
 type Options = {
   pages_app: string,

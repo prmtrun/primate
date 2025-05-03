@@ -1,4 +1,4 @@
-import type Dictionary from "@rcompat/record/Dictionary";
+import type Dictionary from "@rcompat/type/Dictionary";
 import { generateHydrationScript } from "solid-js/web";
 import spa from "./spa.js";
 

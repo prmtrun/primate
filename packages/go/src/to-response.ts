@@ -3,7 +3,7 @@ import redirect from "@primate/core/handler/redirect";
 import view from "@primate/core/handler/view";
 import type ResponseFunction from "@primate/core/ResponseFunction";
 import type ResponseLike from "@primate/core/ResponseLike";
-import type Dictionary from "@rcompat/record/Dictionary";
+import type Dictionary from "@rcompat/type/Dictionary";
 
 type Handler = "view" | "redirect" | "error";
 

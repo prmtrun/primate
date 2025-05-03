@@ -1,6 +1,6 @@
 import type RequestFacade from "#RequestFacade";
 import type { ServeApp } from "#serve/app";
-import type Dictionary from "@rcompat/record/Dictionary";
+import type Dictionary from "@rcompat/type/Dictionary";
 
 type ResponseFunction = (app: ServeApp, transfer: Dictionary, request: RequestFacade)
   => Response | Promise<Response> | undefined;
