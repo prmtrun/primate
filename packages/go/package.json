@@ -28,7 +28,7 @@
     "@primate/core": "workspace:^",
     "@rcompat/cli": "^0.8.1",
     "@rcompat/env": "^0.7.1",
-    "@rcompat/fs": "^0.12.6",
+    "@rcompat/fs": "^0.12.8",
     "@rcompat/invariant": "^0.8.1",
     "@rcompat/runtime": "^0.4.1",
     "@rcompat/stdio": "^0.9.1",

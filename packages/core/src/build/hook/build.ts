@@ -36,7 +36,7 @@ const pre = async (app: BuildApp, target: string) => {
   return app;
 };
 
-const js_re = /^.*.js$/u;
+const js_re = /^.*.js$/;
 const write_directories = async (build_directory: FileRef, app: BuildApp) => {
   const location = app.config("location");
   for (const name of app.server_build) {
@@ -111,7 +111,7 @@ const post = async (app: BuildApp) => {
   await app.stage(app.path.components, location.components, true);
 
   const directory = app.runpath(location.server, location.routes);
-  for (const path of await directory.collect()) {
+  for (const path of await directory.collect(/^.*$/, { recursive: true })) {
     await app.bindings[path.extension]
       ?.(directory, path.debase(`${directory}/`));
   }
