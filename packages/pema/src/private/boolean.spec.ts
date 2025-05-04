@@ -7,6 +7,8 @@ test.case("fail", assert => {
 });
 
 test.case("pass", assert => {
+  assert(boolean).type<"BooleanType">();
+
   assert(boolean.validate(true)).equals(true).type<boolean>();
   assert(boolean.validate(false)).equals(false).type<boolean>();
 });

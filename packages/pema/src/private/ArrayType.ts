@@ -1,8 +1,7 @@
+import GenericType from "#GenericType";
 import type Infer from "#Infer";
-import Validated from "#Validated";
+import type Validated from "#Validated";
 import expected from "#expected";
-import { type Schema } from "#schema";
-import PrintableGeneric from "@rcompat/type/PrintableGeneric";
 
 const member_error = (i: unknown, key?: string) => {
   return key === undefined
@@ -18,14 +17,9 @@ const error = (message: string, key?: string) => {
 
 const is = <T>(x: unknown, validator: (t: unknown) => boolean): x is T => validator(x);
 
-export default class ArrayType<T extends Validated<unknown>>
-  extends Validated<Infer<T>[], "ArrayType">
-  implements PrintableGeneric<T> {
+export default class ArrayType<T extends Validated<unknown>> extends
+  GenericType<T, Infer<T>[], "ArrayType"> {
   #subtype: T;
-
-  get Type(): T {
-    return undefined as unknown as T;
-  }
 
   constructor(subtype: T) {
     super();

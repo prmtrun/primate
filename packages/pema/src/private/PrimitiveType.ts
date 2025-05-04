@@ -1,5 +1,5 @@
 import type Infer from "#Infer";
-import Validated from "#Validated";
+import Type from "#Type";
 import expected from "#expected";
 
 const error_message = (name: string, x: unknown, key?: string) => {
@@ -10,7 +10,7 @@ const error_message = (name: string, x: unknown, key?: string) => {
 };
 
 export default class PrimitiveType<StaticType, Name extends string>
-  extends Validated<StaticType, Name> {
+  extends Type<StaticType, Name> {
   #name: string;
 
   constructor(name: string) {

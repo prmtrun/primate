@@ -1,9 +1,8 @@
 import type Infer from "#Infer";
-import Validated from "#Validated";
 import expected from "#expected";
 import is_validated_type from "#is_validated_type";
 import schema, { type InferSchema, type Schema } from "#schema";
-import PrintableGeneric from "@rcompat/type/PrintableGeneric";
+import GenericType from "#GenericType";
 
 export type InferTuple<T extends Schema[]> = {
     [K in keyof T]:
@@ -24,14 +23,9 @@ const error = (message: string, key?: string) => {
     : `${key}: ${message}`;
 }
 
-export default class TupleType<Members extends Schema[]>
-  extends Validated<InferTuple<Members>, "TupleType">
-  implements PrintableGeneric<Members> {
+export default class TupleType<Members extends Schema[]> extends
+  GenericType<Members, InferTuple<Members>, "TupleType"> {
   #members: Members;
-
-  get Type(): Members {
-    return undefined as unknown as Members;
-  }
 
   constructor(members: Members) {
     super();

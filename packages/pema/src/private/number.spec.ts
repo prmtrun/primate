@@ -8,5 +8,6 @@ test.case("fail", assert => {
 });
 
 test.case("pass", assert => {
+  assert(number).type<"NumberType">();
   assert(number.validate(1)).equals(1).type<number>();
 });

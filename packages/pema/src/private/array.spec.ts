@@ -8,10 +8,10 @@ import date from "#date";
 import type DateType from "#DateType";
 import expect from "#expect";
 import number from "#number";
-import string from "#string";
-import test from "@rcompat/test";
 import type NumberType from "#NumberType";
+import string from "#string";
 import type StringType from "#StringType";
+import test from "@rcompat/test";
 
 const b = array(boolean);
 const bi = array(bigint);

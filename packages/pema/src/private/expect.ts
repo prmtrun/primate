@@ -11,6 +11,7 @@ const types = {
   o: "object",
   nl: "null",
   sy: "symbol",
+  ur: "url",
 };
 
 const prefix = (at: string) => at ? `${at}: `: "";

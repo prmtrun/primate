@@ -7,5 +7,6 @@ test.case("fail", assert => {
 });
 
 test.case("pass", assert => {
+  assert(string).type<"StringType">();
   assert(string.validate("test")).equals("test").type<string>();
 });

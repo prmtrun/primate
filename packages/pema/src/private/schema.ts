@@ -3,13 +3,13 @@ import type ArrayType from "#ArrayType";
 import type Infer from "#Infer";
 import is_validated_type from "#is_validated_type";
 import null_type from "#null";
+import type NullType from "#NullType";
 import tuple from "#tuple";
 import type TupleType from "#TupleType";
 import undefined_type from "#undefined";
-import type NullType from "#NullType";
 import type UndefinedType from "#UndefinedType";
 import Validated from "#Validated";
-import PrintableGeneric from "@rcompat/type/PrintableGeneric";
+import GenericType from "#GenericType";
 
 type Mutable<T> = { -readonly [K in keyof T]: T[K] };
 type Flatten<T> = { [K in keyof T]: T[K] } & {};
@@ -43,13 +43,8 @@ export type Schema =
   { [k: string]: Schema };
 
 export class SchemaType<S extends Schema>
-  extends Validated<InferSchema<S>, "SchemaType">
-  implements PrintableGeneric<S> {
+  extends GenericType<S, InferSchema<S>, "SchemaType"> {
   #schema: S;
-
-  get Type(): S {
-    return undefined as unknown as S;
-  }
 
   get name() {
     return "schema";
@@ -128,8 +123,6 @@ type NormalizeSchema<S> =
     [K in keyof S]: NormalizeSchema<S[K]>;
   } :
   never;
-
-
 
 export default function schema<const S extends Schema>(s: S): SchemaType<NormalizeSchema<S>> {
   if (s === null) {

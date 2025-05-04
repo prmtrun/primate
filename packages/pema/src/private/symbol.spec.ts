@@ -7,8 +7,8 @@ test.case("fail", assert => {
 });
 
 test.case("pass", assert => {
-  const s = Symbol();
-
   assert(symbol).type<"SymbolType">();
+
+  const s = Symbol();
   assert(symbol.validate(s)).equals(s).type<symbol>();
 });

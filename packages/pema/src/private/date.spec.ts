@@ -7,6 +7,8 @@ test.case("fail", assert => {
 });
 
 test.case("pass", assert => {
+  assert(date).type<"DateType">();
+
   const d = new Date();
   assert(date.validate(d)).equals(d).type<Date>();
 });

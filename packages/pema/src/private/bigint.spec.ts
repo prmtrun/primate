@@ -8,5 +8,7 @@ test.case("fail", assert => {
 });
 
 test.case("pass", assert => {
+  assert(bigint).type<"BigIntType">();
+
   assert(bigint.validate(1n)).equals(1n).type<bigint>();
 });
