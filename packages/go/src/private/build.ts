@@ -1,15 +1,15 @@
 import route_error from "#error/route-error";
 import pkgname from "#pkgname";
+import type { BuildAppHook } from "@primate/core/hook";
 import verbs from "@primate/core/http/verbs";
 import log from "@primate/core/log";
 import dim from "@rcompat/cli/color/dim";
-import { user } from "@rcompat/env";
+import user from "@rcompat/env/user";
 import FileRef from "@rcompat/fs/FileRef";
 import runtime from "@rcompat/runtime";
 import execute from "@rcompat/stdio/execute";
 import which from "@rcompat/stdio/which";
 import upperfirst from "@rcompat/string/upperfirst";
-import type { BuildAppHook } from "@primate/core/hook";
 
 const command = await which("go");
 const env = {
@@ -129,7 +129,7 @@ const create_meta_files = async (directory: FileRef) => {
   if (!await directory.join(meta.request).exists()) {
     // copy request.go file
     await directory.join(meta.request).write((await root.join(meta.request)
-      .text())
+      .text()),
     );
     await directory.join(meta.sum).write((await root.join(meta.sum).text()));
     await directory.join(meta.mod).write((await root.join(meta.mod).text()));
@@ -156,7 +156,9 @@ export default (extension: string): BuildAppHook => (app, next) => {
     await base.join(js).write(js_wrapper(wasm_route_path, routes));
 
     try {
-      log.info(`compiling ${dim(file.toString())} to WebAssembly`, { module: pkgname });
+      log.info(`compiling ${dim(file.toString())} to WebAssembly`, {
+        module: pkgname,
+      });
       const cwd = `${base}`;
       // compile .go to .wasm
       await execute(run(wasm, go), { cwd, env: { HOME: user.HOME, ...env } });

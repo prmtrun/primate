@@ -4,11 +4,16 @@ import modulename from "#name";
 import type { RequestHook } from "@primate/core/hook";
 import Status from "@rcompat/http/Status";
 
-type Cookie = {
+type CookieOptions = {
   [key in "path" | "secure" | "httpOnly" | "sameSite"]: string
 };
+type Cookie = (
+  name: string,
+  value: string,
+  { path, secure, httpOnly, sameSite }: CookieOptions
+) => string;
 
-const cookie = (name: string, value: string, { path, secure, httpOnly, sameSite }: Cookie) =>
+const cookie: Cookie = (name, value, { path, secure, httpOnly, sameSite }) =>
   `${name}=${value};${httpOnly};Path=${path};${secure};SameSite=${sameSite}`;
 
 const options = {

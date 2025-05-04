@@ -23,7 +23,7 @@ type Options = {
   extension: string;
   extensions: string[];
   client_side_templates: (keyof typeof import_template)[];
-}
+};
 
 export default ({
   extension,
@@ -37,7 +37,7 @@ export default ({
 
   if (!empty(client_side_templates)) {
     const has_templates = extensions.includes(templates);
-    // app.assert(has_templates, nce(templates, client_side_templates.join(",")));
+
     has_templates ||
       no_client_extension(templates, client_side_templates.join(", "));
     client_side_templates.forEach(client_side_template =>
@@ -45,7 +45,7 @@ export default ({
   }
 
   app.register(extension, {
-    ...compile({ extension, name, compile: { server }, }),
+    ...compile({ extension, name, compile: { server } }),
   });
 
   return next(app);

@@ -8,7 +8,7 @@ export default (manager: Manager): ServeAppHook => async (app, next) => {
   }
 
   manager.init(Object.fromEntries(app.files.locales.map(([name, locale]) =>
-    [name, locale.default]
+    [name, locale.default],
   )));
 
   app.set(s_manager, manager);

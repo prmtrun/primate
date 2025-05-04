@@ -13,11 +13,14 @@ export default class Manager {
   }
 
   init(locales: Locales) {
-    assert(Object.keys(locales).length > 0, "empty locales object")
-    assert(locales[this.#locale] !== undefined, "default locale not in locales");
+    assert(Object.keys(locales).length > 0, "empty locales object");
+    assert(locales[this.#locale] !== undefined,
+      "default locale not in locales");
 
-    log.info(`loaded ${Object.keys(locales).map(l => dim(l)).join(" ")}`, { module });
-    
+    log.info(`loaded ${Object.keys(locales).map(l => dim(l)).join(" ")}`, {
+      module,
+    });
+
     this.#locales = {...locales};
   }
 

@@ -1,7 +1,6 @@
 import type Locale from "#Locale";
+import type PartialDictionary from "@rcompat/type/PartialDictionary";
 
-type Locales = {
-  [k in string]: Locale;
-}
+type Locales = PartialDictionary<Locale>;
 
-export { Locales as default };
+export type { Locales as default };

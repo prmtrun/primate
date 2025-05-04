@@ -1,5 +1,5 @@
-import handler from "@primate/html/handler";
 import type Frontend from "@primate/core/frontend";
+import handler from "@primate/html/handler";
 
 export default ((name, props, options = {}) => async (app, _, request) => {
   const code = "import { htmx } from \"app\";";

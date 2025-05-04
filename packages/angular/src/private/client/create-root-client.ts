@@ -8,12 +8,12 @@ export default () => `
     template,
     standalone: true,
   })(class {});
-  const double_to_single = string => string.replaceAll('"', "'");
+  const singlify = string => string.replaceAll('"', "'");
 
 export default (component, props) => {
   const { selector } = reflectComponentType(component);
   const attributes = Object.entries(props)
-    .map(([key, value]) => \`[\${key}]="\${double_to_single(stringify(value))}"\`)
+    .map(([key, value]) => \`[\${key}]="\${singlify(stringify(value))}"\`)
     .join(" ");
 
   return root_component({
