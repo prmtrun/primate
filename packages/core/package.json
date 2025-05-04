@@ -22,10 +22,6 @@
     "lint": "eslint .",
     "prepublishOnly": "npm run build"
   },
-  "devDependencies": {
-    "@rcompat/module": "^0.7.0",
-    "@rcompat/string": "^0.7.0"
-  },
   "dependencies": {
     "@rcompat/args": "^0.6.0",
     "@rcompat/array": "^0.6.0",
@@ -58,6 +54,10 @@
       "apekit": "./src/serve/*.ts",
       "default": "./lib/serve/*.js"
     },
+    "#serve/hook/*": {
+      "apekit": "./src/serve/hook/*.ts",
+      "default": "./lib/serve/hook/*.js"
+    },
     "#error/*": {
       "apekit": "./src/private/error/*.ts",
       "default": "./lib/private/error/*.js"
@@ -80,6 +80,10 @@
     "#log/*": {
       "apekit": "./src/private/log/*.ts",
       "default": "./lib/private/log/*.js"
+    },
+    "#db/*": {
+      "apekit": "./src/private/db/*.ts",
+      "default": "./lib/private/db/*.js"
     }
   },
   "exports": {
@@ -123,6 +127,10 @@
     "./session": {
       "apekit": "./src/public/session.ts",
       "default": "./lib/public/session.js"
+    },
+    "./db/store": {
+      "apekit": "./src/public/db/store.ts",
+      "default": "./lib/public/db/store.js"
     },
     "./*": {
       "apekit": "./src/public/*.ts"

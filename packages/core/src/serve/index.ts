@@ -6,6 +6,7 @@ import type Route from "#Route";
 import type RouteSpecial from "#RouteSpecial";
 import override from "@rcompat/record/override";
 import type Dictionary from "@rcompat/type/Dictionary";
+import type { Schema } from "pema/schema";
 import init from "../shared/hook/init.js";
 import app from "./app.js";
 import serve from "./hook/serve.js";
@@ -15,10 +16,14 @@ type Import = Dictionary & {
   default: unknown;
 };
 
-export type BuildFiles = Dictionary & {
+export type BuildFiles = {
   routes: [string, Route | RouteSpecial][];
   locales?: [string, {
     default: Dictionary<string>;
+  }][];
+  stores?: [string, {
+    default: Schema;
+    name?: string;
   }][];
 };
 

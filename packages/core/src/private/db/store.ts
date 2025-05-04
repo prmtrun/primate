@@ -1,16 +1,11 @@
-import type Query from "#db/Query";
+import Query from "#db/Query";
 import is from "@rcompat/invariant/is";
 import maybe from "@rcompat/invariant/maybe";
-import object from "pema/object";
-import type ObjectProperties from "pema/ObjectProperties";
+import _schema from "pema";
+import type { Schema } from "pema";
+import type EO from "@rcompat/type/EO";
 
-type ObjectType<T extends ObjectProperties> = ReturnType<typeof object<T>>;
-/*type PromiseRecord<T> = {
-  [K in keyof T]:
-    T[K] extends (...args: any[]) => any
-      ? (...params: Parameters<(T[K])>) => Promise<ReturnType<T[K]>>
-      : never;
-};*/
+type SchemaType<T extends Schema> = ReturnType<typeof _schema<T>>;
 
 type Primary = string;
 type Count<T extends number = number> =
@@ -18,8 +13,8 @@ type Count<T extends number = number> =
     ? never
     : T;
 
-type Document<T extends ObjectProperties> = ObjectType<T>["infer"];
-type Criteria<T extends ObjectProperties> = X<Partial<Document<T>>>;
+type Document<T extends Schema> = SchemaType<T>["infer"];
+type Criteria<T extends Schema> = X<Partial<Document<T>>>;
 
 type Fields<T> = {
   [K in keyof T]?: true;
@@ -35,7 +30,13 @@ type X<T> = {
   [K in keyof T]: T[K]
 } & {};
 
-type Store<T extends ObjectProperties> = {
+type RelationOneType = EO;
+type RelationManyType = EO;
+
+type Store<T extends Schema> = {
+  //get schema(): T;
+  one(): RelationOneType,
+  many(): RelationManyType,
   get: (id: Primary) => Promise<Document<T>>;
   find(criteria: Criteria<T>):
     Promise<Filter<Document<T>, undefined>[]>;
@@ -52,17 +53,26 @@ type Store<T extends ObjectProperties> = {
   query: () => Query<T>;
 };
 
-export default <T extends ObjectProperties>(schema: T): Store<T> => {
-  const o = object(schema);
+export default <T extends Schema>(schema: T): Store<T> => {
+  const o = _schema(schema);
 
   return {
+    one() {
+      return undefined as any;
+    },
+    many() {
+      return undefined as any;
+    },
+ //   get schema() {
+//      return o.schema;
+  //  },
     async get(primary) {
       is(primary).string();
 
       return o.validate({});
     },
-    async find(query: Query<T>, fields?: Fields<Document<T>>) {
-      is(query).object();
+    async find(criteria: Criteria<T>, fields?: Fields<Document<T>>) {
+      is(criteria).object();
       maybe(fields).object()
 
       return [o.validate({})];
@@ -97,7 +107,7 @@ export default <T extends ObjectProperties>(schema: T): Store<T> => {
       is(query).object();
     },
     query() {
-      return new QueryBuilder(schema);
+      return new Query(schema);
     },
   };
 };
