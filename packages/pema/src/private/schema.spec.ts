@@ -29,7 +29,7 @@ const types = [
   [number, 0, "0", "n"],
   [string, "0", 0, "s"],
   [symbol, Symbol(), 0, "sy"],
-  [file, new File([""], ""), 0, "f"]
+  [file, new File([""], ""), 0, "f"],
 ] as const;
 
 test.case("primitive validators", assert => {
@@ -37,7 +37,7 @@ test.case("primitive validators", assert => {
     const s = schema(validated);
     assert(s.validate(good)).equals(good);
     assert(() => s.validate(bad)).throws(expect(type, bad));
-  })
+  });
 });
 
 test.case("empty []", assert => {
@@ -56,7 +56,7 @@ test.case("object", assert => {
   const o = { foo: "bar" };
   type O = { foo: string };
   const o1 = { foo: "bar", bar: { baz: 0 } };
-  type O1 = { foo: string, bar: { baz: number } };
+  type O1 = { foo: string; bar: { baz: number } };
 
   const s = schema({ foo: string });
   const s1 = schema({ foo: string, bar: { baz: number } });
@@ -64,7 +64,7 @@ test.case("object", assert => {
   assert<typeof s>().fail<SchemaType<{ foo: StringType }>>();
   assert(s.validate(o)).equals(o).type<O>();
 
-  assert(s1).fail<SchemaType<{ foo: StringType, bar: { baz: NumberType }}>>();
+  assert(s1).fail<SchemaType<{ foo: StringType; bar: { baz: NumberType }}>>();
   assert(s1.validate(o1)).equals(o1).type<O1>();
 });
 
@@ -125,7 +125,7 @@ test.case("tuple", assert => {
   assert(() => si.validate(b1)).throws(expect("n", undefined, "[1]"));
   assert(() => si.validate(b2)).throws(expect("s", 0, "[0]"));
   assert(() => si.validate(b3)).throws(expect("s", 0, "[0]"));
-})
+});
 
 test.case("complex", assert => {
   const complex = schema({
@@ -136,16 +136,16 @@ test.case("complex", assert => {
   const complexi = schema({
     name: string,
     scores: [number],
-    tupled: [string, boolean]
+    tupled: [string, boolean],
   });
 
   const valid = { name: "Alice", scores: [1, 2, 3], tupled: ["yes", true] };
   const invalid = { name: "Bob", scores: ["oops"], tupled: ["ok", "nope"] };
 
   type Expected = {
-    name: string,
-    scores: number[],
-    tupled: [string, boolean],
+    name: string;
+    scores: number[];
+    tupled: [string, boolean];
   };
   type ExpectSchema = SchemaType<{
     name: StringType;

@@ -11,7 +11,6 @@ import type UndefinedType from "#UndefinedType";
 import Validated from "#Validated";
 import GenericType from "#GenericType";
 
-type Mutable<T> = { -readonly [K in keyof T]: T[K] };
 type Flatten<T> = { [K in keyof T]: T[K] } & {};
 
 type DeepMutable<T> =

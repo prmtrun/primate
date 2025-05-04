@@ -27,7 +27,7 @@ export default {
     },
     destroy() {
       return session.destroy();
-    }
+    },
   },
   view(name: ViewParams[0], props?: PyProxy, options?: PyProxy): ViewReturn {
     return view(name, borrow(props), borrow(options));
@@ -37,5 +37,5 @@ export default {
   },
   error(options: PyProxy): ResponseFunction {
     return error(borrow(options));
-  }
+  },
 };

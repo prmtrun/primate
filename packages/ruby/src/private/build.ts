@@ -1,7 +1,6 @@
+import type { BuildAppHook } from "@primate/core/hook";
 import verbs from "@primate/core/http/verbs";
 import FileRef from "@rcompat/fs/FileRef";
-import type { BuildAppHook } from "@primate/core/hook";
-import type { BuildApp } from "@primate/core/build/app";
 
 const routes_re = new RegExp(`def (?<route>${verbs.join("|")})`, "gu");
 const get_routes = (code: string) => [...code.matchAll(routes_re)]
@@ -42,7 +41,7 @@ def run_${route}(js_request, helpers, session)
 end
 `).join("\n");
 
-const js_wrapper = async (path: string, routes: string[], app: BuildApp) => {
+const js_wrapper = async (path: string, routes: string[]) => {
   const classes: string[] = [];
   const request_initialize: string[] = [];
   const request_defs: string[] = [];
@@ -52,11 +51,11 @@ import to_response from "@primate/ruby/to-response";
 import helpers from "@primate/ruby/helpers";
 import default_ruby_vm from "@primate/ruby/default-ruby-vm";
 import ruby from "@primate/ruby/ruby";
-import file from "primate/runtime/file";
+import FileRef from "primate/runtime/FileRef";
 import session from "primate/session";
 
 const { vm } = await default_ruby_vm(ruby);
-const code = await file(${JSON.stringify(path)}).text();
+const code = await FileRef.text(${JSON.stringify(path)});
 const wrappers = ${JSON.stringify(create_ruby_wrappers(routes))};
 const request = ${JSON.stringify(request
   .replace("%%CLASSES%%", _ => classes.join("\n"))
@@ -79,7 +78,7 @@ export default (extension: string): BuildAppHook => (app, next) => {
     const code = await path.text();
     const routes = get_routes(code);
     // write .js wrapper
-    await base.join(js).write(await js_wrapper(path.toString(), routes, app));
+    await base.join(js).write(await js_wrapper(path.toString(), routes));
   });
 
   return next(app);

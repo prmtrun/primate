@@ -16,14 +16,14 @@ const make_package = (pkg: string) => `await pyodide.loadPackage("${pkg}", {
 });\n`;
 
 const js_wrapper = (path: FileRef, routes: string[], packages: string[]) => `
-  import file from "primate/runtime/file";
+  import FileRef from "primate/runtime/FileRef";
   import to_request from "@primate/python/to-request";
   import to_response from "@primate/python/to-response";
   import load from "@primate/python/load";
   import namespace from "@primate/python/namespace";
 
   const pyodide = await load({ indexURL: "./node_modules/pyodide" });
-  const route = await file(${JSON.stringify(path.toString())}).text();
+  const route = await FileRef.text(${JSON.stringify(path.toString())});
   ${packages.map(make_package)}
   pyodide.registerJsModule("primate", namespace);
 

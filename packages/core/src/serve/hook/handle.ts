@@ -1,3 +1,4 @@
+import client_error from "#handler/error";
 import type { RequestHook } from "#module-loader";
 import type RequestFacade from "#RequestFacade";
 import type RequestInit from "#RequestInit";
@@ -5,13 +6,12 @@ import type ResponseLike from "#ResponseLike";
 import type RouteFunction from "#RouteFunction";
 import type RouteSpecial from "#RouteSpecial";
 import type { ServeApp } from "#serve/app";
-import client_error from "#handler/error";
+import session_hook from "#session/hook";
 import cascade from "@rcompat/async/cascade";
 import reload_defaults from "@rcompat/build/reload/defaults";
 import reload_path from "@rcompat/build/reload/path";
 import respond from "./respond.js";
 import route from "./route.js";
-import session_hook from "#session/hook";
 
 type GuardError = {
   response: Exclude<ResponseLike, void>;
@@ -84,7 +84,7 @@ const as_route = async (app: ServeApp, request: RequestFacade) => {
   }
 };
 
-export default (app: ServeApp) => {
+export default (app: ServeApp): ReturnType<typeof cascade> => {
   const handle = async (request: RequestFacade) =>
     (await app.loader.asset(request.url.pathname)) ?? as_route(app, request);
 

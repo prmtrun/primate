@@ -15,13 +15,13 @@ const member_error = (i: unknown, key?: string) => {
   return key === undefined
     ? `[${i}]`
     : `${key}[${i}]`;
-}
+};
 
 const error = (message: string, key?: string) => {
   return key === undefined
     ? message
     : `${key}: ${message}`;
-}
+};
 
 export default class TupleType<Members extends Schema[]> extends
   GenericType<Members, InferTuple<Members>, "TupleType"> {

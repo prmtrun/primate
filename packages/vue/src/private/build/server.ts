@@ -1,5 +1,10 @@
 import transform from "@rcompat/build/transform";
-import { compileScript, compileTemplate, parse, type SFCDescriptor } from "vue/compiler-sfc";
+import {
+  compileScript,
+  compileTemplate,
+  parse,
+  type SFCDescriptor,
+} from "vue/compiler-sfc";
 
 const genDefaultAs = "__SCRIPT__";
 const id_size = 8;
@@ -21,7 +26,7 @@ export default async (text: string) => {
   const template = compileTemplate({
     filename: "",
     id,
-    source: descriptor.template?.content ?? ""
+    source: descriptor.template?.content ?? "",
   });
   const script = has_script
     ? compileScript(descriptor, { id, inlineTemplate: inline, genDefaultAs })

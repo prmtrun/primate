@@ -1,7 +1,6 @@
 import ValidatedKey from "#ValidatedKey";
 
 export default abstract class Validated<StaticType>{
-
   get [ValidatedKey](): "ValidatedKey" {
     return "ValidatedKey";
   }

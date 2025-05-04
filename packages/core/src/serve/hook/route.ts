@@ -9,7 +9,7 @@ import BodyParser from "@rcompat/http/body";
 import entries from "@rcompat/record/entries";
 
 const deroot = (pathname: string) => pathname.endsWith("/") && pathname !== "/"
-  ? pathname.slice(0, -1) 
+  ? pathname.slice(0, -1)
   : pathname;
 // remove excess slashes
 const deslash = (url: string) => url.replaceAll(/\/{2,}/gu, _ => "/");
@@ -30,10 +30,10 @@ export default async (app: ServeApp, facade: RequestFacade) => {
   const $request_body_parse = app.config("request.body.parse");
   const $location = app.config("location");
 
-  const index = (path: string) => `${$location.routes}${path === "/" ? "/index" : path}`; 
+  const index = (path: string) => `${$location.routes}${path === "/" ? "/index" : path}`;
 
   const pathname = normalize(url.pathname);
-  const route = app.router.match(request) ?? 
+  const route = app.router.match(request) ??
     no_route_to_path(request.method.toLowerCase(), pathname, index(pathname));
   const matched = route as Exclude<ReturnType<typeof app.router.match>, undefined>;
   const { params: path } = matched;

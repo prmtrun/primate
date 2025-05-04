@@ -1,6 +1,8 @@
 import PrimitiveType from "#PrimitiveType";
 
-export default class UndefinedType extends PrimitiveType<undefined, "UndefinedType"> {
+type Name = "UndefinedType";
+
+export default class UndefinedType extends PrimitiveType<undefined, Name> {
   constructor() {
     super("undefined");
   }

@@ -3,7 +3,7 @@ import type Dictionary from "@rcompat/type/Dictionary";
 
 type DictConverter = Iterable<[
   key: string,
-  value: any
+  value: unknown,
 ]>;
 
 const dict_converter = (value: DictConverter) => Object.fromEntries(value);
@@ -17,8 +17,8 @@ const recursively_convert = (input: Dictionary) => {
       return [k, (o as PyProxy).toJs({ dict_converter })];
     }
     return [k, o];
-  }))
-}
+  }));
+};
 
 const qualify = (response: PyProxy, destroy = true) => {
   if ((response.toJs as any) !== undefined) {

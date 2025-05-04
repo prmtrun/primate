@@ -2,14 +2,14 @@ import type Dictionary from "@rcompat/type/Dictionary";
 import spa from "./spa.js";
 
 type Init = {
-  names: string[],
-  data: Dictionary[],
-  request: Dictionary,
+  names: string[];
+  data: Dictionary[];
+  request: Dictionary;
 };
 
 type Options = {
-  spa: boolean,
-  ssr: boolean,
+  spa: boolean;
+  ssr: boolean;
 };
 
 export default ({ names, data, request }: Init, options: Options) => `

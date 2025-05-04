@@ -21,7 +21,7 @@ export default async () => {
   const app = (await serve()).default;
 
   const files = await (await root()).join(directory)
-    .list(path => path.endsWith(".ts") || path.endsWith(".js"), {})
+    .list(path => path.endsWith(".ts") || path.endsWith(".js"), {});
 
   // side effects
   await Promise.all(files.map(file => file.import()));
@@ -36,7 +36,7 @@ export default async () => {
         equals(status) {
           checks.push(() => {
             return [response.status === status, status, response.status];
-          })
+          });
         },
       },
       body: {
@@ -80,8 +80,8 @@ export default async () => {
                 return [includes(actual, expected), expected, actual];
               });
             },
-          }
-        }
+          };
+        },
       },
     };
     test.tester(mocked_response);
@@ -101,4 +101,4 @@ export default async () => {
   }
 
   await app.stop();
-}
+};

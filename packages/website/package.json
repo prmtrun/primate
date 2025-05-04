@@ -3,9 +3,9 @@
   "private": true,
   "dependencies": {
     "@primate/frontend": "^0.15.0",
-    "@rcompat/fs": "^0.11.5",
-    "@rcompat/http": "^0.10.1",
-    "@rcompat/record": "^0.6.1",
+    "@rcompat/fs": "^0.12.6",
+    "@rcompat/http": "^0.11.1",
+    "@rcompat/record": "^0.7.1",
     "handlebars": "^4.7.8",
     "marked": "^12.0.2",
     "primate": "^0.31.1",

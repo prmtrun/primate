@@ -7,7 +7,7 @@ const error_message = (name: string, x: unknown, key?: string) => {
   return key === undefined
     ? base
     : `${key}: ${base}`;
-}
+};
 
 export default class InstanceType<StaticType, Name extends string>
   extends Type<StaticType, Name> {

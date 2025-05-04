@@ -21,7 +21,7 @@
     "@primate/core": "workspace:^",
     "@primate/store": "workspace:^",
     "@rcompat/invariant": "^0.8.1",
-    "@rcompat/record": "^0.7.0",
+    "@rcompat/record": "^0.7.1",
     "surrealdb": "^1.3.2"
   },
   "type": "module",

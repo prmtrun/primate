@@ -70,9 +70,10 @@ ${
 ? `import route_path from "${path}" with { type: "file" };
 const route = await Bun.file(route_path).arrayBuffer();`
 :
-`import file from "primate/runtime/file";
-const route = new Uint8Array(await file(import.meta.url+"/../${path}")
-  .arrayBuffer());`
+`import FileRef from "primate/runtime/FileRef";
+
+const buffer = await FileRef.arrayBuffer(import.meta.url+"/../${path}");
+const route = new Uint8Array(buffer);`
 }
 env();
 

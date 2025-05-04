@@ -1,5 +1,5 @@
 import { transformAsync } from "@babel/core";
-// @ts-expect-error
+// @ts-expect-error no declaration file
 import solid from "babel-preset-solid";
 
 export default async (text: string) => {

@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@rcompat/invariant": "^0.8.1",
-    "@rcompat/record": "^0.7.0"
+    "@rcompat/record": "^0.7.1"
   },
   "type": "module",
   "imports": {

@@ -1,11 +1,11 @@
-import resolve from "@rcompat/fs/resolve";
+import FileRef from "@rcompat/fs/FileRef";
 import root from "@rcompat/package/root";
 
 const load = async () => {
   try {
     return await root();
   } catch {
-    return resolve();
+    return FileRef.resolve();
   }
 };
 

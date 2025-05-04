@@ -54,7 +54,7 @@ test.case("flat", assert => {
 
   assert(b.validate(x(ab, 3))).equals(x(ab, 3));
   assert(bi.validate(x(abi, 4))).equals(x(abi, 4));
-  assert(d.validate(x(ad, 5))).equals(x(ad, 5))
+  assert(d.validate(x(ad, 5))).equals(x(ad, 5));
   assert(n.validate(x(an, 6))).equals(x(an, 6));
   assert(s.validate(x(as))).equals(x(as));
 

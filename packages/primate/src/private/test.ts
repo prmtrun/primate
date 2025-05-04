@@ -16,8 +16,8 @@ export type MockedResponse = {
     get(header: string): {
       equals(value: string): void;
       includes(value: string): void;
-    }
-  }
+    };
+  };
 };
 
 type Verb = typeof verbs[number];

@@ -16,12 +16,12 @@
   },
   "dependencies": {
     "@clack/prompts": "^0.10.1",
-    "@rcompat/args": "^0.6.0",
-    "@rcompat/cli": "^0.8.0",
-    "@rcompat/fs": "^0.12.3",
+    "@rcompat/args": "^0.6.1",
+    "@rcompat/cli": "^0.8.1",
+    "@rcompat/fs": "^0.12.6",
     "@rcompat/object": "^0.5.0",
-    "@rcompat/package": "^0.11.0",
-    "@rcompat/record": "^0.7.0"
+    "@rcompat/package": "^0.11.1",
+    "@rcompat/record": "^0.7.1"
   },
   "type": "module",
   "scripts": {

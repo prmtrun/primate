@@ -3,14 +3,14 @@ import { generateHydrationScript } from "solid-js/web";
 import spa from "./spa.js";
 
 type Init = {
-  names: string[],
-  data: Dictionary[],
-  request: Dictionary,
+  names: string[];
+  data: Dictionary[];
+  request: Dictionary;
 };
 
 type Options = {
-  spa: boolean,
-  ssr: boolean,
+  spa: boolean;
+  ssr: boolean;
 };
 
 const hydration_script = generateHydrationScript()

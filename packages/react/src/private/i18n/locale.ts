@@ -45,10 +45,10 @@ export default {
 
   set(name: string) {
     this[$locale]!.set(name);
-  }
+  },
 } satisfies {
   [$locale]?: Locale;
   init(): void;
   get(): string;
   set(locale: string): void;
-}
+};

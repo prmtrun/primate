@@ -7,13 +7,13 @@ const member_error = (i: unknown, key?: string) => {
   return key === undefined
     ? `[${i}]`
     : `${key}[${i}]`;
-}
+};
 
 const error = (message: string, key?: string) => {
   return key === undefined
     ? message
     : `${key}: ${message}`;
-}
+};
 
 const is = <T>(x: unknown, validator: (t: unknown) => boolean): x is T => validator(x);
 

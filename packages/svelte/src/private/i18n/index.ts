@@ -9,5 +9,5 @@ import { derived } from "svelte/store";
 export default derived(locale_store, locale =>
   (key: string, placeholders: Dictionary<string>) => {
   const { locales } = getContext<Context>(context_name).i18n;
-  return resolve(locales[locale], key, placeholders);
+  return resolve(locales[locale]!, key, placeholders);
 });

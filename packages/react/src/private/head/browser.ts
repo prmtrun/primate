@@ -3,8 +3,8 @@ import type Props from "@primate/core/frontend/Props";
 import React from "react";
 
 type Child = {
-  type: string,
-  props: Props,
+  type: string;
+  props: Props;
 };
 
 const to_array = (maybe: Child[]) => Array.isArray(maybe) ? maybe : [maybe];
@@ -61,7 +61,6 @@ const Head = class Head extends React.Component<{ children: Child[] }> {
 
   componentDidMount() {
     this.id = crypto.randomUUID();
-    this.props.children
     render(this.props.children, this.id);
   }
 
