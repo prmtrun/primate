@@ -1,4 +1,4 @@
 import OptionalType from "#OptionalType";
-import { type Schema } from "#schema";
+import type Validated from "#Validated";
 
-export default <const T extends Schema>(type: T) => new OptionalType(type);
+export default <const T extends Validated<unknown>>(type: T) => new OptionalType(type);

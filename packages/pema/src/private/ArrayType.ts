@@ -1,7 +1,8 @@
+import expected from "#expected";
 import GenericType from "#GenericType";
 import type Infer from "#Infer";
+import OptionalType from "#OptionalType";
 import type Validated from "#Validated";
-import expected from "#expected";
 
 const member_error = (i: unknown, key?: string) => {
   return key === undefined
@@ -24,6 +25,10 @@ export default class ArrayType<T extends Validated<unknown>> extends
   constructor(subtype: T) {
     super();
     this.#subtype = subtype;
+  }
+
+  optional() {
+    return new OptionalType(this);
   }
 
   default(value: Infer<this>) {

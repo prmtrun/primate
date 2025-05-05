@@ -1,8 +1,11 @@
-import GenericType from "#GenericType";
-import type Infer from "#Infer";
 import expected from "#expected";
+import GenericType from "#GenericType";
+import schema from "#index";
+import type Infer from "#Infer";
+import type InferSchema from "#InferSchema";
 import is_validated_type from "#is_validated_type";
-import schema, { type InferSchema, type Schema } from "#schema";
+import OptionalType from "#OptionalType";
+import type Schema from "#Schema";
 
 export type InferTuple<T extends Schema[]> = {
     [K in keyof T]:
@@ -30,6 +33,10 @@ export default class TupleType<T extends Schema[]> extends
   constructor(members: T) {
     super();
     this.#members = members;
+  }
+
+  optional() {
+    return new OptionalType(this);
   }
 
   default(value: Infer<this>) {
