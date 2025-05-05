@@ -1,4 +1,4 @@
-import TupleType from "#TupleType";
+  import TupleType from "#TupleType";
 import { type Schema } from "#schema";
 
-export default <const T extends Schema[]>(...tuple: T) => new TupleType(tuple);
+export default <const T extends Schema[]>(...types: T) => new TupleType(types);

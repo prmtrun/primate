@@ -4,7 +4,7 @@ import is_validated_type from "#is_validated_type";
 import schema, { type InferSchema, type Schema } from "#schema";
 
 export default class OptionalType<S extends Schema> extends
-  GenericType<S, InferSchema<S>, "OptionalType"> {
+  GenericType<S | undefined, InferSchema<S> | undefined, "OptionalType"> {
   #schema: S;
 
   constructor(s: S) {
@@ -25,7 +25,7 @@ export default class OptionalType<S extends Schema> extends
 
     // optional
     if (x === undefined) {
-      return x as Infer<this>;
+      return undefined as Infer<this>;
     }
 
     const validator = is_validated_type(s) ? s : schema(s);

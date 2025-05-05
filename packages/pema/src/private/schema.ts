@@ -1,5 +1,6 @@
 import array from "#array";
 import type ArrayType from "#ArrayType";
+import GenericType from "#GenericType";
 import type Infer from "#Infer";
 import is_validated_type from "#is_validated_type";
 import null_type from "#null";
@@ -9,30 +10,26 @@ import type TupleType from "#TupleType";
 import undefined_type from "#undefined";
 import type UndefinedType from "#UndefinedType";
 import Validated from "#Validated";
-import GenericType from "#GenericType";
-
-type Flatten<T> = { [K in keyof T]: T[K] } & {};
-
-type DeepMutable<T> =
-  T extends readonly [...infer Elements extends readonly unknown[]]
-    ? { -readonly [K in keyof Elements]: DeepMutable<Elements[K]> }
-    : T extends object
-      ? { -readonly [K in keyof T]: DeepMutable<T[K]> }
-      : T;
+import type UndefinedToOptional from "@rcompat/type/UndefinedToOptional";
 
 type DecrementDepth = [never, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-export type InferSchema<S, Depth extends number = 10> = DeepMutable<
+export type InferSchema<S, Depth extends number = 10> =
   [Depth] extends [never] ? never :
   S extends Validated<unknown> ? Infer<S> :
   S extends null ? Infer<NullType> :
   S extends undefined ? Infer<UndefinedType> :
-  S extends [infer Only] ? Only extends Validated<unknown> ? Infer<ArrayType<Only>> : never :
+  S extends [infer Only] ?
+    Only extends Validated<unknown> ? Infer<ArrayType<Only>> : never :
   S extends Schema[] ? InferSchema<TupleType<{
-    [K in keyof S]: S[K] extends Validated<unknown> ? InferSchema<S[K], DecrementDepth[Depth]> : never
+    [K in keyof S]: S[K] extends Validated<unknown>
+      ? InferSchema<S[K], DecrementDepth[Depth]>
+      : never
   }>> :
-  S extends { [key: string]: Schema } ? { [K in keyof S]: InferSchema<S[K], DecrementDepth[Depth]> } :
-  never>;
+  S extends { [key: string]: Schema } ? UndefinedToOptional<{
+    [K in keyof S]: InferSchema<S[K], DecrementDepth[Depth]>
+  }> :
+  never;
 
 export type Schema =
   Validated<unknown> |
@@ -45,9 +42,9 @@ export class SchemaType<S extends Schema>
   extends GenericType<S, InferSchema<S>, "SchemaType"> {
   #schema: S;
 
-  constructor(schema: S) {
+  constructor(s: S) {
     super();
-    this.#schema = schema;
+    this.#schema = s;
   }
 
   default(value: Infer<this>) {
@@ -82,14 +79,18 @@ export class SchemaType<S extends Schema>
       }
       const result: any = {};
       for (const k in s) {
-        result[k] = schema((s as any)[k]).validate((x as any)[k], `.${k}`);
+        const r = schema((s as any)[k]).validate((x as any)[k], `.${k}`);
+        // exclude undefined (optionals)
+        if (r !== undefined) {
+          result[k] = r;
+        }
       }
       return result;
     }
 
     if (s === null) {
       if (x !== null) throw new Error("Expected null");
-      return null as Infer<this>;
+      return null as unknown as Infer<this>;
     }
 
     if (s === undefined) {
@@ -103,17 +104,6 @@ export class SchemaType<S extends Schema>
 
 type OneElementArray<T> = T extends [infer U] ? [U] extends T ? U : never : never;
 
-/*type NormalizeSchema<S, Depth extends number = 10> =
-  [Depth] extends [never] ? never :
-  S extends Validated<unknown> ? S :
-  S extends null ? NullType :
-  S extends undefined ? UndefinedType :
-  S extends [unknown] ?
-    OneElementArray<S> extends Validated<unknown> ? ArrayType<OneElementArray<S>> : never :
-  S extends Schema[] ? TupleType<S> :
-  S extends { [K: string]: Schema } ? Flatten<Mutable<S>> :
-  never*/
-;
 type NormalizeSchema<S> =
   S extends [] ? TupleType<[]> :
   S extends Validated<unknown> ? S :
@@ -123,11 +113,12 @@ type NormalizeSchema<S> =
     O extends Validated<unknown> ? ArrayType<NormalizeSchema<O>> : never :
   S extends Schema[] ? TupleType<S> :
   S extends { [K: string]: Schema } ? {
-    [K in keyof S]: NormalizeSchema<S[K]>;
+    -readonly [K in keyof S]: NormalizeSchema<S[K]>;
   } :
   never;
 
 export default function schema<const S extends Schema>(s: S): SchemaType<NormalizeSchema<S>> {
+
   if (s === null) {
     return new SchemaType(null_type) as never;
   }
@@ -142,6 +133,4 @@ export default function schema<const S extends Schema>(s: S): SchemaType<Normali
     }
   }
   return new SchemaType<NormalizeSchema<typeof s>>(s as NormalizeSchema<typeof s>);
-
-
 }

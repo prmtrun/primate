@@ -61,10 +61,10 @@ test.case("object", assert => {
   const s = schema({ foo: string });
   const s1 = schema({ foo: string, bar: { baz: number } });
 
-  assert<typeof s>().fail<SchemaType<{ foo: StringType }>>();
+  assert<typeof s>().type<SchemaType<{ foo: StringType }>>();
   assert(s.validate(o)).equals(o).type<O>();
 
-  assert(s1).fail<SchemaType<{ foo: StringType; bar: { baz: NumberType }}>>();
+  assert(s1).type<SchemaType<{ foo: StringType; bar: { baz: NumberType }}>>();
   assert(s1.validate(o1)).equals(o1).type<O1>();
 });
 
@@ -153,10 +153,10 @@ test.case("complex", assert => {
     tupled: TupleType<[StringType, BooleanType]>;
   }>;
 
-  assert(complex).fail<ExpectSchema>();
+  assert(complex).type<ExpectSchema>();
   assert(complex.validate(valid)).equals(valid).type<Expected>;
 
-  assert(complexi).fail<ExpectSchema>();
+  assert(complexi).type<ExpectSchema>();
   assert(complexi.validate(valid)).equals(valid).type<Expected>();
   assert(() => complex.validate(invalid))
     .throws(expect("n", "oops", ".scores[0]"));
