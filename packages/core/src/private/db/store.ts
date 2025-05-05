@@ -35,22 +35,21 @@ type RelationManyType = EO;
 
 type Store<T extends Schema> = {
   //get schema(): T;
-  one(): RelationOneType,
-  many(): RelationManyType,
-  get: (id: Primary) => Promise<Document<T>>;
-  find(criteria: Criteria<T>):
-    Promise<Filter<Document<T>, undefined>[]>;
+  one(): RelationOneType;
+  many(): RelationManyType;
+  get(id: Primary): Promise<Document<T>>;
+  find(criteria: Criteria<T>): Promise<Filter<Document<T>, undefined>[]>;
   find<F extends Fields<Document<T>>>(
     criteria: Criteria<T>,
     fields: F
   ): Promise<Filter<Document<T>, F>[]>;
-  count: (criteria?: Criteria<T>) => Promise<Count>;
-  exists: (criteria: Criteria<T>) => Promise<boolean>;
-  insert: (document: Document<T>) => Promise<Document<T>>;
-  update: (criteria: Criteria<T>, document: Document<T>) => Promise<Document<T>>;
-  save: (document: Document<T>) => Promise<Document<T>>;
-  delete: (criteria: Criteria<T>) => Promise<void>;
-  query: () => Query<T>;
+  count(criteria?: Criteria<T>): Promise<Count>;
+  exists(criteria: Criteria<T>): Promise<boolean>;
+  insert(document: Document<T>): Promise<Document<T>>;
+  update(criteria: Criteria<T>, document: Document<T>): Promise<Document<T>>;
+  save(document: Document<T>): Promise<Document<T>>;
+  delete(criteria: Criteria<T>): Promise<void>;
+  query(): Query<T>;
 };
 
 export default <T extends Schema>(schema: T): Store<T> => {
@@ -73,7 +72,7 @@ export default <T extends Schema>(schema: T): Store<T> => {
     },
     async find(criteria: Criteria<T>, fields?: Fields<Document<T>>) {
       is(criteria).object();
-      maybe(fields).object()
+      maybe(fields).object();
 
       return [o.validate({})];
     },

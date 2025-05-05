@@ -26,6 +26,10 @@ export default class ArrayType<T extends Validated<unknown>> extends
     this.#subtype = subtype;
   }
 
+  default(value: Infer<this>) {
+    return this;
+  }
+
   get name() {
     return "array";
   }

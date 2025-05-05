@@ -28,7 +28,7 @@ const guard = (app: ServeApp, guards: RouteSpecial[]): RequestHook => async (req
       if (response !== true) {
         throw {
           response,
-          type: guard_error
+          type: guard_error,
         } as GuardError;
       }
     }
@@ -110,7 +110,7 @@ export default (app: ServeApp): ReturnType<typeof cascade> => {
     : next(facade)) satisfies RequestHook;
 
   const modules = [hotreload, session_hook(app)]
-    .concat(app.modules.handle !== undefined ? app.modules.handle : [])
+    .concat(app.modules.handle !== undefined ? app.modules.handle : []);
 
   return cascade(modules as RequestHook<false>[], handle);
 };

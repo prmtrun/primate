@@ -3,10 +3,10 @@ import FileRef from "@rcompat/fs/FileRef";
 import type Dictionary from "@rcompat/type/Dictionary";
 
 type Options = {
-  pages_app: string,
-  pages: Dictionary<string>,
-  rootfile: string,
-  static_root: string,
+  pages_app: string;
+  pages: Dictionary<string>;
+  rootfile: string;
+  static_root: string;
 };
 
 export default ({

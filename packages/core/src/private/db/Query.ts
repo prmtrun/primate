@@ -29,4 +29,4 @@ export default class Query<
   async run(): Promise<Filter<Document<T>, P>>{
       return this.#schema.infer as any;
     }
-};
+}

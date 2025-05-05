@@ -10,7 +10,7 @@ type CSPProperties = "script-src" | "style-src";
 
 export type CSP = {
   [K in CSPProperties]?: string[];
-}
+};
 /*
 import object from "pema/object";
 import string from "pema/string";
@@ -72,66 +72,66 @@ const pema_config = object({
 */
 
 export type Config = {
-  base: string,
-  modules?: Module[],
+  base: string;
+  modules?: Module[];
   pages: {
-    app: string,
-    error: string,
-  },
+    app: string;
+    error: string;
+  };
   log: {
-    level: LogLevel,
-    trace: boolean,
-  },
+    level: LogLevel;
+    trace: boolean;
+  };
   http: {
-    host: string,
-    port: number,
-    csp?: CSP,
-    headers?: Dictionary,
+    host: string;
+    port: number;
+    csp?: CSP;
+    headers?: Dictionary;
     static: {
-      root: string,
-    },
+      root: string;
+    };
     ssl?: {
-      key: Path,
-      cert: Path,
-    }
-  },
+      key: Path;
+      cert: Path;
+    };
+  };
   session: {
-    manager: SessionManager,
-    implicit: boolean,
+    manager: SessionManager;
+    implicit: boolean;
     cookie: {
-      name: string,
-      same_site: "Strict" | "Lax" | "None",
-      http_only: boolean,
-      path: `/${string}`,
-    },
-  },
+      name: string;
+      same_site: "Strict" | "Lax" | "None";
+      http_only: boolean;
+      path: `/${string}`;
+    };
+  };
   request: {
     body: {
-      parse: boolean,
-    },
-  },
+      parse: boolean;
+    };
+  };
   location: {
     // renderable components
-    components: string,
+    components: string;
     // HTML pages
-    pages: string,
+    pages: string;
     // hierarchical routes
-    routes: string,
+    routes: string;
     // static assets
-    static: string,
+    static: string;
     // build environment
-    build: string,
+    build: string;
     // client build
-    client: string,
+    client: string;
     // server build
-    server: string,
-  },
+    server: string;
+  };
   build: BuildOptions & {
-    name: string,
-    includes: string[],
-    excludes: string[],
-  },
-}
+    name: string;
+    includes: string[];
+    excludes: string[];
+  };
+};
 
 export default {
   base: "/",

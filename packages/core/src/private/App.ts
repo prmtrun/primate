@@ -7,7 +7,7 @@ import type Dictionary from "@rcompat/type/Dictionary";
 import type MaybePromise from "@rcompat/type/MaybePromise";
 
 export type TargetHandler = (app: App) => MaybePromise<void>;
-export type BindFn = (directory: FileRef, file: FileRef) => MaybePromise<undefined>;
+export type BindFn = (directory: FileRef, file: FileRef) => MaybePromise<void>;
 
 type App = {
   path: Dictionary<FileRef>;
@@ -16,8 +16,8 @@ type App = {
   set: (key: symbol, value: unknown) => void;
   config: <P extends string>(path: P) => ReturnType<typeof get<Config, P>>;
   error: {
-    default?: RouteFunction,
-  },
+    default?: RouteFunction;
+  };
   modules: Awaited<ReturnType<typeof module_loader>>;
   runpath: (...directories: string[]) => FileRef;
 };

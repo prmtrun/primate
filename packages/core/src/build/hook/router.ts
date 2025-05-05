@@ -11,7 +11,9 @@ const error_entries = Object.entries({
   RestRoute: rest_route,
 });
 
-export default async (directory: FileRef, extensions: string[]): ReturnType<typeof Router.load> => {
+type Return = ReturnType<typeof Router.load>;
+
+export default async (directory: FileRef, extensions: string[]): Return => {
   try {
     return await Router.load({
         import: false,
@@ -28,7 +30,7 @@ export default async (directory: FileRef, extensions: string[]): ReturnType<type
       });
   } catch (error) {
     error_entries.forEach(([key, value]) =>
-      key in Router.Error && value((error as { route: string }).route)
+      key in Router.Error && value((error as { route: string }).route),
     );
     // rethrow original error
     throw error;

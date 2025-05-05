@@ -20,31 +20,31 @@ import serve from "@rcompat/http/serve";
 import type Server from "@rcompat/http/Server";
 import Status from "@rcompat/http/Status";
 import is from "@rcompat/invariant/is";
-import type Dictionary from "@rcompat/type/Dictionary";
 import empty from "@rcompat/record/empty";
 import entries from "@rcompat/record/entries";
 import get from "@rcompat/record/get";
 import stringify from "@rcompat/record/stringify";
+import type Dictionary from "@rcompat/type/Dictionary";
 import handle from "./hook/handle.js";
 import type { BuildFiles, Options } from "./index.js";
 import type loader from "./loader.js";
 import parse from "./parse.js";
 
 interface ViewOptions extends FrontendOptions {
-  body: string
+  body: string;
 }
 
-type Entry<T> = [keyof T, Required<T>[keyof T]]
+type Entry<T> = [keyof T, Required<T>[keyof T]];
 
 const to_csp = (config_csp: Entry<CSP>[], assets: CSP, override: CSP) => config_csp
   // only csp entries in the config will be enriched
   .map<Entry<CSP>>(([key, directives]) =>
     // enrich with application assets
-    [key, assets[key] ? directives.concat(...assets[key]) : directives]
+    [key, assets[key] ? directives.concat(...assets[key]) : directives],
   )
   .map<Entry<CSP>>(([key, directives]) =>
     // enrich with explicit csp
-    [key, override[key] ? directives.concat(...override[key]) : directives]
+    [key, override[key] ? directives.concat(...override[key]) : directives],
   )
   .map(([key, directives]) => `${key} ${directives.join(" ")}`)
   .join(";");
@@ -98,40 +98,40 @@ const hash = async (data: string, algorithm = "sha-384") => {
 const s_http = Symbol("s_http");
 
 interface PublishOptions {
-  src?: string,
-  code: string,
-  type: string,
-  inline: boolean
+  src?: string;
+  code: string;
+  type: string;
+  inline: boolean;
 };
 
 type PartialDictionary<T> = Dictionary<T | undefined>;
 
 export interface ServeApp extends App {
-  hash: typeof hash,
-  secure: boolean,
-  assets: Options["assets"],
-  files: BuildFiles,
-  component<T>(name: string): T,
-  frontends: PartialDictionary<Frontend>,
-  headers(csp?: Dictionary): Dictionary<string>,
-  asset_csp: CSP,
-  render(content: Omit<ViewOptions, keyof ResponseInit>): string,
-  loader: ReturnType<typeof loader>,
-  respond(...args: ConstructorParameters<typeof Response>): Response,
-  view(options: ViewOptions): Response,
-  media(type: string, options?: ResponseInit): ResponseInit,
+  hash: typeof hash;
+  secure: boolean;
+  assets: Options["assets"];
+  files: BuildFiles;
+  component<T>(name: string): T;
+  frontends: PartialDictionary<Frontend>;
+  headers(csp?: Dictionary): Dictionary<string>;
+  asset_csp: CSP;
+  render(content: Omit<ViewOptions, keyof ResponseInit>): string;
+  loader: ReturnType<typeof loader>;
+  respond(...args: ConstructorParameters<typeof Response>): Response;
+  view(options: ViewOptions): Response;
+  media(type: string, options?: ResponseInit): ResponseInit;
   inline(code: string, type: "style" | "script" | "module"): Promise<{
-    head: string,
-    integrity: string,
-  }>,
-  publish(options: PublishOptions): Promise<void>,
-  create_csp(): void,
+    head: string;
+    integrity: string;
+  }>;
+  publish(options: PublishOptions): Promise<void>;
+  create_csp(): void;
   register(extension: string, frontend: Frontend): void;
-  build_target: string,
-  start(): Promise<void>,
-  stop(): void,
-  server(): Server,
-  mode: Mode,
+  build_target: string;
+  start(): Promise<void>;
+  stop(): void;
+  server(): Server;
+  mode: Mode;
   router: ReturnType<typeof Router.init<Route, RouteSpecial>>;
   fonts: unknown[];
   target(_: any): void;
@@ -173,7 +173,7 @@ export default async (rootfile: string, build: Options): Promise<ServeApp> => {
       key: root.join(http.ssl.key),
       cert: root.join(http.ssl.cert),
     } : {},
-  })
+  });
 
   let server: Server;
 

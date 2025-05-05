@@ -45,13 +45,17 @@ export class SchemaType<S extends Schema>
   extends GenericType<S, InferSchema<S>, "SchemaType"> {
   #schema: S;
 
-  get name() {
-    return "schema";
-  }
-
   constructor(schema: S) {
     super();
     this.#schema = schema;
+  }
+
+  default(value: Infer<this>) {
+    return this;
+  }
+
+  get name() {
+    return "schema";
   }
 
   validate(x: unknown, key?: string): Infer<this> {

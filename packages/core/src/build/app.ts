@@ -8,21 +8,19 @@ import type Path from "@rcompat/fs/Path";
 import entries from "@rcompat/record/entries";
 import exclude from "@rcompat/record/exclude";
 import get from "@rcompat/record/get";
-import type Dictionary from "@rcompat/type/Dictionary";
+import type PartialDictionary from "@rcompat/type/PartialDictionary";
 import { web } from "./targets/index.js";
 
 export const symbols = {
   layout_depth: Symbol("layout.depth"),
 };
 
-type PartialDictionary<T> = Dictionary<T | undefined>;
-
 type ExtensionCompileFunction = (component: FileRef, app: BuildApp) =>
   Promise<void>;
 
 type ExtensionCompile = {
-  client: ExtensionCompileFunction,
-  server: ExtensionCompileFunction,
+  client: ExtensionCompileFunction;
+  server: ExtensionCompileFunction;
 };
 
 export interface BuildApp extends App {
@@ -31,7 +29,7 @@ export interface BuildApp extends App {
   postbuild: (() => void)[];
   bindings: PartialDictionary<BindFn>;
   roots: FileRef[];
-  targets: PartialDictionary<{ forward?: string, target: TargetHandler }>;
+  targets: PartialDictionary<{ forward?: string; target: TargetHandler }>;
   assets: unknown[];
   extensions: PartialDictionary<ExtensionCompile>;
   stage: (source: FileRef, directory: Path, apply_defines?: boolean) => Promise<void>;
@@ -161,6 +159,6 @@ export default async (root: FileRef, config: Config, mode: Mode = "development")
     },
     depth() {
       return this.get<number>(symbols.layout_depth);
-    }
+    },
   } as const satisfies BuildApp;
 };

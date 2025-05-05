@@ -11,7 +11,7 @@ const app = {
 };
 const verbs = ["get", "post", "put", "delete"];
 const r = await (async () => {
-  const p = "https://p.com";
+  const p = "https://primate.run";
   const request = (method: string, path = "/", options = {}) =>
     new Request(`${p}${path}`, { method, ...options });
   return Object.fromEntries(verbs.map(verb => [verb, (...params: string[]) =>

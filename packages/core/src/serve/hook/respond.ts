@@ -29,7 +29,7 @@ type MatchResult<T extends ReadonlyArray<UnknownFunction>> = {
           (arg: unknown) => ResponseFunction :
           (...args: unknown[]) => unknown
     ]
-}
+};
 
 function match<T extends ReadonlyArray<UnknownFunction>>(m: MatchResult<T>): MatchResult<T> {
   return m;

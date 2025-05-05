@@ -20,6 +20,10 @@ export default class InstanceType<StaticType, Name extends string>
     this.#instance = instance;
   }
 
+  default(value: StaticType) {
+    return this;
+  }
+
   get name() {
     return this.#name;
   }

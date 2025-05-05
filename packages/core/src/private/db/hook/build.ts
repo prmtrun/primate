@@ -21,7 +21,7 @@ const valid = (type: Dictionary, name: string, store: string) => {
     return true;
   }
   invalid_type(name, store);
-}
+};
 
 export default (directory: string): BuildAppHook => async (app, next) => {
   const location = app.config("location");

@@ -6,13 +6,12 @@ import string from "pema/string";
 const Post = store({
   id: number,
   title: string,
-  //description: string.default("test")
   user_id: number,
 });
 
 const User = store({
   id: number,
-  name: string,
+  name: string.default("Donald"),
   lastname: string,
   age: number,
   //post_id: Post.schema.id,

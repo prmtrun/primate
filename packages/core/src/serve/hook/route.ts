@@ -22,7 +22,7 @@ const parse_body = async (request: Request, url: URL) => {
   } catch(error) {
     mismatched_body(url.pathname, (error as any).message);
   }
-}
+};
 
 export default async (app: ServeApp, facade: RequestFacade) => {
   const { request, url } = facade;

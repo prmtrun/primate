@@ -1,3 +1,3 @@
 interface ImportMeta {
-  url: string
+  url: string;
 }

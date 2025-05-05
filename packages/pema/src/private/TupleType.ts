@@ -1,8 +1,8 @@
+import GenericType from "#GenericType";
 import type Infer from "#Infer";
 import expected from "#expected";
 import is_validated_type from "#is_validated_type";
 import schema, { type InferSchema, type Schema } from "#schema";
-import GenericType from "#GenericType";
 
 export type InferTuple<T extends Schema[]> = {
     [K in keyof T]:
@@ -23,13 +23,17 @@ const error = (message: string, key?: string) => {
     : `${key}: ${message}`;
 };
 
-export default class TupleType<Members extends Schema[]> extends
-  GenericType<Members, InferTuple<Members>, "TupleType"> {
-  #members: Members;
+export default class TupleType<T extends Schema[]> extends
+  GenericType<T, InferTuple<T>, "TupleType"> {
+  #members: T;
 
-  constructor(members: Members) {
+  constructor(members: T) {
     super();
     this.#members = members;
+  }
+
+  default(value: Infer<this>) {
+    return this;
   }
 
   get name() {
