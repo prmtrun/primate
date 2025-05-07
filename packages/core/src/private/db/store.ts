@@ -2,7 +2,7 @@ import Query from "#db/Query";
 import is from "@rcompat/invariant/is";
 import maybe from "@rcompat/invariant/maybe";
 import _schema from "pema";
-import type { Schema } from "pema";
+import type Schema from "pema/Schema";
 import type EO from "@rcompat/type/EO";
 
 type SchemaType<T extends Schema> = ReturnType<typeof _schema<T>>;

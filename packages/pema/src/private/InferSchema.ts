@@ -7,9 +7,9 @@ import type UndefinedType from "#UndefinedType";
 import type Validated from "#Validated";
 import type UndefinedToOptional from "@rcompat/type/UndefinedToOptional";
 
-type DecrementDepth = [never, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+type DecrementDepth = [never, 0, 1, 2, 3, 4];
 
-type InferSchema<S, Depth extends number = 10> =
+type InferSchema<S, Depth extends number = 4> =
   [Depth] extends [never] ? never :
   S extends Validated<unknown> ? Infer<S> :
   S extends null ? Infer<NullType> :

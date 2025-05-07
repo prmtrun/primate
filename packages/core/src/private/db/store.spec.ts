@@ -23,7 +23,6 @@ const User = store({
 test.case("query", async assert => {
   const r = await User.query().select("lastname", "name").run();
   assert(r).type<{ name: string; lastname?: string }>();
-
 });
 
 test.case("find", async assert => {

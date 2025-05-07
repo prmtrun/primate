@@ -1,7 +1,7 @@
 import type SessionData from "#session/Data";
 import local_storage from "./storage.js";
 
-const session = () => local_storage.getStore();
+const session = () => local_storage.getStore()!;
 
 export default {
   get new(): boolean {
@@ -10,7 +10,7 @@ export default {
   get id(): string {
     return session().id;
   },
-  get data(): SessionData {
+  get data(): SessionData | undefined {
     return session().data;
   },
   create(data?: SessionData): void {
@@ -18,5 +18,5 @@ export default {
   },
   destroy(): void {
     return session().destroy();
-  }
+  },
 };

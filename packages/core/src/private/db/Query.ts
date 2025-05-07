@@ -1,5 +1,5 @@
 import _schema from "pema";
-import type { Schema } from "pema";
+import type Schema from "pema/Schema";
 
 type SchemaType<T extends Schema> = ReturnType<typeof _schema<T>>;
 type Document<T extends Schema> = SchemaType<T>["infer"];
