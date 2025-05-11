@@ -25,10 +25,10 @@
     "@primate/core": "workspace:^"
   },
   "dependencies": {
-    "@angular/compiler": "^19.2.9",
-    "@angular/platform-browser": "^19.2.9",
-    "@angular/platform-server": "^19.2.9",
-    "@angular/ssr": "^19.2.10",
+    "@angular/compiler": "^19.2.10",
+    "@angular/platform-browser": "^19.2.10",
+    "@angular/platform-server": "^19.2.10",
+    "@angular/ssr": "^19.2.11",
     "@rcompat/build": "^0.11.2",
     "@rcompat/crypto": "^0.8.1",
     "@rcompat/fs": "^0.12.8",
