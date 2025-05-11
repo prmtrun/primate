@@ -107,10 +107,18 @@ const post = async (app: BuildApp) => {
   // stage routes
   await app.stage(app.path.routes, FileRef.join(location.server, location.routes));
 
+  // stage stores
+  await app.stage(app.path.stores, FileRef.join(location.server, location.stores));
+
+  const { define = {} } = app.config("build");
+  const defines = Object.entries(define);
   // stage components, transforming defines
-  await app.stage(app.path.components, location.components, true);
+  await app.stage(app.path.components, location.components, text =>
+    defines.reduce((replaced, [key, substitution]) =>
+      replaced.replaceAll(key, substitution as string), text));
 
   const directory = app.runpath(location.server, location.routes);
+
   for (const path of await directory.collect(/^.*$/, { recursive: true })) {
     await app.bindings[path.extension]
       ?.(directory, path.debase(`${directory}/`));
@@ -164,7 +172,8 @@ const post = async (app: BuildApp) => {
   const manifest_data = {
     ...await manifest() as Dictionary,
     imports: {
-      "#components/*": "./components/*.js",
+      "#component/*": "./components/*.js",
+      "#store/*": "./server/stores/*.js",
       "#session": "primate/session",
     },
   };

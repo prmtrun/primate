@@ -125,6 +125,8 @@ export type Config = {
     client: string;
     // server build
     server: string;
+    // stores
+    stores: string;
   };
   build: BuildOptions & {
     name: string;
@@ -182,6 +184,8 @@ export default {
     client: "client",
     // server build
     server: "server",
+    // stores
+    stores: "stores",
   },
   build: {
     name: "app",
