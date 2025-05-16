@@ -18,10 +18,6 @@ export default class PrimitiveType<StaticType, Name extends string>
     this.#name = name;
   }
 
-  default(value: StaticType) {
-    return this;
-  }
-
   get name() {
     return this.#name;
   }

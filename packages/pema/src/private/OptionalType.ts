@@ -11,10 +11,6 @@ export default class OptionalType<S extends Validated<unknown>> extends
     this.#schema = s;
   }
 
-  default(value: Infer<this>) {
-    return this;
-  }
-
   get name() {
     return "optional";
   }

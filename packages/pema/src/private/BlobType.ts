@@ -1,6 +1,6 @@
-import InstanceType from "#InstanceType";
+import BuiltinType from "#BuiltinType";
 
-export default class BlobType extends InstanceType<Blob, "BlobType"> {
+export default class BlobType extends BuiltinType<Blob, "BlobType"> {
   constructor() {
     super("blob", Blob);
   }

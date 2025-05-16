@@ -11,7 +11,5 @@ export default abstract class Validated<StaticType> {
 
   abstract get name(): string;
 
-  abstract default(value: StaticType): Validated<StaticType>;
-
   abstract validate(x: unknown, key?: string): StaticType;
 }

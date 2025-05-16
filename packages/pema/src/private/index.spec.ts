@@ -8,6 +8,7 @@ import date from "#date";
 import expect from "#expect";
 import file from "#file";
 import schema from "#index";
+import type LiteralType from "#LiteralType";
 import type NullType from "#NullType";
 import number from "#number";
 import type NumberType from "#NumberType";
@@ -38,6 +39,12 @@ test.case("primitive validators", assert => {
     assert(s.validate(good)).equals(good);
     assert(() => s.validate(bad)).throws(expect(type, bad));
   });
+});
+
+test.case("literals", assert => {
+  const foo = schema("foo");
+  assert(foo).type<SchemaType<LiteralType<"foo">>>();
+  assert(foo.validate("foo")).equals("foo").type<"foo">();
 });
 
 test.case("empty []", assert => {

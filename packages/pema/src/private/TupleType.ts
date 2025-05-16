@@ -1,3 +1,4 @@
+import error from "#error";
 import expected from "#expected";
 import GenericType from "#GenericType";
 import schema from "#index";
@@ -7,23 +8,17 @@ import is_validated_type from "#is_validated_type";
 import OptionalType from "#OptionalType";
 import type Schema from "#Schema";
 
-export type InferTuple<T extends Schema[]> = {
+type InferTuple<T extends Schema[]> = {
     [K in keyof T]:
       T[K] extends Schema
       ? InferSchema<T[K]>
-      : "t0"
+      : "tuple-never"
 };
 
 const member_error = (i: unknown, key?: string) => {
   return key === undefined
     ? `[${i}]`
     : `${key}[${i}]`;
-};
-
-const error = (message: string, key?: string) => {
-  return key === undefined
-    ? message
-    : `${key}: ${message}`;
 };
 
 export default class TupleType<T extends Schema[]> extends
@@ -37,10 +32,6 @@ export default class TupleType<T extends Schema[]> extends
 
   optional() {
     return new OptionalType(this);
-  }
-
-  default(value: Infer<this>) {
-    return this;
   }
 
   get name() {

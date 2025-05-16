@@ -1,6 +1,6 @@
-import InstanceType from "#InstanceType";
+import BuiltinType from "#BuiltinType";
 
-export default class FileType extends InstanceType<File, "FileType"> {
+export default class FileType extends BuiltinType<File, "FileType"> {
   constructor() {
     super("file", File);
   }

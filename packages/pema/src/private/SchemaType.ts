@@ -19,10 +19,6 @@ export default class SchemaType<S extends Schema>
     return new OptionalType(this);
   }
 
-  default(value: Infer<this>) {
-    return this;
-  }
-
   get name() {
     return "schema";
   }

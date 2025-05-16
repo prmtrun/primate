@@ -1,6 +1,6 @@
-import InstanceType from "#InstanceType";
+import BuiltinType from "#BuiltinType";
 
-export default class DateType extends InstanceType<Date, "DateType"> {
+export default class DateType extends BuiltinType<Date, "DateType"> {
   constructor() {
     super("date", Date);
   }

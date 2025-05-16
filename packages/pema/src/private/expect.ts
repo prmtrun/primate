@@ -12,6 +12,9 @@ const types = {
   nl: "null",
   sy: "symbol",
   ur: "url",
+  i: "int",
+  ui: "uint",
+  co: "constructor",
 };
 
 const prefix = (at: string) => at ? `${at}: `: "";

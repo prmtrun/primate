@@ -92,5 +92,5 @@ test.case("deep", assert => {
 });
 
 test.case("object", assert => {
-//  const rc = array({ foo: string });
+  //const rc = array({ foo: string });
 });

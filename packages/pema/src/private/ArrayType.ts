@@ -31,10 +31,6 @@ export default class ArrayType<T extends Validated<unknown>> extends
     return new OptionalType(this);
   }
 
-  default(value: Infer<this>) {
-    return this;
-  }
-
   get name() {
     return "array";
   }

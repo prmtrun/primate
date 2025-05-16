@@ -14,7 +14,7 @@
   "private": true,
   "devDependencies": {
     "@rcompat/test": "^0.1.16",
-    "@rcompat/type": "^0.1.9",
+    "@rcompat/type": "^0.1.13",
     "apekit": "^0.0.16",
     "esbuild": "^0.25.4",
     "eslint": "^9.26.0",

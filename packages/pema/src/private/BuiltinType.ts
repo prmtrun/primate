@@ -1,6 +1,6 @@
 import type Infer from "#Infer";
 import Type from "#Type";
-import type Instance from "@rcompat/type/Instance";
+import type AbstractorController from "@rcompat/type/AbstractConstructor";
 
 const error_message = (name: string, x: unknown, key?: string) => {
   const base = `expected ${name}, got \`${x}\` (${(typeof x)})`;
@@ -9,19 +9,15 @@ const error_message = (name: string, x: unknown, key?: string) => {
     : `${key}: ${base}`;
 };
 
-export default class InstanceType<StaticType, Name extends string>
+export default class BuiltinType<StaticType, Name extends string>
   extends Type<StaticType, Name> {
   #name: string;
-  #instance: Instance;
+  #type: AbstractorController;
 
-  constructor(name: string, instance: Instance) {
+  constructor(name: string, type: AbstractorController) {
     super();
     this.#name = name;
-    this.#instance = instance;
-  }
-
-  default(value: StaticType) {
-    return this;
+    this.#type = type;
   }
 
   get name() {
@@ -29,7 +25,7 @@ export default class InstanceType<StaticType, Name extends string>
   }
 
   validate(x: unknown, key?: string): Infer<this> {
-    if (!(x instanceof this.#instance)) {
+    if (!(x instanceof this.#type)) {
       throw new Error(error_message(this.#name, x, key));
     }
 
