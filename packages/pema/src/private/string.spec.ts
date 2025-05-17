@@ -22,3 +22,32 @@ test.case("default", assert => {
     assert(() => d.validate(1)).throws(expect("s", 1));
   });
 });
+
+test.case("startsWith", assert => {
+  const sw = string.startsWith("/");
+
+  assert(sw).type<StringType>();
+  assert(sw.validate("/")).equals("/").type<string>();
+  assert(sw.validate("/foo")).equals("/foo").type<string>();
+  assert(() => sw.validate("foo")).throws(`"foo" does not start with "/"`);
+});
+
+test.case("endsWith", assert => {
+  const ew = string.endsWith("/");
+
+  assert(ew).type<StringType>();
+  assert(ew.validate("/")).equals("/").type<string>();
+  assert(ew.validate("foo/")).equals("foo/").type<string>();
+  assert(() => ew.validate("foo")).throws(`"foo" does not end with "/"`);
+});
+
+test.case("combined validators", assert => {
+  const sew = string.startsWith("/").endsWith(".");
+
+  assert(sew).type<StringType>();
+  assert(sew.validate("/.")).equals("/.").type<string>();
+  assert(sew.validate("/foo.")).equals("/foo.").type<string>();
+  assert(() => sew.validate("foo")).throws(`"foo" does not start with "/"`);
+  assert(() => sew.validate("foo.")).throws(`"foo." does not start with "/"`);
+  assert(() => sew.validate("/foo")).throws(`"/foo" does not end with "."`);
+});
