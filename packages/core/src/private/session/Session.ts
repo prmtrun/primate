@@ -3,7 +3,7 @@ import type SessionManager from "./Manager.js";
 
 export default class Session<
   Id extends string,
-  Data extends SessionData
+  Data extends SessionData,
 >{
   #manager: SessionManager;
   #id: Id;

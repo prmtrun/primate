@@ -4,7 +4,7 @@ import type MaybePromise from "@rcompat/type/MaybePromise";
 
 export default abstract class SessionManager<
   Id extends string = string,
-  Data extends SessionData = SessionData
+  Data extends SessionData = SessionData,
 > {
   // init the session manager, potentially loading previously-saved data
   init(): void {

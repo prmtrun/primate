@@ -16,8 +16,8 @@ const helpat = (name: string, error: unknown) =>
 const applevel = levels[loglevel];
 
 export interface PrimateError {
-  level?: LogLevel,
-  message: string
+  level?: LogLevel;
+  message: string;
   fix?: string;
   name?: string | undefined;
   params?: StringLike[];
@@ -39,7 +39,7 @@ const make_error = (level: LogLevel , {
   module,
 });
 
-const normalize = (level: LogLevel, message: string | Omit<PrimateError, 'level'>) => typeof message === "string"
+const normalize = (level: LogLevel, message: string | Omit<PrimateError, "level">) => typeof message === "string"
   ? { level, message }
   : make_error(level, message);
 

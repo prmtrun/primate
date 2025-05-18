@@ -10,7 +10,8 @@ import type FileRef from "@rcompat/fs/FileRef";
 import type MaybePromise from "@rcompat/type/MaybePromise";
 import * as hooks from "./hooks.js";
 
-export type Hook<I, O = I> = (t: I, next?: Hook<I, O>) => MaybePromise<O | void>;
+export type Hook<I, O = I> = (t: I, next?: Hook<I, O>) =>
+ MaybePromise<O | void>;
 type NextHook<I, O = I> = (t: I, next: Hook<I, O>) => MaybePromise<O | void>;
 
 export type AppHook<Next extends boolean = true> =
@@ -25,14 +26,15 @@ export type RequestHook<Next extends boolean = true> =
     : Hook<RequestFacade, Response>;
 
 type Hooks<Next extends boolean> = {
-  init: AppHook<Next>,
-  build: BuildAppHook<Next>,
-  serve: ServeAppHook<Next>,
-  route: RequestHook<Next>,
-  handle: RequestHook<Next>,
+  init: AppHook<Next>;
+  build: BuildAppHook<Next>;
+  serve: ServeAppHook<Next>;
+  route: RequestHook<Next>;
+  handle: RequestHook<Next>;
 };
 
-export type Module<Next extends boolean = true> = { name: string, load?: () => [] } &
+export type Module<Next extends boolean = true> =
+  { name: string; load?: () => [] } &
   { [Property in keyof Hooks<Next>]?: Hooks<Next>[Property]; };
 
 type LoadedHooks<Next extends boolean = false> =
@@ -47,7 +49,9 @@ const filter = (key: keyof Module, array?: Module[]) =>
 const load = (modules: Module[] = []): Module[] => modules.map(module =>
   [module, ...load(module.load?.() ?? [])]).flat();
 
-export default async (root: FileRef, modules: Module[]): Promise<LoadedHooks> => {
+type ModuleLoader = (root: FileRef, modules: Module[]) => Promise<LoadedHooks>;
+
+const module_loader: ModuleLoader = async (root, modules) => {
   // remove errors for the benefit of a general config file schema validation
   /*if (!Array.isArray(modules)) {
     error_modules_array("modules");
@@ -68,3 +72,5 @@ export default async (root: FileRef, modules: Module[]): Promise<LoadedHooks> =>
       .map(hook => [hook, filter(hook as keyof Module, loaded)])),
   };
 };
+
+export { module_loader as default };

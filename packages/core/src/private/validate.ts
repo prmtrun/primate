@@ -4,7 +4,7 @@ import maybe from "@rcompat/invariant/maybe";
 
 export type ValidationFunction = (value: unknown, name: string) => unknown;
 
-export type Validator = { validate: ValidationFunction }
+export type Validator = { validate: ValidationFunction };
 
 // Todo: Refactor to remove type assertions
 export default (type: Validator | ValidationFunction, value: unknown, name: string) => {

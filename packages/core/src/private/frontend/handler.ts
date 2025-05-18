@@ -9,27 +9,34 @@ import { json } from "@rcompat/http/mime";
 import Status from "@rcompat/http/Status";
 import type Dictionary from "@rcompat/type/Dictionary";
 
+type ClientData = {
+  names: string[];
+  data: Dictionary[];
+  request: Dictionary;
+};
+type ClientOptions = {
+  ssr: boolean;
+  spa: boolean;
+};
+
 type Options<Comp> = {
-  app: ServeApp,
-  name: string,
-  spa: boolean,
-  ssr: boolean,
-  client(
-    { names, data, request }: { names: string[], data: Dictionary[], request: Dictionary },
-    { ssr, spa }: { ssr: boolean, spa: boolean },
-  ): string,
-  render: (component: Comp, props: Props) => { body: string, head: string },
+  app: ServeApp;
+  name: string;
+  spa: boolean;
+  ssr: boolean;
+  client(data: ClientData, options: ClientOptions): string;
+  render: (component: Comp, props: Props) => { body: string; head: string };
 };
 
 type Component<C> = {
-  name: string,
-  props: Props,
-  component: C,
+  name: string;
+  props: Props;
+  component: C;
 };
 
 const register = <C>({ app, name: rootname, ...rest }: Options<C>): Omit<Options<C>, "app" | "name"> & {
-  root: C
-  load(name: string, props: Props): Component<C>
+  root: C;
+  load(name: string, props: Props): Component<C>;
 } => ({
   root: app.component<C>(`root_${rootname}.js`)!,
   load(name: string, props: Props) {
@@ -56,9 +63,8 @@ export default <C>(config: Options<C>): Frontend => {
         return load(name, props);
 
       }
-      const components = (await Promise.all((layouts as Layout<C>[]).map(layout =>
-        layout(app, { as_layout: true }, request),
-      )))
+      const components = (await Promise.all((layouts as Layout<C>[])
+        .map(layout => layout(app, { as_layout: true }, request))))
         /* set the actual page as the last component */
         .concat(load(name, props));
 

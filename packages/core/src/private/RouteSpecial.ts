@@ -3,7 +3,7 @@ import type RouteGuard from "#RouteGuard";
 
 type RouteSpecial = {
   default: RouteFunction | RouteGuard;
-  recursive?: boolean,
-}
+  recursive?: boolean;
+};
 
 export { RouteSpecial as default };

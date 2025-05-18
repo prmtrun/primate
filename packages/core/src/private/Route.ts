@@ -2,14 +2,14 @@ import type RouteFunction from "#RouteFunction";
 
 type Route = {
   body?: {
-    parse?: boolean
-  },
+    parse?: boolean;
+  };
   default: {
-    get: RouteFunction,
-    post: RouteFunction,
-    put: RouteFunction,
-    delete: RouteFunction,
-  }
-}
+    get: RouteFunction;
+    post: RouteFunction;
+    put: RouteFunction;
+    delete: RouteFunction;
+  };
+};
 
 export { Route as default };

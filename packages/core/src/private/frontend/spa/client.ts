@@ -39,7 +39,7 @@ const handlers = {
 const handle = async (response: Response, updater: Updater) => {
   const content_type = response.headers.get("content-type") as keyof typeof handlers;
   const handler = Object.keys(handlers).includes(content_type)
-    ? handlers[content_type] 
+    ? handlers[content_type]
     : handlers[TEXT_PLAIN];
   await handler(response, updater);
 };

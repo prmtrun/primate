@@ -1,0 +1,8 @@
+{
+  "name": "@primate/app/db",
+  "dependencies": {
+    "pema": "workspace:^",
+    "primate": "workspace:^"
+  },
+  "type": "module"
+}

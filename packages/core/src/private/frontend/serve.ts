@@ -6,7 +6,9 @@ export default (render?: Render) =>
     app.register(extension, (name, props = {}, options = {}) => async _app => {
       const component = _app.component(name);
 
-      return app.view({ body: await (render ?? default_render)(component, props), ...options });
+      return app.view({
+        body: await (render ?? default_render)(component, props), ...options,
+      });
     });
 
     return next(app);

@@ -7,7 +7,7 @@ type PartialStringDictionary = PartialDictionary<string>;
 type RequestFacade = Dictionary<Dictionary | unknown> & {
   request: Request;
   url: URL;
-  pass(to: string): Promise<Response>,
+  pass(to: string): Promise<Response>;
   headers: PartialStringDictionary;
   query: PartialStringDictionary;
   cookies: PartialStringDictionary;
