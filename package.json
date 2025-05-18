@@ -17,7 +17,7 @@
     "@rcompat/type": "^0.1.13",
     "apekit": "^0.0.16",
     "esbuild": "^0.25.4",
-    "eslint": "^9.26.0",
+    "eslint": "^9.27.0",
     "proby": "^0.1.1",
     "typescript": "^5.8.3"
   }
