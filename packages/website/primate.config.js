@@ -1,4 +1,4 @@
-import join from "@rcompat/fs/join";
+import FileRef from "@rcompat/fs/FileRef";
 import { svelte, markdown, handlebars } from "@primate/frontend";
 import { getHighlighter } from "shiki";
 import priss from "./module.js";
@@ -130,7 +130,7 @@ export default {
       blog: true,
       title: "Primate",
       description: "Polymorphic development platform",
-      root: join("components", "content"),
+      root: FileRef.join("components", "content"),
       theme: master({
         navbar: [
           { label: "Guide", link: "/guide/getting-started" },
