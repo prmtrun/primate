@@ -3,5 +3,5 @@ package main
 import "github.com/primate-run/primate"
 
 func Get(request Request) any {
-	return primate.Props{ "name": "Donald" };
+  return primate.Props{ "name": "Donald" };
 }
