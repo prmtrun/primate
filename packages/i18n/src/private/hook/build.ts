@@ -19,12 +19,13 @@ export default (manager: Manager): BuildAppHook => async (app, next) => {
   let has_default_locale = false;
 
   const json_re = /^.*.json$/u;
-  await Promise.all((await root.collect(json_re)).map(async path => {
-    const name = path.base;
-    const code = `export default ${await path.text()}`;
-    name === manager.locale && (has_default_locale = true);
-    await base.join(`${path.base}.js`).write(code);
-  }));
+  await Promise.all((await root.list(file => json_re.test(file.path)))
+    .map(async path => {
+      const name = path.base;
+      const code = `export default ${await path.text()}`;
+      name === manager.locale && (has_default_locale = true);
+      await base.join(`${path.base}.js`).write(code);
+    }));
 
   if (!(has_default_locale as boolean)) {
     no_default_locale(manager.locale, root);

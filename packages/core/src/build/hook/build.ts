@@ -41,7 +41,7 @@ const write_directories = async (build_directory: FileRef, app: BuildApp) => {
   const location = app.config("location");
   for (const name of app.server_build) {
     const d = app.runpath(location.server, name);
-    const e = await Promise.all((await FileRef.collect(d, js_re, { recursive: true }))
+    const e = await Promise.all((await FileRef.collect(d, file => js_re.test(file.path)))
       .map(async path => `${path}`.replace(d.toString(), _ => "")));
     const files_js = `
     const ${name} = [];
@@ -57,7 +57,7 @@ const write_directories = async (build_directory: FileRef, app: BuildApp) => {
 const write_components = async (build_directory: FileRef, app: BuildApp) => {
   const location = app.config("location");
   const d2 = app.runpath(location.server, location.components);
-  const e = await Promise.all((await FileRef.collect(d2, js_re, { recursive: true }))
+  const e = await Promise.all((await FileRef.collect(d2, file => js_re.test(file.path)))
     .map(async path => `${path}`.replace(d2.toString(), _ => "")));
   const components_js = `
 const components = [];
@@ -119,7 +119,7 @@ const post = async (app: BuildApp) => {
 
   const directory = app.runpath(location.server, location.routes);
 
-  for (const path of await directory.collect(/^.*$/, { recursive: true })) {
+  for (const path of await directory.collect(file => /^.*$/.test(file.path))) {
     await app.bindings[path.extension]
       ?.(directory, path.debase(`${directory}/`));
   }
@@ -132,7 +132,7 @@ const post = async (app: BuildApp) => {
   await app.stage(app.path.static, FileRef.join(location.server, location.static));
 
   // publish JavaScript and CSS files
-  const imports = await FileRef.collect(app.path.static, /\.(?:css)$/u, {});
+  const imports = await FileRef.collect(app.path.static, file => /\.(?:css)$/.test(file.path));
   await Promise.all(imports.map(async file => {
     const src = file.debase(app.path.static);
     app.build.export(`import "./${location.static}${src}";`);

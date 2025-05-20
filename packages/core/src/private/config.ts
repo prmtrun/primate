@@ -1,7 +1,7 @@
 import type { LogLevel } from "#loglevel";
 import type { Module } from "#module-loader";
 import InMemorySessionManager from "#session/InMemoryManager";
-import type SessionManager from "#session/Manager";
+import SessionManager from "#session/Manager";
 import type Path from "@rcompat/fs/Path";
 import type Dictionary from "@rcompat/type/Dictionary";
 import type { BuildOptions } from "esbuild";
@@ -11,65 +11,62 @@ type CSPProperties = "script-src" | "style-src";
 export type CSP = {
   [K in CSPProperties]?: string[];
 };
-/*
-import object from "pema/object";
-import string from "pema/string";
-import boolean from "pema/boolean";
-import number from "pema/number";
-import array from "pema/array";
-import int from "pema/int";
-import union from "pema/union";
-import instance from "pema/instance";
-import infer from "pema/infer";
-import default from "pema/default";
-import record from "pema/record";
 
-const pema_config = object({
-  base: default("/"),
-  modules: [Module]
+import boolean from "pema/boolean";
+import int from "pema/int";
+import schema from "pema";
+import string from "pema/string";
+import union from "pema/union";
+import constructor from "pema/constructor";
+import record from "pema/record";
+import FileRef from "@rcompat/fs/FileRef";
+
+const _pema_config = schema({
+  base: string.default("/"),
+  //modules: [Module],
   pages: {
-    app: default("app.html")
-    error: default("error.html"),
+    app: string.default("app.html"),
+    error: string.default("error.html"),
   },
   log: {
     //level: LogLevel,
-    trace: default(true)
+    trace: boolean.default(true),
   },
   http: {
-    host: default("localhost"),
-    port: int.range(80, 1000).default(6161),
+    host: string.default("localhost"),
+    port: int.default(6161),
     csp: {},
     static: {
-      root: default("/"),
+      root: string.default("/"),
     },
     ssl: {
-      key: union(FileRef, string).optional()
-      cert: union(FileRef, string).optional()
-    }
+      key: union(FileRef, string).optional(),
+      cert: union(FileRef, string).optional(),
+    },
   },
   session: {
-    manager: instance(SessionManager).default(InMemorySessionManager)
-    implicit: default(false)
+    manager: constructor(SessionManager)
+      .default(() => new InMemorySessionManager()),
+    implicit: boolean.default(false),
     cookie: {
-      name: default("session_id")
-      same_site: union("Strict", "Lax", "None")
-      http_only: default(true)
-      path: infer`/${string}`.default("/")
+      name: string.default("session_id"),
+      same_site: union("Strict", "Lax", "None"),
+      http_only: boolean.default(true),
+      path: string.startsWith("/").default("/"),
     },
   },
   request: {
     body: {
-      parse: default(true),
+      parse: boolean.default(true),
     },
   },
   build: {
-    name: default("app"),
+    name: string.default("app"),
     includes: [string],
     excludes: [string],
-    define: record(string, string)
+    define: record(string, string),
   },
 });
-*/
 
 export type Config = {
   base: string;

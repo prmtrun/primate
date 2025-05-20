@@ -101,7 +101,8 @@ const build: Default = async (root, config, mode = "developement" as Mode) => {
 
       const target_base = this.runpath(directory.toString());
 
-      await Promise.all((await source.collect()).map(async abs => {
+      await Promise.all((await source.collect(file => file.isFile()))
+        .map(async abs => {
         const rel = FileRef.join(directory, abs.debase(source));
         const is_ts = abs.path.endsWith(".ts");
         let text = await mapper(await abs.text());

@@ -21,7 +21,7 @@ export default async () => {
   const app = (await serve()).default;
 
   const files = await (await root()).join(directory)
-    .list(path => path.endsWith(".ts") || path.endsWith(".js"), {});
+    .list(({ path }) => path.endsWith(".ts") || path.endsWith(".js"));
 
   // side effects
   await Promise.all(files.map(file => file.import()));
@@ -86,7 +86,15 @@ export default async () => {
     };
     test.tester(mocked_response);
 
-    const results = await Promise.all(checks.map(check => check()));
+    const results = await Promise.all(checks.map(async check => {
+      try {
+        return await check();
+      } catch (error) {
+        return [
+          false, "()", "test execution failed",
+        ];
+      }
+    }));
 
     const failed = results.find(result => !result[0]);
     const verb = test.verb.toUpperCase();

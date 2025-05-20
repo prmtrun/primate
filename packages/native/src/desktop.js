@@ -1,6 +1,5 @@
-import collect from "@rcompat/fs/collect";
-import join from "@rcompat/fs/join";
 import FileRef from "@rcompat/fs/FileRef";
+import join from "@rcompat/fs/join";
 
 const html = /^.*.html$/u;
 
@@ -29,7 +28,7 @@ export default async app => {
       };
     }))).filter(file => !file.empty);
   const d = app.runpath(location.server, location.pages);
-  const pages = await Promise.all((await collect(d, html, { recursive: true }))
+  const pages = await Promise.all((await FileRef.collect(d, file => html.test(file.path)))
     .map(async file => `${file}`.replace(`${d}/`, _ => "")));
   const app_js = client_imports.find($import => $import.src.endsWith(".js"));
 
