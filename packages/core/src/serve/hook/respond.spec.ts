@@ -1,6 +1,6 @@
 import respond from "#serve/hook/respond";
 import { html } from "@rcompat/http/mime";
-import Status from "@rcompat/http/status";
+import Status from "@rcompat/http/Status";
 import test from "@rcompat/test";
 
 const app = {
