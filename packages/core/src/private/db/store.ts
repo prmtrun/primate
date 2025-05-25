@@ -1,11 +1,11 @@
 import Query from "#db/Query";
 import is from "@rcompat/invariant/is";
 import maybe from "@rcompat/invariant/maybe";
-import _schema from "pema";
-import type Schema from "pema/Schema";
 import type EO from "@rcompat/type/EO";
+import schema from "pema";
+import type Schema from "pema/Schema";
 
-type SchemaType<T extends Schema> = ReturnType<typeof _schema<T>>;
+type SchemaType<T extends Schema> = ReturnType<typeof schema<T>>;
 
 type Primary = string;
 type Count<T extends number = number> =
@@ -15,6 +15,15 @@ type Count<T extends number = number> =
 
 type Document<T extends Schema> = SchemaType<T>["infer"];
 type Criteria<T extends Schema> = X<Partial<Document<T>>>;
+
+type PartialNull<T extends object> = {
+  [K in keyof T]?: T[K] | null;
+};
+
+type Delta<T extends Schema> = X<PartialNull<Document<T>>>;
+/*{
+  [K in keyof T]?: Document<T[K]> | null;
+};*/
 
 type Fields<T> = {
   [K in keyof T]?: true;
@@ -35,8 +44,8 @@ type RelationManyType = EO;
 
 type Store<T extends Schema> = {
   //get schema(): T;
-  one(): RelationOneType;
-  many(): RelationManyType;
+//  one(): RelationOneType;
+ // many(): RelationManyType;
   get(id: Primary): Promise<Document<T>>;
   find(criteria: Criteria<T>): Promise<Filter<Document<T>, undefined>[]>;
   find<F extends Fields<Document<T>>>(
@@ -46,22 +55,22 @@ type Store<T extends Schema> = {
   count(criteria?: Criteria<T>): Promise<Count>;
   exists(criteria: Criteria<T>): Promise<boolean>;
   insert(document: Document<T>): Promise<Document<T>>;
-  update(criteria: Criteria<T>, document: Document<T>): Promise<Document<T>>;
-  save(document: Document<T>): Promise<Document<T>>;
+  update(criteria: Criteria<T>, set: Delta<T>): Promise<Document<T>>;
+  //save(document: Document<T>): Promise<Document<T>>;
   delete(criteria: Criteria<T>): Promise<void>;
   query(): Query<T>;
 };
 
-export default <T extends Schema>(schema: T): Store<T> => {
-  const o = _schema(schema);
+export default <T extends Schema>(spec: T): Store<T> => {
+  const o = schema(spec);
 
   return {
-    one() {
+  /*  one() {
       return undefined as any;
     },
     many() {
       return undefined as any;
-    },
+    },*/
  //   get schema() {
 //      return o.schema;
   //  },
@@ -89,7 +98,7 @@ export default <T extends Schema>(schema: T): Store<T> => {
     async insert(document) {
       is(document).object();
 
-      return o.validate({});
+      return o.validate(document);
     },
     async update(query, document) {
       is(query).object();
@@ -106,7 +115,7 @@ export default <T extends Schema>(schema: T): Store<T> => {
       is(query).object();
     },
     query() {
-      return new Query(schema);
+      return new Query(spec);
     },
   };
 };
