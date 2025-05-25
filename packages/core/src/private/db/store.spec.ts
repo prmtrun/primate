@@ -20,37 +20,53 @@ const User = store({
   //posts: Post.many({ id: post => post.user_id }),
 });
 
-test.case("query", async assert => {
+type T = Parameters<typeof User.update>[1];
+
+test.case("query", async (assert) => {
   const r = await User.query().select("lastname", "name").run();
   assert(r).type<{ name: string; lastname?: string }>();
 });
 
-test.case("find", async assert => {
+test.case("find", async (assert) => {
   const _ = await User.find({ name: "string" });
-  assert(_).type<{
-    id: number;
-    name: string;
-    lastname?: string;
-    age: number;
-  }[]>();
+  assert(_).type<
+    {
+      id: number;
+      name: string;
+      lastname?: string;
+      age: number;
+    }[]
+  >();
 
-  const users = await User.find({ name: "string" },
-    { name: true, lastname: true });
-  assert(users).type<{
-    name: string;
-    lastname?: string;
-  }[]>();
+  const users = await User.find(
+    { name: "string" },
+    { name: true, lastname: true },
+  );
+  assert(users).type<
+    {
+      name: string;
+      lastname?: string;
+    }[]
+  >();
 
   const users2 = await User.find({ name: "string" }, { age: true });
-  assert(users2).type<{
-    age: number;
-  }[]>();
+  assert(users2).type<
+    {
+      age: number;
+    }[]
+  >();
 
-  const users3 = await User.find({ name: "string" }, {
-    age: true, lastname: true,
-  });
-  assert(users3).type<{
-    age: number;
-    lastname?: string;
-  }[]>();
+  const users3 = await User.find(
+    { name: "string" },
+    {
+      age: true,
+      lastname: true,
+    },
+  );
+  assert(users3).type<
+    {
+      age: number;
+      lastname?: string;
+    }[]
+  >();
 });
