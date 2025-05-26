@@ -20,7 +20,15 @@ const User = store({
   //posts: Post.many({ id: post => post.user_id }),
 });
 
-type T = Parameters<typeof User.update>[1];
+test.case("update", async (assert) => {
+  const r = await User.update({ id: 1 }, { lastname: "John" });
+  assert(r).type<{
+    lastname?: string | undefined;
+    id: number;
+    name: string;
+    age: number;
+  }>();
+});
 
 test.case("query", async (assert) => {
   const r = await User.query().select("lastname", "name").run();
