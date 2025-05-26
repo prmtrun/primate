@@ -1,6 +1,7 @@
 {
   "name": "@primate/app/db",
   "dependencies": {
+    "@primate/html": "workspace:^",
     "pema": "workspace:^",
     "primate": "workspace:^"
   },
