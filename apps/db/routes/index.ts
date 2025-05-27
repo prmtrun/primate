@@ -4,7 +4,7 @@ export default {
   async get(request) {
 //    await User.schema.create();
 
-    await User.insert({
+    await User.set({
       name: "Donald",
     });
 
