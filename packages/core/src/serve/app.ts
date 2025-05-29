@@ -10,6 +10,7 @@ import type Mode from "#Mode";
 import module_loader from "#module-loader";
 import type Route from "#Route";
 import type RouteSpecial from "#RouteSpecial";
+import type AsyncLocalStorage from "@rcompat/async/context";
 import dim from "@rcompat/cli/color/dim";
 import crypto from "@rcompat/crypto";
 import FileRef from "@rcompat/fs/FileRef";

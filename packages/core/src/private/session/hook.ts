@@ -1,6 +1,6 @@
 import type { RequestHook } from "#module-loader";
 import type { ServeApp } from "#serve/app";
-import local_storage from "#session/storage";
+import storage from "#session/storage";
 
 type CookieOptions = {
   path: string;
@@ -22,7 +22,7 @@ export default (app: ServeApp): RequestHook => async (request, next) => {
   const session = manager.get(id as string);
 
   const response = await new Promise<Response>(resolve => {
-    local_storage.run(session, async () => {
+    storage().run(session, async () => {
       resolve(await next(request) as Response);
     });
   });

@@ -14,19 +14,19 @@ type ViewReturn = ReturnType<View>;
 export default {
   session: {
     get new() {
-      return session.new;
+      return session().new;
     },
     get id() {
-      return session.id;
+      return session().id;
     },
-    get data(): typeof session.data {
-      return session.data;
+    get data() {
+      return session().data;
     },
     create(data: PyProxy) {
-      return session.create(borrow(data));
+      session().create(borrow(data));
     },
     destroy() {
-      return session.destroy();
+      session().destroy();
     },
   },
   view(name: ViewParams[0], props?: PyProxy, options?: PyProxy): ViewReturn {

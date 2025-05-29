@@ -1,5 +1,19 @@
-import AsyncLocalStorage from "@rcompat/async/context";
 import type Session from "#session/Session";
-import type Data from "#session/Data";
+import AsyncLocalStorage from "@rcompat/async/context";
 
-export default new AsyncLocalStorage<Session<string, Data>>();
+class Cache {
+  #entries: Record<symbol, unknown> = {};
+
+  get<Data>(key: symbol, init: () => Data) {
+    if (this.#entries[key] === undefined) {
+      this.#entries[key] = init();
+    }
+    return this.#entries[key] as Data;
+  }
+}
+
+const cache = new Cache();
+const s = Symbol("primate.session");
+
+export default <Data>() =>
+  cache.get(s, () => new AsyncLocalStorage<Session<string, Data>>);

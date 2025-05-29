@@ -49,19 +49,19 @@ import session from "primate/session";
 
 globalThis.PRMT_SESSION = {
   get new() {
-    return session.new
+    return session().new;
   },
   get id() {
-    return session.id;
+    return session().id;
   },
   get data() {
-    return JSON.stringify(session.data);
+    return JSON.stringify(session().data);
   },
   create(data) {
-    session.create(JSON.parse(data));
+    session().create(JSON.parse(data));
   },
   destroy() {
-    session.destroy();
+    session().destroy();
   },
 };
 

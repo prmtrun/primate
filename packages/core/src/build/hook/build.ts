@@ -104,6 +104,9 @@ const post = async (app: BuildApp) => {
   const location = app.config("location");
   const defaults = FileRef.join(import.meta.url, "../../defaults");
 
+  // stage config
+  await app.stage(app.path.config, location.config);
+
   // stage routes
   await app.stage(app.path.routes, FileRef.join(location.server, location.routes));
 
@@ -164,6 +167,7 @@ const post = async (app: BuildApp) => {
   // copy config file
   const local_config = app.root.join(config_filename);
   const build_config = app.path.build.join(config_filename);
+
   const root_base = await root(import.meta.url);
   const default_config = root_base.join("/src/private/config.js");
   (await local_config.exists() ? local_config : default_config)
@@ -174,7 +178,8 @@ const post = async (app: BuildApp) => {
     imports: {
       "#component/*": "./components/*.js",
       "#store/*": "./server/stores/*.js",
-      "#session": "primate/session",
+      "#staging/store/*": "./staging/stores/*.js",
+      "#session": "./config/session.js",
     },
   };
   // create package.json

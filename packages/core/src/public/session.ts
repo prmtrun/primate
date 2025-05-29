@@ -1,1 +1,1 @@
-export { default } from "#session/current";
+export { default } from "#session/create";

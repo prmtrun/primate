@@ -1,4 +1,4 @@
-import session from "primate/session";
+import session from "#session";
 
 export default {
   get() {
@@ -6,5 +6,5 @@ export default {
       return "no session";
     }
     return "session";
-  }
-}
+  },
+};

@@ -93,7 +93,7 @@ export type Config = {
     };
   };
   session: {
-    manager: SessionManager;
+    manager: SessionManager<string, unknown>;
     implicit: boolean;
     cookie: {
       name: string;
@@ -124,6 +124,8 @@ export type Config = {
     server: string;
     // stores
     stores: string;
+    // Config
+    config: string;
   };
   build: BuildOptions & {
     name: string;
@@ -183,6 +185,8 @@ export default {
     server: "server",
     // stores
     stores: "stores",
+    // config
+    config: "config",
   },
   build: {
     name: "app",

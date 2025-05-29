@@ -12,7 +12,11 @@
     "exactOptionalPropertyTypes": true,
     "paths": {
       "#component/*": ["components/*"],
-      "#store/*": ["stores/*"]
+      "#store/*": ["stores/*"],
+      "#app": ["config/app.ts", "config/app.js"],
+      "#session": ["config/session.ts", "config/session.js"],
+      "#db": ["config/db/index.ts", "config/db/index.js"],
+      "#db/*": ["config/db/*.ts", "config/db/*.js"]
     }
   },
   "include": [

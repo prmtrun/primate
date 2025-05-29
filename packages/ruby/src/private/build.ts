@@ -11,7 +11,7 @@ const request = await this_directory.join("./request.rb").text();
 const make_route = (route: string) => `async ${route.toLowerCase()}(request) {
     try {
       return to_response(await environment.callAsync("run_${route}",
-        vm.wrap(request), vm.wrap(helpers), vm.wrap(session)));
+        vm.wrap(request), vm.wrap(helpers), vm.wrap(session())));
     } catch (e) {
       console.log("ruby error", e);
       return "Ruby error";

@@ -1,16 +1,12 @@
-import type SessionData from "#session/Data";
-import type SessionManager from "./Manager.js";
+import type SessionManager from "#session/Manager";
 
-export default class Session<
-  Id extends string,
-  Data extends SessionData,
->{
-  #manager: SessionManager;
+export default class Session<Id extends string, Data>{
+  #manager: SessionManager<Id, Data>;
   #id: Id;
   #new: boolean = true;
-  #data?: Data;
+  #data: Data = {} as Data;
 
-  constructor(manager: SessionManager, id: Id) {
+  constructor(manager: SessionManager<Id, Data>, id: Id) {
     this.#id = id;
     this.#manager = manager;
   }
@@ -23,7 +19,7 @@ export default class Session<
     return this.#id;
   }
 
-  get data(): Data | undefined {
+  get data() {
     return this.#data;
   }
 
@@ -31,7 +27,7 @@ export default class Session<
     this.#data = data;
   }
 
-  create(data?: Data) {
+  create(data: Data) {
     this.#data = data;
     this.#new = false;
     this.#manager.create(this);
