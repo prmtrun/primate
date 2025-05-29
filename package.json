@@ -9,7 +9,7 @@
     "upgrade": "pnpm -r update -i -L",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "test": "npx proby"
+    "test": "pnpm -r test"
   },
   "private": true,
   "devDependencies": {

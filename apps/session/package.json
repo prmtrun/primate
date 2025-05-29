@@ -1,6 +1,8 @@
 {
   "name": "@primate/app/session",
-  "version": "0.0.1",
+  "scripts": {
+    "test": "npx primate test"
+  },
   "dependencies": {
     "@primate/html": "workspace:^",
     "primate": "workspace:^"

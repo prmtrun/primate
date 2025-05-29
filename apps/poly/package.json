@@ -1,6 +1,5 @@
 {
   "name": "@primate/app/poly",
-  "version": "0.0.1",
   "dependencies": {
     "@primate/core": "workspace:^",
     "@primate/i18n": "workspace:^",

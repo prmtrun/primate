@@ -3,6 +3,6 @@ export default {
     return [
       { name: "Donald" },
       { name: "Ryan" },
-    ]
-  }
+    ];
+  },
 };

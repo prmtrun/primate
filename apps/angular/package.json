@@ -1,6 +1,8 @@
 {
   "name": "@primate/app/angular",
-  "version": "0.0.1",
+  "scripts": {
+    "test": "npx primate test"
+  },
   "dependencies": {
     "@angular/core": "^19.2.14",
     "@primate/angular": "workspace:^",
