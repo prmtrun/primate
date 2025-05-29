@@ -1,0 +1,10 @@
+{
+  "name": "@primate/app/angular",
+  "version": "0.0.1",
+  "dependencies": {
+    "@angular/core": "^19.2.1",
+    "@primate/angular": "workspace:^",
+    "primate": "workspace:^"
+  },
+  "type": "module"
+}

@@ -6,20 +6,43 @@ import Build from "@rcompat/build";
 import transform from "@rcompat/build/transform";
 import FileRef from "@rcompat/fs/FileRef";
 import type Path from "@rcompat/fs/Path";
+import identity from "@rcompat/function/identity";
 import entries from "@rcompat/record/entries";
 import exclude from "@rcompat/record/exclude";
 import get from "@rcompat/record/get";
 import type MaybePromise from "@rcompat/type/MaybePromise";
 import type PartialDictionary from "@rcompat/type/PartialDictionary";
 import { web } from "./targets/index.js";
-import identity from "@rcompat/function/identity";
+
+const ts_options = {
+  loader: "ts",
+  tsconfigRaw: {
+    compilerOptions: {
+      experimentalDecorators: true,
+    },
+  },
+} as const;
 
 const compile_typescript = async (code: string) =>
-  (await transform(code, { loader: "ts" })).code;
+  (await transform(code, ts_options)).code;
 
 export const symbols = {
   layout_depth: Symbol("layout.depth"),
 };
+
+class Cache {
+  #entries: Record<symbol, unknown> = {};
+
+  get<Data>(key: symbol, init: () => Data) {
+    if (this.#entries[key] === undefined) {
+      this.#entries[key] = init();
+    }
+    return this.#entries[key] as Data;
+  }
+}
+
+const cache = new Cache();
+const s = Symbol("primate.Build");
 
 type ExtensionCompileFunction = (component: FileRef, app: BuildApp) =>
   Promise<void>;
@@ -57,7 +80,6 @@ const build: Default = async (root, config, mode = "developement" as Mode) => {
     .get();
   const error = path.routes.join("+error.js");
   const kv_storage = new Map<symbol, unknown>();
-  let _build: Build | undefined = undefined;
 
   return {
     postbuild: [],
@@ -105,6 +127,7 @@ const build: Default = async (root, config, mode = "developement" as Mode) => {
         .map(async abs => {
         const rel = FileRef.join(directory, abs.debase(source));
         const is_ts = abs.path.endsWith(".ts");
+        const is_angular = abs.path.endsWith(".component.ts");
         let text = await mapper(await abs.text());
         if (is_ts) {
           text = await compile_typescript(text);
@@ -115,7 +138,8 @@ const build: Default = async (root, config, mode = "developement" as Mode) => {
         const outdir = target_base.join(rel.debase(directory)).directory;
         await outdir.create();
 
-        const outfile = outdir.join(base.concat(is_ts ? ".js" : extension));
+        const e = is_angular ? ".ts.js" : is_ts ? ".js" : extension;
+        const outfile = outdir.join(base.concat(e));
         await outfile.write(text);
       }));
     },
@@ -160,19 +184,17 @@ const build: Default = async (root, config, mode = "developement" as Mode) => {
     },
     server_build: ["routes"],
     build_target: "web",
-    get build(): Build {
-      if (_build === undefined) {
-        _build = new Build({
+    get build() {
+      return cache.get(s, () =>
+        new Build({
           ...exclude(this.config("build"), ["includes"]),
           outdir: this.runpath(this.config("location.client")).path,
           stdin: {
             contents: "",
             resolveDir: this.root.path,
           },
-        }, mode as Mode);
-        return _build;
-      }
-      throw new Error("build not yet initialized");
+        }, mode as Mode),
+      );
     },
     depth() {
       return this.get<number>(symbols.layout_depth);

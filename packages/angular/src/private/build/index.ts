@@ -1,5 +1,4 @@
 import create_root from "#client/create-root-client";
-import expose from "#client/expose";
 import name from "#name";
 import type { BuildApp } from "@primate/core/build/app";
 import type { BuildAppHook } from "@primate/core/hook";
@@ -27,7 +26,7 @@ export default (extension: string): BuildAppHook => async (app, next) => {
 
   await client_root(app);
   app.build.plugin(publish(app, extension));
-  app.build.export(expose);
+  app.build.export(`export * from "@primate/angular";`);
 
   return next(app);
 };
