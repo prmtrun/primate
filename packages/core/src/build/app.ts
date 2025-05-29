@@ -138,7 +138,7 @@ const build: Default = async (root, config, mode = "developement" as Mode) => {
         const outdir = target_base.join(rel.debase(directory)).directory;
         await outdir.create();
 
-        const e = is_angular ? ".ts.js" : is_ts ? ".js" : extension;
+        const e = is_angular ? ".ts" : is_ts ? ".js" : extension;
         const outfile = outdir.join(base.concat(e));
         await outfile.write(text);
       }));

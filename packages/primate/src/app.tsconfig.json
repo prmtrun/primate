@@ -21,6 +21,7 @@
   },
   "include": [
     "${configDir}/routes",
+    "${configDir}/components",
     "${configDir}/stores",
     "${configDir}/test",
     "${configDir}/primate.config.js",

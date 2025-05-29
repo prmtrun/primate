@@ -11,7 +11,6 @@ export default async (app: BuildApp, component: FileRef, extensions: ExtensionMa
   const location = app.config("location");
   const source = app.runpath(location.components);
   const code = await compile(await component.text());
-  console.log("code", code)
   const target_base = app.runpath(location.server, location.components);
   const path = target_base.join(`${component.path}.js`.replace(source, ""));
   await path.directory.create();
