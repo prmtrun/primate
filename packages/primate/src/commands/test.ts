@@ -16,6 +16,16 @@ type Check<T> = () => MaybePromise<[boolean, T, T | null]>;
 
 const fetch_options = { redirect: "manual" } as const;
 
+const first_error = (left: string, right: string) => {
+  const length = left.length > right.length ? right.length : left.length;
+
+  for (let i = 0; i < length; i++) {
+    if (left[i] !== right[i]) {
+      return i;
+    }
+  }
+};
+
 export default async () => {
   await build("production", "web");
   const app = (await serve()).default;
@@ -101,8 +111,11 @@ export default async () => {
 
     if (failed !== undefined) {
       console.log(red(`${verb} ${test.route}`));
-      console.log(`expected: ${JSON.stringify(failed[1])}`);
-      console.log(`actual: ${JSON.stringify(failed[2])}`);
+      const expected = JSON.stringify(failed[1]);
+      const actual = JSON.stringify(failed[2]);
+      const n = first_error(expected, actual)!;
+      console.log(`expected: ${expected.slice(0, n)}${green(expected[n])}${expected.slice(n+1)}`);
+      console.log(`actual:   ${actual.slice(0, n)}${red(actual[n])}${actual.slice(n+1)}`);
     } else {
       console.log(green(`${verb} ${test.route}`));
     }

@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Primate app</title>
+    <meta charset="utf-8" />
+    <script type="importmap" integrity="sha384-fnSaa3sfY0+f2GD7sEqKe42ysMFFf+cv+q9YsV4jS8EkMttAurz2rPJWMOsdDdfu">{
+  "imports": {
+    "app": "/app-IFOKCWMT.js"
+  }
+}</script>
+<script type="js" integrity="sha384-l7f5G6DbmthBXrEGm/ST1e6mc7NklBtRd6qiElY0tDHf85yGvi5oB+naGU/1WtMA" src="/app-IFOKCWMT.js"></script>
+<script type="js" integrity="sha384-vCM7+AM2lAJzC976iLHKkTU4Sc374LzoykUBHrk6XyJ51SLoIWvMBM7RuVukHHSj" src="/post-index.component.ts.js"></script>
+<script type="module" integrity="sha384-nr4CQVLzynYcv7th7OkJBh9OQsSVP7kt9iL5xsgFnqKqjKAoln3THtFKFJfH+8UN">
+  import { bootstrapApplication, provideClientHydration } from "app";
+  import * as components from "app";
+
+  const config = { providers: [provideClientHydration()] };
+
+  const rendered = components.root_angular(components.angular_175246930aab170eee60n,
+    {"posts":[{"id":1,"title":"First post"}]});
+
+  bootstrapApplication(rendered, config)
+    .catch(error => console.error(error));</script>
+
+  </head>
+  <body><!--nghm--><app-root ng-version="19.2.14" ngh="0" ng-server-context="analog"><post-index ngh="0"><h1>bar</h1><h3>1 says:</h3></post-index></app-root><script id="ng-state" type="application/json">{"__nghData__":[{}]}</script></body>
+</html>

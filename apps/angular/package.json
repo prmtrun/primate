@@ -6,5 +6,8 @@
     "@primate/angular": "workspace:^",
     "primate": "workspace:^"
   },
+  "devDependencies": {
+    "@rcompat/fs": "^0.12.14"
+  },
   "type": "module"
 }
