@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@primate/core": "workspace:^",
-    "@rcompat/invariant": "^0.8.2",
+    "@rcompat/invariant": "^0.8.5",
     "marked": "^15.0.12"
   },
   "peerDependencies": {

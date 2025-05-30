@@ -6,4 +6,11 @@ const expected = await FileRef.join(import.meta.dirname, "index.expected.html")
 
 test.get("/", response => {
   response.body.includes(expected);
+  /*response.client.query("span").equals("0");
+  response.client.click("#increment");
+  response.client.query("span").equals("1");
+  response.client.click("#increment");
+  response.client.query("span").equals("2");
+  response.client.click("#decrement").click("#decrement");
+  response.client.query("span").equals("0");*/
 });

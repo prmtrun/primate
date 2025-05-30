@@ -22,7 +22,7 @@
     "test": "npm run build && npx proby"
   },
   "dependencies": {
-    "@rcompat/invariant": "^0.8.2",
+    "@rcompat/invariant": "^0.8.5",
     "@rcompat/record": "^0.7.1"
   },
   "type": "module",

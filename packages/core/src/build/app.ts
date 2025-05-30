@@ -7,6 +7,7 @@ import transform from "@rcompat/build/transform";
 import FileRef from "@rcompat/fs/FileRef";
 import type Path from "@rcompat/fs/Path";
 import identity from "@rcompat/function/identity";
+import cache from "@rcompat/kv/cache";
 import entries from "@rcompat/record/entries";
 import exclude from "@rcompat/record/exclude";
 import get from "@rcompat/record/get";
@@ -30,18 +31,6 @@ export const symbols = {
   layout_depth: Symbol("layout.depth"),
 };
 
-class Cache {
-  #entries: Record<symbol, unknown> = {};
-
-  get<Data>(key: symbol, init: () => Data) {
-    if (this.#entries[key] === undefined) {
-      this.#entries[key] = init();
-    }
-    return this.#entries[key] as Data;
-  }
-}
-
-const cache = new Cache();
 const s = Symbol("primate.Build");
 
 type ExtensionCompileFunction = (component: FileRef, app: BuildApp) =>
@@ -193,7 +182,7 @@ const build: Default = async (root, config, mode = "developement" as Mode) => {
             contents: "",
             resolveDir: this.root.path,
           },
-        }, mode as Mode),
+        }, mode),
       );
     },
     depth() {

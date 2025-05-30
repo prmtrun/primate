@@ -29,7 +29,7 @@
     "@rcompat/cli": "^0.8.1",
     "@rcompat/env": "^0.7.1",
     "@rcompat/fs": "^0.12.14",
-    "@rcompat/invariant": "^0.8.2",
+    "@rcompat/invariant": "^0.8.5",
     "@rcompat/runtime": "^0.4.1",
     "@rcompat/stdio": "^0.9.1",
     "@rcompat/string": "^0.7.2"
