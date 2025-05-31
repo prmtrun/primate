@@ -3,4 +3,4 @@ import ruby from "@primate/ruby";
 
 export default {
   modules: [html(), ruby()],
-}
+};

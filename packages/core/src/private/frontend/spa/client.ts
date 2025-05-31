@@ -45,8 +45,8 @@ const handle = async (response: Response, updater: Updater) => {
 };
 
 type Goto = {
-  pathname: string,
-  hash: string,
+  pathname: string;
+  hash: string;
 };
 
 const goto = async ({ pathname, hash }: Goto, updater: Updater, state = false) => {

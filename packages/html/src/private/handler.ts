@@ -13,12 +13,12 @@ export default ((name, props = {}, options = {}) => async app => {
   const scripts = await Promise.all([...rendered.matchAll(script_re)]
     .flatMap(({ groups })=> groups?.code !== undefined
       ? app.inline(groups.code, "module")
-      : []
+      : [],
     ));
   const styles = await Promise.all([...rendered.matchAll(style_re)]
     .flatMap(({ groups })=> groups?.code !== undefined
       ? app.inline(groups.code, "style")
-      : []
+      : [],
     ));
   const style_src = styles.map(asset => asset.integrity).concat(xstyle_src);
   const script_src = scripts.map(asset => asset.integrity).concat(xscript_src);

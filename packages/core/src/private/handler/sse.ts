@@ -2,7 +2,7 @@ import handler from "#handler";
 import { sse } from "@rcompat/http/mime";
 
 type Body = {
-  open(events: { send(name: string, data: unknown): undefined }): undefined,
+  open(events: { send(name: string, data: unknown): undefined }): undefined;
   close?(): undefined;
 };
 

@@ -8,5 +8,5 @@ const posts = [{
 export default {
   get() {
     return view("index.poly", { posts });
-  }
-}
+  },
+};

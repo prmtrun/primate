@@ -3,7 +3,7 @@ import Client from "#Client";
 import ident from "@primate/store/core/ident";
 import wrap from "@primate/store/core/wrap";
 import numeric from "@rcompat/invariant/numeric";
-import Serializable from "@rcompat/record/Serializable";
+import type Serializable from "@rcompat/record/Serializable";
 
 export default (database: string) => async () => {
   const client = new Client(database);

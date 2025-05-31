@@ -5,8 +5,8 @@ import { writable } from "poly/store";
 import type ContextData from "@primate/i18n/ContextData";
 
 type Context = {
-  i18n: ContextData;  
-}
+  i18n: ContextData;
+};
 
 const store = writable("", set => {
   const { locale } = getContext<Context>(context_name).i18n;

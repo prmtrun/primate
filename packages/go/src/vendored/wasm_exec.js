@@ -68,7 +68,7 @@ export default () => {
 			umask() { throw enosys(); },
 			cwd() { throw enosys(); },
 			chdir() { throw enosys(); },
-		}
+		};
 	}
 
 	if (!globalThis.crypto) {
@@ -109,17 +109,17 @@ export default () => {
 			const setInt64 = (addr, v) => {
 				this.mem.setUint32(addr + 0, v, true);
 				this.mem.setUint32(addr + 4, Math.floor(v / 4294967296), true);
-			}
+			};
 
 			const setInt32 = (addr, v) => {
 				this.mem.setUint32(addr + 0, v, true);
-			}
+			};
 
 			const getInt64 = (addr) => {
 				const low = this.mem.getUint32(addr + 0, true);
 				const high = this.mem.getInt32(addr + 4, true);
 				return low + high * 4294967296;
-			}
+			};
 
 			const loadValue = (addr) => {
 				const f = this.mem.getFloat64(addr, true);
@@ -132,7 +132,7 @@ export default () => {
 
 				const id = this.mem.getUint32(addr, true);
 				return this._values[id];
-			}
+			};
 
 			const storeValue = (addr, v) => {
 				const nanHead = 0x7FF80000;
@@ -182,13 +182,13 @@ export default () => {
 				}
 				this.mem.setUint32(addr + 4, nanHead | typeFlag, true);
 				this.mem.setUint32(addr, id, true);
-			}
+			};
 
 			const loadSlice = (addr) => {
 				const array = getInt64(addr + 0);
 				const len = getInt64(addr + 8);
 				return new Uint8Array(this._inst.exports.mem.buffer, array, len);
-			}
+			};
 
 			const loadSliceOfValues = (addr) => {
 				const array = getInt64(addr + 0);
@@ -198,13 +198,13 @@ export default () => {
 					a[i] = loadValue(array + i * 8);
 				}
 				return a;
-			}
+			};
 
 			const loadString = (addr) => {
 				const saddr = getInt64(addr + 0);
 				const len = getInt64(addr + 8);
 				return decoder.decode(new DataView(this._inst.exports.mem.buffer, saddr, len));
-			}
+			};
 
 			const timeOrigin = Date.now() - performance.now();
 			this.importObject = {
@@ -456,7 +456,7 @@ export default () => {
 					"debug": (value) => {
 						console.log(value);
 					},
-				}
+				},
 			};
 		}
 
@@ -555,5 +555,5 @@ export default () => {
 				return event.result;
 			};
 		}
-	}
+	};
 };

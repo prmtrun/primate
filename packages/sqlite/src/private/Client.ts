@@ -4,9 +4,9 @@ import assert from "@rcompat/invariant/assert";
 import Connection from "@rcompat/sql/sqlite";
 
 const defaults: {
-  poolsize: number,
-  timeout: number
-  waitfor: number,
+  poolsize: number;
+  timeout: number;
+  waitfor: number;
 } = {
   // Pool size
   poolsize: 4,

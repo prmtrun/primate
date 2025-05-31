@@ -14,7 +14,7 @@ export default test => {
     fail(undefined, {}, null, 0, 0.5, 1, 1.5, "0", "1", "[]", true, false);
   });
   test.case("same", ({ same }) => {
-    same([], Array(), new Array());
+    same([], [], []);
   });
   test.case(".of", ({ assert }) => {
     assert(string_array.validate([])).equals([]);

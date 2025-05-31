@@ -1,11 +1,11 @@
 type Func = (component: {
   render(...args: any[]): {
-    html: string,
-    head: string,
-  }
+    html: string;
+    head: string;
+  };
 }, ...args: any[]) => {
-  body: string,
-  head: string,
+  body: string;
+  head: string;
 };
 
 export default ((component, ...args) => {

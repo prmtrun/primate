@@ -16,23 +16,23 @@ type ErrorParameters = Parameters<typeof error>;
 const handle_handler = (handler: Handler, response: Dictionary) => {
   if (handler === "view") {
     const { name, props, options } = response as {
-      name: ViewParameters[0],
-      props: ViewParameters[1],
-      options: ViewParameters[2],
+      name: ViewParameters[0];
+      props: ViewParameters[1];
+      options: ViewParameters[2];
     };
     return view(name, props, options);
   }
   if (handler === "redirect") {
     const { location, status } = response as {
-      location: RedirectParameters[0],
-      status: RedirectParameters[1],
-    }
+      location: RedirectParameters[0];
+      status: RedirectParameters[1];
+    };
     return redirect(location, status);
   }
 
   const { options } = response as {
-    options: ErrorParameters[0],
-  }
+    options: ErrorParameters[0];
+  };
   return error(options);
 };
 
@@ -44,5 +44,5 @@ export default (response: Dictionary): ResponseLike => {
 
   return is_handler(handler)
     ? handle_handler(handler, response) as ResponseFunction
-    : response
+    : response;
 };

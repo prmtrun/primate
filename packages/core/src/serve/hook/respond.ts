@@ -27,7 +27,7 @@ type MatchResult<T extends ReadonlyArray<UnknownFunction>> = {
         (arg: R) => ResponseFunction :
         T[K] extends (arg: unknown) => boolean ?
           (arg: unknown) => ResponseFunction :
-          (...args: unknown[]) => unknown
+          (...args: unknown[]) => unknown,
     ]
 };
 

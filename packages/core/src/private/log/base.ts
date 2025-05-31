@@ -5,7 +5,7 @@ import type StringLike from "@rcompat/type/StringLike";
 
 export default (level: LogLevel) =>
   (module: string) =>
-    (url: string, { message, fix }: { message: string, fix: string }) =>
+    (url: string, { message, fix }: { message: string; fix: string }) =>
       (...params: StringLike[]) =>
         log[level]({
           params,

@@ -12,7 +12,7 @@ type Filter<T, P extends keyof T> = X<Pick<T, Extract<P, keyof T>>>;
 
 export default class Query<
   T extends Schema,
-  P extends keyof Document<T> = keyof Document<T>
+  P extends keyof Document<T> = keyof Document<T>,
 > {
   #schema: SchemaType<T>;
   #projection?: P[];
