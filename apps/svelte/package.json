@@ -6,7 +6,7 @@
     "@primate/svelte": "workspace:^",
     "@rcompat/invariant": "^0.8.5",
     "primate": "workspace:^",
-    "svelte": "^5.33.11"
+    "svelte": "^5.33.14"
   },
   "type": "module"
 }
