@@ -9,7 +9,7 @@
     "primate": "workspace:^"
   },
   "devDependencies": {
-    "@rcompat/fs": "^0.12.14"
+    "@rcompat/fs": "^0.12.16"
   },
   "type": "module"
 }
