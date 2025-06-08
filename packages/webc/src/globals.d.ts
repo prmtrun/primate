@@ -1,3 +1,3 @@
 declare namespace globalThis {
-  var registry = Record<string, unknown>;
+  const registry = Record<string, unknown>;
 }

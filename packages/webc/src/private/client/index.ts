@@ -1,5 +1,7 @@
 import type Props from "@primate/core/frontend/Props";
 
+const to_hyphen = (x: string) => x.replaceAll("/", "-");
+
 export default (name: string, props: Props) => `
   import * as components from "app";
 
@@ -16,7 +18,7 @@ export default (name: string, props: Props) => `
   });
   globalThis.registry = {};
 
-  const element = globalThis.document.createElement("${name.replaceAll("/", "-")}");
+  const element = globalThis.document.createElement("${to_hyphen(name)}");
   element.props = ${JSON.stringify(props)};
   globalThis.document.body.appendChild(element)
 `;
