@@ -29,7 +29,7 @@
     "@rcompat/build": "^0.11.3",
     "@rcompat/cli": "^0.8.1",
     "@rcompat/crypto": "^0.8.1",
-    "@rcompat/fs": "^0.12.16",
+    "@rcompat/fs": "^0.12.18",
     "@rcompat/function": "^0.7.1",
     "@rcompat/http": "^0.11.2",
     "@rcompat/invariant": "^0.8.5",
@@ -125,16 +125,13 @@
       "apekit": "./src/public/frontend/*.ts",
       "default": "./lib/public/frontend/*.js"
     },
-    "./session": {
-      "apekit": "./src/public/session.ts",
-      "default": "./lib/public/session.js"
-    },
     "./db/store": {
       "apekit": "./src/public/db/store.ts",
       "default": "./lib/public/db/store.js"
     },
     "./*": {
-      "apekit": "./src/public/*.ts"
+      "apekit": "./src/public/*.ts",
+      "default": "./lib/public/*.js"
     }
   }
 }

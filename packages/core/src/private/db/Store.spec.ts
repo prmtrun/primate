@@ -1,16 +1,16 @@
-import store from "#db/store";
+import Store from "#db/Store";
 import test from "@rcompat/test";
 import number from "pema/number";
-import string from "pema/string";
 import optional from "pema/optional";
+import string from "pema/string";
 
-const Post = store({
+const Post = new Store({
   id: number,
   title: string,
   user_id: number,
 });
 
-const User = store({
+const User = new Store({
   id: number,
   name: string.default("Donald"),
   lastname: optional(string),

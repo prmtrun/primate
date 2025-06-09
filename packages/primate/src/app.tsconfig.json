@@ -15,11 +15,11 @@
       "#store/*": ["stores/*"],
       "#app": ["config/app.ts", "config/app.js"],
       "#session": ["config/session.ts", "config/session.js"],
-      "#db": ["config/db/index.ts", "config/db/index.js"],
-      "#db/*": ["config/db/*.ts", "config/db/*.js"]
+      "#db": ["config/db.ts", "config/db.js"]
     }
   },
   "include": [
+    "${configDir}/config",
     "${configDir}/routes",
     "${configDir}/components",
     "${configDir}/stores",

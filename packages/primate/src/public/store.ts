@@ -1,1 +1,3 @@
-export { default } from "@primate/core/db/store";
+import Store from "@primate/core/db/Store";
+
+export default Store.new;
