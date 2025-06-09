@@ -8,8 +8,5 @@
     "@primate/angular": "workspace:^",
     "primate": "workspace:^"
   },
-  "devDependencies": {
-    "@rcompat/fs": "^0.12.16"
-  },
   "type": "module"
 }
