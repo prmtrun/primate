@@ -6,30 +6,40 @@
   "bugs": "https://github.com/primate-run/primate/issues",
   "license": "MIT",
   "files": [
-    "src/**/*.js",
-    "!src/**/*.spec.js"
+    "/lib/**/*.js",
+    "/lib/**/*.d.ts",
+    "!/**/*.spec.*"
   ],
   "repository": {
     "type": "git",
     "url": "https://github.com/primate-run/primate",
     "directory": "packages/sqlite"
   },
+  "scripts": {
+    "build": "npm run clean && tsc",
+    "clean": "rm -rf ./lib",
+    "lint": "eslint .",
+    "prepublishOnly": "npm run build"
+  },
   "dependencies": {
     "@primate/core": "workspace:^",
-    "@primate/store": "workspace:^",
+    "@rcompat/async": "^0.7.1",
     "@rcompat/invariant": "^0.8.5",
-    "@rcompat/object": "^0.5.0",
     "@rcompat/runtime": "^0.4.1",
+    "@rcompat/sql": "^0.7.2",
     "better-sqlite3": "^11.10.0"
   },
   "type": "module",
   "imports": {
     "#*": {
-      "livetypes": "./src/private/*.js",
-      "default": "./src/private/*.js"
+      "apekit": "./src/private/*.ts",
+      "default": "./lib/private/*.js"
     }
   },
   "exports": {
-    ".": "./src/default.js"
+    ".": {
+      "apekit": "./src/public/default.ts",
+      "default": "./lib/public/default.js"
+    }
   }
 }

@@ -3,7 +3,9 @@ import store from "primate/store";
 
 export const getMe = () => undefined;
 
-export default store({
+const t = store({
   name: string,
   lastname: string.optional(),
 });
+
+export default t;

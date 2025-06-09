@@ -38,19 +38,18 @@ const pre = async (app: BuildApp, target: string) => {
 
 const js_re = /^.*.js$/;
 const write_directories = async (build_directory: FileRef, app: BuildApp) => {
-  const location = app.config("location");
   for (const name of app.server_build) {
-    const d = app.runpath(location.server, name);
+    const d = app.runpath(`${name}s`);
     const e = await Promise.all((await FileRef.collect(d, file => js_re.test(file.path)))
       .map(async path => `${path}`.replace(d.toString(), _ => "")));
     const files_js = `
     const ${name} = [];
-    ${e.map((path, i) =>
-    `import * as ${name}${i} from "${FileRef.webpath(`../server/${name}${path}`)}";
-    ${name}.push(["${FileRef.webpath(path.slice(1, -".js".length))}", ${name}${i}]);`,
+    ${e.map(path => path.slice(1, -".js".length)).map((bare, i) =>
+    `import * as ${name}${i} from "${FileRef.webpath(`#${name}/${bare}`)}";
+    ${name}.push(["${FileRef.webpath(bare)}", ${name}${i}]);`,
   ).join("\n")}
     export default ${name};`;
-    await build_directory.join(`${name}.js`).write(files_js);
+    await build_directory.join(`${name}s.js`).write(files_js);
   }
 };
 
@@ -80,7 +79,7 @@ const write_bootstrap = async (build_number: string, app: BuildApp, mode: string
 import serve from "primate/serve";
 import config from "./${config_filename}";
 const files = {};
-${app.server_build.map(name =>
+${app.server_build.map(name => `${name}s`).map(name =>
     `import ${name} from "./${build_number}/${name}.js";
      files.${name} = ${name};`,
   ).join("\n")}
@@ -104,11 +103,20 @@ const post = async (app: BuildApp) => {
   const location = app.config("location");
   const defaults = FileRef.join(import.meta.url, "../../defaults");
 
+  await app.stage2(app.path.routes, "routes", file =>
+    `export { default } from "#stage/route${file}";`);
+
+  await app.stage2(app.path.stores, "stores", file =>
+    `import db from "#db";
+import store from "#stage/store${file}";
+
+export default db.wrap("${file.base}", store);`);
+
+  await app.stage2(app.path.config, "config", file =>
+    `export { default } from #stage/config/${file}`);
+
   // stage config
   await app.stage(app.path.config, location.config);
-
-  // stage routes
-  await app.stage(app.path.routes, FileRef.join(location.server, location.routes));
 
   // stage stores
   await app.stage(app.path.stores, FileRef.join(location.server, location.stores));
@@ -120,12 +128,6 @@ const post = async (app: BuildApp) => {
     defines.reduce((replaced, [key, substitution]) =>
       replaced.replaceAll(key, substitution as string), text));
 
-  const directory = app.runpath(location.server, location.routes);
-
-  for (const path of await directory.collect(file => /^.*$/.test(file.path))) {
-    await app.bindings[path.extension]
-      ?.(directory, path.debase(`${directory}/`));
-  }
   // copy framework pages
   await app.stage(defaults, FileRef.join(location.server, location.pages));
   // overwrite transformed pages to build
@@ -176,9 +178,13 @@ const post = async (app: BuildApp) => {
   const manifest_data = {
     ...await manifest() as Dictionary,
     imports: {
+      "#route/*": "./routes/*.js",
+      "#stage/route/*": "./stage/routes/*.js",
+      "#store/*": "./stores/*.js",
+      "#stage/store/*": "./stage/stores/*.js",
+      "#stage/config/*": "./stage/config/*.js",
       "#component/*": "./components/*.js",
-      "#store/*": "./server/stores/*.js",
-      "#staging/store/*": "./staging/stores/*.js",
+      "#db": "./config/db.js",
       "#session": "./config/session.js",
     },
   };

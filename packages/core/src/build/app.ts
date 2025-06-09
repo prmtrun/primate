@@ -1,4 +1,6 @@
-import type { default as App, BindFn, TargetHandler } from "#App";
+import type { default as App, TargetHandler } from "#App";
+import type Binder from "#build/Binder";
+import type BindingContext from "#build/BindingContext";
 import type { Config } from "#config";
 import type Mode from "#Mode";
 import module_loader from "#module-loader";
@@ -7,6 +9,7 @@ import transform from "@rcompat/build/transform";
 import FileRef from "@rcompat/fs/FileRef";
 import type Path from "@rcompat/fs/Path";
 import identity from "@rcompat/function/identity";
+import assert from "@rcompat/invariant/assert";
 import cache from "@rcompat/kv/cache";
 import entries from "@rcompat/record/entries";
 import exclude from "@rcompat/record/exclude";
@@ -42,16 +45,18 @@ type ExtensionCompile = {
 };
 
 export interface BuildApp extends App {
-  bind: (extension: string, handler: BindFn) => void;
+  bind: (extension: string, binder: Binder) => void;
   target: (name: string, target: TargetHandler) => void;
   postbuild: (() => void)[];
-  bindings: PartialDictionary<BindFn>;
+  bindings: PartialDictionary<Binder>;
   roots: FileRef[];
   targets: PartialDictionary<{ forward?: string; target: TargetHandler }>;
   assets: unknown[];
   extensions: PartialDictionary<ExtensionCompile>;
   stage: (source: FileRef, directory: Path,
     mapper?: (text: string) => MaybePromise<string>) => Promise<void>;
+  stage2: (directory: FileRef, context: BindingContext,
+    importer: (file: FileRef) => string) => Promise<void>;
   compile: (component: FileRef) => Promise<void>;
   register: (extension: string, compile: ExtensionCompile) => void;
   done: (fn: () => void) => void;
@@ -75,11 +80,13 @@ const build: Default = async (root, config, mode = "developement" as Mode) => {
     bindings: {
       // noop
       ".js": () => {},
-      ".ts": async (directory, file) => {
-        const _path = directory.join(file);
-        const base = _path.directory;
-        const js = _path.base.concat(".js");
-        await base.join(js).write(await compile_typescript(await _path.text()));
+      ".ts": async (file, context) => {
+        const contexts = ["routes", "stores", "config"];
+        const _error = "ts: only route, store and config files are supported";
+        assert(contexts.includes(context), _error);
+
+        const code = await file.text();
+        await file.append(".js").write(await compile_typescript(code));
       },
     },
     roots: [],
@@ -132,6 +139,32 @@ const build: Default = async (root, config, mode = "developement" as Mode) => {
         await outfile.write(text);
       }));
     },
+    async stage2(directory, context, importer) {
+      if (!await directory.exists()) {
+        return;
+      }
+      if (!await this.runpath("stage").exists()) {
+        await this.runpath("stage").create();
+      }
+      const base = this.runpath("stage", context);
+      if (!await base.exists()) {
+        await base.create();
+      }
+      const build_directory = this.runpath(directory.name);
+      await build_directory.create();
+      for (const file of await directory.collect(({ path }) => /^.*$/.test(path))) {
+        const debased = file.debase(directory);
+        const target = base.join(debased);
+        // copy to build/stage/${directory}
+        await file.copy(target);
+        await this.bindings[file.fullExtension]?.(target, context);
+
+        // actual
+        const runtime_file = build_directory.join(debased.bare(".js"));
+        await runtime_file.directory.create();
+        runtime_file.write(importer(debased));
+      }
+    },
     async compile(component) {
       const { server, client, components } = this.config("location");
 
@@ -162,8 +195,11 @@ const build: Default = async (root, config, mode = "developement" as Mode) => {
     runpath(...directories) {
       return this.path.build.join(...directories);
     },
-    bind(extension, handler) {
-      this.bindings[extension] = handler;
+    bind(extension, binder) {
+      if (this.bindings[extension] !== undefined) {
+        throw new Error(`${extension} already bound`);
+      }
+      this.bindings[extension] = binder;
     },
     target(name, target) {
       this.targets[name] = { target };
@@ -171,7 +207,7 @@ const build: Default = async (root, config, mode = "developement" as Mode) => {
     done(fn) {
       this.postbuild.push(fn);
     },
-    server_build: ["routes"],
+    server_build: ["route"],
     build_target: "web",
     get build() {
       return cache.get(s, () =>

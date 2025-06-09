@@ -1,6 +1,7 @@
 import type { BuildAppHook } from "@primate/core/hook";
 import verbs from "@primate/core/http/verbs";
 import FileRef from "@rcompat/fs/FileRef";
+import assert from "@rcompat/invariant/assert";
 
 const routes_re = new RegExp(`def (?<route>${verbs.join("|")})`, "gu");
 const get_routes = (code: string) => [...code.matchAll(routes_re)]
@@ -41,7 +42,7 @@ def run_${route}(js_request, helpers, session)
 end
 `).join("\n");
 
-const js_wrapper = async (path: string, routes: string[]) => {
+const js_wrapper = async (path: FileRef, routes: string[]) => {
   const classes: string[] = [];
   const request_initialize: string[] = [];
   const request_defs: string[] = [];
@@ -52,10 +53,10 @@ import helpers from "@primate/ruby/helpers";
 import default_ruby_vm from "@primate/ruby/default-ruby-vm";
 import ruby from "@primate/ruby/ruby";
 import FileRef from "primate/runtime/FileRef";
-import session from "primate/session";
+import session from "primate/config/session";
 
 const { vm } = await default_ruby_vm(ruby);
-const code = await FileRef.text(${JSON.stringify(path)});
+const code = await FileRef.text(${JSON.stringify(path.toString())});
 const wrappers = ${JSON.stringify(create_ruby_wrappers(routes))};
 const request = ${JSON.stringify(request
   .replace("%%CLASSES%%", _ => classes.join("\n"))
@@ -71,14 +72,13 @@ export default {
 };
 
 export default (extension: string): BuildAppHook => (app, next) => {
-  app.bind(extension, async (directory, route) => {
-    const path = directory.join(route);
-    const base = path.directory;
-    const js = path.base.concat(".js");
-    const code = await path.text();
+  app.bind(extension, async (file, context) => {
+    assert(context === "routes", "ruby: only route files are supported");
+
+    const code = await file.text();
     const routes = get_routes(code);
     // write .js wrapper
-    await base.join(js).write(await js_wrapper(path.toString(), routes));
+    await file.append(".js").write(await js_wrapper(file, routes));
   });
 
   return next(app);

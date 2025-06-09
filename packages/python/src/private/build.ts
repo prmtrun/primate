@@ -1,6 +1,7 @@
 import type { BuildAppHook } from "@primate/core/hook";
 import verbs from "@primate/core/http/verbs";
 import type FileRef from "@rcompat/fs/FileRef";
+import assert from "@rcompat/invariant/assert";
 
 const routes_re = new RegExp(`def (?<route>${verbs.join("|")})`, "gu");
 const get_routes = (code: string) => [...code.matchAll(routes_re)]
@@ -36,14 +37,13 @@ const js_wrapper = (path: FileRef, routes: string[], packages: string[]) => `
 
 export default (extension: string, packages: string[]): BuildAppHook =>
   (app, next) => {
-    app.bind(extension, async (directory, file) => {
-      const path = directory.join(file);
-      const base = path.directory;
-      const js = path.base.concat(".js");
-      const code = await path.text();
+    app.bind(extension, async (file, context) => {
+      assert(context === "routes", "python: only route files are supported");
+
+      const code = await file.text();
       const routes = get_routes(code);
       // write .js wrapper
-      await base.join(js).write(js_wrapper(path, routes, packages));
+      await file.append(".js").write(js_wrapper(file, routes, packages));
     });
 
     return next(app);

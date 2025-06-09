@@ -6,6 +6,7 @@ import log from "@primate/core/log";
 import dim from "@rcompat/cli/color/dim";
 import user from "@rcompat/env/user";
 import FileRef from "@rcompat/fs/FileRef";
+import assert from "@rcompat/invariant/assert";
 import runtime from "@rcompat/runtime";
 import execute from "@rcompat/stdio/execute";
 import which from "@rcompat/stdio/which";
@@ -18,8 +19,8 @@ const env = {
   GOCACHE: (await execute(`${command} env GOCACHE`, {})).replaceAll("\n", ""),
 };
 
-const run = (wasm: string, go: string) =>
-  `${command} build -o ${wasm} ${go} request.go`;
+const run = (wasm: FileRef, go: FileRef) =>
+  `${command} build -o ${wasm.name} ${go.name} request.go`;
 
 const verbs_string = verbs.map(upperfirst).join("|");
 const routes_re = new RegExp(`func (?<route>${verbs_string})`, "gu");
@@ -45,7 +46,7 @@ const js_wrapper = (path: string, routes: string[]) => `
 import env from "@primate/go/env";
 import to_request from "@primate/go/to-request";
 import to_response from "@primate/go/to-response";
-import session from "primate/session";
+import session from "primate/config/session";
 
 globalThis.PRMT_SESSION = {
   get new() {
@@ -138,35 +139,34 @@ const create_meta_files = async (directory: FileRef) => {
 };
 
 export default (extension: string): BuildAppHook => (app, next) => {
-  app.bind(extension, async (directory, file) => {
-    const path = directory.join(file);
-    const base = path.directory;
-    const go = path.base.concat(".go");
-    const wasm = path.base.concat(".wasm");
-    const js = path.base.concat(".js");
+  app.bind(extension, async (go, context) => {
+      assert(context === "routes", "go: only route files are supported");
 
-    // create meta files
-    await create_meta_files(base);
+      // build/stage/routes
+      const directory = go.directory;
+      // create meta files
+      await create_meta_files(directory);
 
-    const code = await path.text();
-    const routes = get_routes(code);
-    // write .go file
-    await path.write(go_wrapper(code, routes));
-    // write .js wrapper
-    const wasm_route_path = `./${file.name.slice(0, -extension.length)}.wasm`;
-    await base.join(js).write(js_wrapper(wasm_route_path, routes));
+      const code = await go.text();
+      const routes = get_routes(code);
+      // write .go file
+      await go.write(go_wrapper(code, routes));
 
-    try {
-      log.info(`compiling ${dim(file.toString())} to WebAssembly`, {
-        module: pkgname,
-      });
-      const cwd = `${base}`;
-      // compile .go to .wasm
-      await execute(run(wasm, go), { cwd, env: { HOME: user.HOME, ...env } });
-    } catch (error) {
-      console.log(error);
-      route_error(file.toString(), `${error}`);
-    }
+      const wasm = go.bare(".wasm");
+
+      await go.append(".js").write(js_wrapper(wasm.name, routes));
+      //const js = file.bare(".js");
+      try {
+        log.info(`compiling ${dim(go.toString())} to WebAssembly`, {
+          module: pkgname,
+        });
+        const cwd = `${directory}`;
+        // compile .go to .wasm
+        await execute(run(wasm, go), { cwd, env: { HOME: user.HOME, ...env } });
+      } catch (error) {
+        console.log(error);
+        route_error(go.toString(), `${error}`);
+      }
   });
 
   return next(app);

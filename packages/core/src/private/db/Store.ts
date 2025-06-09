@@ -5,6 +5,7 @@ import maybe from "@rcompat/invariant/maybe";
 import type InferStore from "pema/InferStore";
 import type StoreSchema from "pema/StoreSchema";
 import StoreType from "pema/StoreType";
+import type BaseStore from "#db/BaseStore";
 
 type X<T> = {
   [K in keyof T]: T[K]
@@ -22,18 +23,28 @@ type Filter<A, B = undefined> = B extends undefined ? A : {
   ]: A[K];
 };
 
-export default class Store<S extends StoreSchema> {
+type Config = {
+  driver: "default" | (string & {});
+};
+
+export default class Store<S extends StoreSchema = StoreSchema> {
   #schema: S;
   #type: StoreType<S>;
+  #config: Config;
 
-  constructor(schema: S) {
+  constructor(schema: S, config?: Config) {
     this.#schema = schema;
     this.#type = new StoreType(schema);
+    this.#config = config ?? { driver: "default" };
+  }
+
+  get driver() {
+    return this.#config.driver;
   }
 
   // allow importers to expose this class as a function
-  static new(schema: StoreSchema) {
-    return new Store(schema);
+  static new(schema: StoreSchema, config?: Config) {
+    return new Store(schema, config);
   }
 
   /**
@@ -46,7 +57,7 @@ export default class Store<S extends StoreSchema> {
   async exists(key: Primary): Promise<boolean> {
       is(key).string();
 
-      return false;
+      return false; //this.#facade.exists();
   };
 
   /**
