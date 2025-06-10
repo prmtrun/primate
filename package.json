@@ -13,6 +13,7 @@
   },
   "private": true,
   "devDependencies": {
+    "@types/bun": "^1.2.15",
     "@rcompat/test": "^0.1.16",
     "@rcompat/type": "^0.1.13",
     "apekit": "^0.0.16",
