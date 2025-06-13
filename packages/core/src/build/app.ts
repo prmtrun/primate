@@ -78,8 +78,14 @@ const build: Default = async (root, config, mode = "developement" as Mode) => {
   return {
     postbuild: [],
     bindings: {
-      // noop
-      ".js": () => {},
+      ".js": async (file, context) => {
+        const contexts = ["routes", "stores", "config"];
+        const _error = "js: only route, store and config files are supported";
+        assert(contexts.includes(context), _error);
+
+        await file.append(".js").write(await file.text());
+
+      },
       ".ts": async (file, context) => {
         const contexts = ["routes", "stores", "config"];
         const _error = "ts: only route, store and config files are supported";
