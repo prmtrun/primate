@@ -4,12 +4,12 @@ import type BindingContext from "#build/BindingContext";
 import type { Config } from "#config";
 import type Mode from "#Mode";
 import module_loader from "#module-loader";
+import assert from "@rcompat/assert";
 import Build from "@rcompat/build";
 import transform from "@rcompat/build/transform";
 import FileRef from "@rcompat/fs/FileRef";
 import type Path from "@rcompat/fs/Path";
 import identity from "@rcompat/function/identity";
-import assert from "@rcompat/invariant/assert";
 import cache from "@rcompat/kv/cache";
 import entries from "@rcompat/record/entries";
 import exclude from "@rcompat/record/exclude";
@@ -228,7 +228,7 @@ const build: Default = async (root, config, mode = "developement" as Mode) => {
             contents: "",
             resolveDir: this.root.path,
           },
-        }, mode),
+        }, mode === "development" ? "development" : "production"),
       );
     },
     depth() {

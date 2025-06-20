@@ -7,9 +7,8 @@ import is_validated_type from "#is_validated_type";
 import OptionalType from "#OptionalType";
 import type Schema from "#Schema";
 import type Validated from "#Validated";
-import assert from "@rcompat/invariant/assert";
+import assert from "@rcompat/assert";
 import type TupleToUnion from "@rcompat/type/TupleToUnion";
-import type Primitive from "@rcompat/type/Primitive";
 
 type InferUnion<T extends Schema[]> = TupleToUnion<{
     [K in keyof T]:

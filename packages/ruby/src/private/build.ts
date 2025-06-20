@@ -1,7 +1,7 @@
 import type { BuildAppHook } from "@primate/core/hook";
 import verbs from "@primate/core/http/verbs";
+import assert from "@rcompat/assert";
 import FileRef from "@rcompat/fs/FileRef";
-import assert from "@rcompat/invariant/assert";
 
 const routes_re = new RegExp(`def (?<route>${verbs.join("|")})`, "gu");
 const get_routes = (code: string) => [...code.matchAll(routes_re)]

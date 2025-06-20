@@ -1,6 +1,6 @@
 import errors from "#errors";
+import assert from "@rcompat/assert";
 import map from "@rcompat/async/map";
-import assert from "@rcompat/invariant/assert";
 import Connection from "@rcompat/sql/sqlite";
 
 const defaults: {

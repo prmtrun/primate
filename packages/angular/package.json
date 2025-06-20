@@ -25,14 +25,14 @@
     "@primate/core": "workspace:^"
   },
   "dependencies": {
-    "@angular/compiler": "^20.0.1",
-    "@angular/platform-browser": "^20.0.1",
-    "@angular/platform-server": "^20.0.1",
-    "@angular/ssr": "^20.0.1",
-    "@rcompat/build": "^0.11.3",
-    "@rcompat/crypto": "^0.8.1",
-    "@rcompat/fs": "^0.12.18",
-    "@rcompat/record": "^0.7.1",
+    "@angular/compiler": "^20.0.4",
+    "@angular/platform-browser": "^20.0.4",
+    "@angular/platform-server": "^20.0.4",
+    "@angular/ssr": "^20.0.3",
+    "@rcompat/build": "^0.12.0",
+    "@rcompat/crypto": "^0.9.0",
+    "@rcompat/fs": "^0.13.0",
+    "@rcompat/record": "^0.8.0",
     "zone.js": "^0.15.1"
   },
   "peerDependencies": {

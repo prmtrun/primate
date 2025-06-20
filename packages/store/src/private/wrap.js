@@ -2,7 +2,7 @@ import invalid_document from "#error/invalid-document";
 import invalid_value from "#error/invalid-value";
 import no_document from "#error/no-document";
 import primary from "#primary";
-import maybe from "@rcompat/invariant/maybe";
+import maybe from "@rcompat/assert/maybe";
 import empty from "@rcompat/object/empty";
 import filter from "@rcompat/object/filter";
 import transform from "@rcompat/object/transform";

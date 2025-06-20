@@ -3,7 +3,7 @@
   "dependencies": {
     "@primate/vue": "workspace:^",
     "primate": "workspace:^",
-    "vue": "^3.5.15"
+    "vue": "^3.5.17"
   },
   "type": "module"
 }

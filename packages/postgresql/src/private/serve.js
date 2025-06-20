@@ -2,7 +2,7 @@ import Facade from "#Facade";
 import connect from "#connect";
 import ident from "@primate/store/core/ident";
 import wrap from "@primate/store/core/wrap";
-import numeric from "@rcompat/invariant/numeric";
+import numeric from "@rcompat/assert/numeric";
 
 export default options => async () => {
   const client = connect(options);

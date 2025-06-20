@@ -1,6 +1,6 @@
 import range from "#predicates/range";
-import assert from "@rcompat/invariant/assert";
-import numeric from "@rcompat/invariant/numeric";
+import assert from "@rcompat/assert";
+import numeric from "@rcompat/assert/numeric";
 
 const coercibles = {
   string: value => numeric(value) ? Number(value) : value,

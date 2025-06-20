@@ -1,4 +1,4 @@
-import maybe from "@rcompat/invariant/maybe";
+import maybe from "@rcompat/assert/maybe";
 import empty from "@rcompat/object/empty";
 import filter from "@rcompat/object/filter";
 import valmap from "@rcompat/object/valmap";

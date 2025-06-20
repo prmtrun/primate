@@ -1,6 +1,6 @@
 import typemap from "#typemap";
 import make_sort from "@primate/store/sql/make-sort";
-import is from "@rcompat/invariant/is";
+import is from "@rcompat/assert/is";
 import entries from "@rcompat/record/entries";
 import { RecordId } from "surrealdb";
 

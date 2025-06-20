@@ -9,7 +9,7 @@ export default test => {
     return { assert, pool: new Pool(id_pool) };
   });
 
-  test.case("constructor invariants", ({ assert, pool }) => {
+  test.case("constructor", ({ assert, pool }) => {
     assert(() => new Pool()).throws();
     assert(() => new Pool({ manager: { new: () => null } })).throws();
     assert(() => new Pool({

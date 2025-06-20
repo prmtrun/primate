@@ -1,4 +1,4 @@
-import is from "@rcompat/invariant/is";
+import is from "@rcompat/assert/is";
 import stringify from "@rcompat/object/stringify";
 import FileRef from "@rcompat/fs/FileRef";
 

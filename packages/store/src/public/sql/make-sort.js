@@ -1,4 +1,4 @@
-import maybe from "@rcompat/invariant/maybe";
+import maybe from "@rcompat/assert/maybe";
 
 export default ({ sort = {} } = {}) => {
   maybe(sort).object();

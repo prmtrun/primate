@@ -1,6 +1,6 @@
-import { marked } from "marked";
+import maybe from "@rcompat/assert/maybe";
 import type { MarkedExtension } from "marked";
-import maybe from "@rcompat/invariant/maybe";
+import { marked } from "marked";
 
 const compile = (text: string) => `export default () => ${JSON.stringify(text)};`;
 

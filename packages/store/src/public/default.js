@@ -4,7 +4,7 @@ import route from "#hook/route";
 import serve from "#hook/serve";
 import modes from "#modes";
 import name from "#name";
-import assert from "@rcompat/invariant/assert";
+import assert from "@rcompat/assert";
 
 export default ({
   // directory for stores

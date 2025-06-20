@@ -1,7 +1,7 @@
 import not from "#not";
 import orthrow from "#orthrow";
 import range from "#predicates/range";
-import assert from "@rcompat/invariant/assert";
+import assert from "@rcompat/assert";
 
 const baseint = inttype => ({ base, bounds, name }) => {
   const inrange = range(bounds.min, bounds.max);

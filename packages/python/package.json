@@ -23,9 +23,9 @@
   },
   "dependencies": {
     "@primate/core": "workspace:^",
-    "@rcompat/fs": "^0.12.18",
-    "@rcompat/invariant": "^0.8.5",
-    "pyodide": "^0.27.6"
+    "@rcompat/assert": "^0.1.0",
+    "@rcompat/fs": "^0.13.0",
+    "pyodide": "^0.27.7"
   },
   "peerDependencies": {
     "primate": "workspace:^"

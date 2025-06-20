@@ -20,7 +20,7 @@ import { html } from "@rcompat/http/mime";
 import serve from "@rcompat/http/serve";
 import type Server from "@rcompat/http/Server";
 import Status from "@rcompat/http/Status";
-import is from "@rcompat/invariant/is";
+import is from "@rcompat/assert/is";
 import empty from "@rcompat/record/empty";
 import entries from "@rcompat/record/entries";
 import get from "@rcompat/record/get";
