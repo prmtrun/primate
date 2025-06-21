@@ -1,7 +1,6 @@
 import Store from "#db/Store";
 import test from "@rcompat/test";
 import number from "pema/number";
-import optional from "pema/optional";
 import string from "pema/string";
 
 const Post = new Store({
@@ -13,7 +12,7 @@ const Post = new Store({
 const User = new Store({
   id: number,
   name: string.default("Donald"),
-  lastname: optional(string),
+  lastname: string.optional(), //optional(string),
   age: number,
   //post_id: Post.schema.id,
   //post: Post.one({ post_id: post => post.id }),

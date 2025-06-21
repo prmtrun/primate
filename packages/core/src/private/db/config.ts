@@ -1,25 +1,18 @@
-import type PartialDictionary from "@rcompat/type/PartialDictionary";
-import type Facade from "#db/Facade";
+import type Database from "#db/Database";
 import type Store from "#db/Store";
+import derive from "#db/symbol/derive";
+import type PartialDictionary from "@rcompat/type/PartialDictionary";
 
 type Config = {
-  default: Facade;
-} & PartialDictionary<Facade>;
+  default: Database;
+} & PartialDictionary<Database>;
 
 export default (config: Config) => {
   const drivers = config;
 
   return {
     wrap(name: string, store: Store) {
-      const driver = store.driver;
-
-      if (drivers[driver] === undefined) {
-        throw new Error(`store ${name} has invalid driver (${driver})`);
-      }
-
-      //store.facade = drivers[driver];
-
-      return store;
+      return store[derive](name, store.db ?? drivers.default);
     },
   };
 };

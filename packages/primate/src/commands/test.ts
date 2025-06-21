@@ -27,7 +27,7 @@ const first_error = (left: string, right: string) => {
 };
 
 export default async () => {
-  await build("development", "web");
+  await build("testing", "web");
   const app = (await serve()).default;
 
   const files = await (await root()).join(directory)

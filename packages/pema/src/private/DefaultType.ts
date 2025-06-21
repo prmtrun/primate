@@ -1,6 +1,6 @@
-import GenericType from "#GenericType";
 import type Infer from "#Infer";
 import type Validated from "#Validated";
+import VirtualType from "#VirtualType";
 import type UnknownFunction from "@rcompat/type/UnknownFunction";
 
 const is_default_function = (x: unknown): x is UnknownFunction => {
@@ -10,7 +10,7 @@ const is_default_function = (x: unknown): x is UnknownFunction => {
 export default class DefaultType<
   S extends Validated<unknown>,
   D extends Infer<S>,
-> extends GenericType<S, Infer<S>, "DefaultType"> {
+> extends VirtualType<S, Infer<S>, "DefaultType"> {
   #schema: S;
   #default: D | (() => D);
 
@@ -20,15 +20,12 @@ export default class DefaultType<
     this.#default = d;
   }
 
-  get datatype() {
-    if ("datatype" in this.#schema) {
-      return this.#schema.datatype;
-    }
-    throw new Error("cannot be used in a store");
-  }
-
   get name() {
     return "default";
+  }
+
+  get schema() {
+    return this.#schema;
   }
 
   validate(x: unknown, key?: string): Infer<this> {
