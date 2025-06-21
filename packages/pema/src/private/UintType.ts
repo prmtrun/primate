@@ -29,7 +29,7 @@ export default class UintType
   }
 
   validate(x: unknown, key?: string): Infer<this> {
-    if (!is_uint(x) || x < 0) {
+    if (!is_uint(x)) {
       throw new Error(error(expected("uint", x), key));
     }
 
