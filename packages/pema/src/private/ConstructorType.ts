@@ -19,12 +19,12 @@ export default class ConstructorType<C extends AbstractConstructor>
     this.#type = t;
   }
 
-  default(value: InstanceType<C> | (() => InstanceType<C>)) {
-    return new DefaultType(this, value);
-  }
-
   get name() {
     return "constructor";
+  }
+
+  default(value: InstanceType<C> | (() => InstanceType<C>)) {
+    return new DefaultType(this, value);
   }
 
   validate(x: unknown, key?: string): Infer<this> {

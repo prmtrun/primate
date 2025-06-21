@@ -20,6 +20,13 @@ export default class DefaultType<
     this.#default = d;
   }
 
+  get datatype() {
+    if ("datatype" in this.#schema) {
+      return this.#schema.datatype;
+    }
+    throw new Error("cannot be used in a store");
+  }
+
   get name() {
     return "default";
   }

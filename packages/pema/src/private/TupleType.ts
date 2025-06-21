@@ -21,8 +21,8 @@ const member_error = (i: unknown, key?: string) => {
     : `${key}[${i}]`;
 };
 
-export default class TupleType<T extends Schema[]> extends
-  GenericType<T, InferTuple<T>, "TupleType"> {
+export default class TupleType<T extends Schema[]>
+  extends GenericType<T, InferTuple<T>, "TupleType"> {
   #members: T;
 
   constructor(members: T) {
@@ -30,12 +30,12 @@ export default class TupleType<T extends Schema[]> extends
     this.#members = members;
   }
 
-  optional() {
-    return new OptionalType(this);
-  }
-
   get name() {
     return "tuple";
+  }
+
+  optional() {
+    return new OptionalType(this);
   }
 
   validate(x: unknown, key?: string): Infer<this> {

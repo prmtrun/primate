@@ -1,4 +1,5 @@
 import PrimitiveType from "#PrimitiveType";
+import type Storeable from "#Storeable";
 import type Validator from "#Validator";
 
 const starts_with_validator = (prefix: string): Validator<string> =>
@@ -15,9 +16,20 @@ const ends_with_validator = (suffix: string): Validator<string> =>
     }
   };
 
-export default class StringType extends PrimitiveType<string, "StringType"> {
+export default class StringType
+  extends PrimitiveType<string, "StringType">
+  implements Storeable<"string"> {
+
   constructor(validators?: Validator<string>[]) {
     super("string", validators);
+  }
+
+  get datatype() {
+    return "string" as const;
+  }
+
+  normalize(value: string) {
+    return value;
   }
 
   startsWith(prefix: string) {

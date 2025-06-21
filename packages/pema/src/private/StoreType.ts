@@ -3,8 +3,8 @@ import type Infer from "#Infer";
 import type InferStore from "#InferStore";
 import type StoreSchema from "#StoreSchema";
 
-export default class StoreType<T extends StoreSchema> extends
-  GenericType<T, InferStore<T>, "StoreType"> {
+export default class StoreType<T extends StoreSchema>
+  extends GenericType<T, InferStore<T>, "StoreType"> {
   #spec: T;
 
   constructor(spec: T) {

@@ -1,5 +1,7 @@
-import type Validated from "#Validated";
+import type Storeable from "#Storeable";
 
-type StoreSchema = { [k: string]: Validated<unknown> };
+type StoreSchema =
+  /*{ id: Storeable<any> } &*/
+  { [k: string]: Storeable<any> };
 
 export type { StoreSchema as default };

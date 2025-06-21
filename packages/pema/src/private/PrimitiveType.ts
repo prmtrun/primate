@@ -21,12 +21,12 @@ export default class PrimitiveType<StaticType, Name extends string>
     this.#validators = validators;
   }
 
-  get validators() {
-    return this.#validators;
-  }
-
   get name() {
     return this.#name;
+  }
+
+  get validators() {
+    return this.#validators;
   }
 
   validate(x: unknown, key?: string): Infer<this> {

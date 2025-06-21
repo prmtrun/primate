@@ -27,12 +27,12 @@ export default class ArrayType<T extends Validated<unknown>> extends
     this.#subtype = subtype;
   }
 
-  optional() {
-    return new OptionalType(this);
-  }
-
   get name() {
     return "array";
+  }
+
+  optional() {
+    return new OptionalType(this);
   }
 
   validate(x: unknown, key?: string): Infer<this> {

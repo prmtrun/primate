@@ -2,8 +2,8 @@ import GenericType from "#GenericType";
 import type Infer from "#Infer";
 import type Validated from "#Validated";
 
-export default class OptionalType<S extends Validated<unknown>> extends
-  GenericType<S | undefined, Infer<S> | undefined, "OptionalType"> {
+export default class OptionalType<S extends Validated<unknown>>
+  extends GenericType<S | undefined, Infer<S> | undefined, "OptionalType"> {
   #schema: S;
 
   constructor(s: S) {
@@ -13,6 +13,13 @@ export default class OptionalType<S extends Validated<unknown>> extends
 
   get name() {
     return "optional";
+  }
+
+  get datatype() {
+    if ("datatype" in this.#schema) {
+      return this.#schema.datatype;
+    }
+    throw new Error("cannot be used in a store");
   }
 
   validate(x: unknown, key?: string): Infer<this> {
