@@ -9,7 +9,7 @@ import transform from "@rcompat/build/transform";
 import FileRef from "@rcompat/fs/FileRef";
 import type Path from "@rcompat/fs/Path";
 import identity from "@rcompat/function/identity";
-import assert from "@rcompat/invariant/assert";
+import assert from "@rcompat/assert";
 import cache from "@rcompat/kv/cache";
 import entries from "@rcompat/record/entries";
 import exclude from "@rcompat/record/exclude";
