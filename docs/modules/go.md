@@ -207,7 +207,7 @@ In addition, any types defined in `types` will be available to a `Dispatcher`.
 Suppose you have defined the following type.
 
 ```js caption=types/uuid.js
-import is from "@rcompat/invariant/is";
+import is from "@rcompat/assert/is";
 
 const valid = /^[^\W_]{8}-[^\W_]{4}-[^\W_]{4}-[^\W_]{4}-[^\W_]{12}$/u;
 

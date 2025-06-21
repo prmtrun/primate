@@ -1,5 +1,5 @@
 import view from "primate/handler/view";
-import assert from "@rcompat/invariant/assert";
+import assert from "@rcompat/assert";
 
 const posts = [{
   id: 1,
