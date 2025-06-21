@@ -16,11 +16,13 @@ const deslash = (url: string) => url.replaceAll(/\/{2,}/gu, _ => "/");
 
 const normalize = (pathname: string) => deroot(deslash(pathname));
 
-const parse_body = async (request: Request, url: URL) => {
+const parse_body = async (request: Request, url: URL): Promise<Body >=> {
   try {
-    return await BodyParser.parse(request) ?? {};
+    return await BodyParser.parse(request) as Body;
   } catch(error) {
     mismatched_body(url.pathname, (error as any).message);
+    // unreachable
+    return Promise.resolve(null);
   }
 };
 
