@@ -1,8 +1,8 @@
 import route_error from "#error/route-error";
 import pkgname from "#pkgname";
 import type { BuildAppHook } from "@primate/core/hook";
-import verbs from "@primate/core/http/verbs";
 import log from "@primate/core/log";
+import verbs from "@primate/core/verbs";
 import assert from "@rcompat/assert";
 import dim from "@rcompat/cli/color/dim";
 import user from "@rcompat/env/user";

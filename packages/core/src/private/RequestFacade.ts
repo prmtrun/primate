@@ -12,7 +12,7 @@ type RequestFacade = Dictionary<Dictionary | unknown> & {
   query: PartialStringDictionary;
   cookies: PartialStringDictionary;
   path: PartialStringDictionary;
-  body?: Body;
+  body: Body;
 };
 
 export { RequestFacade as default };

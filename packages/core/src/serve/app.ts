@@ -8,9 +8,9 @@ import type FrontendOptions from "#frontend/Options";
 import log from "#log";
 import type Mode from "#Mode";
 import module_loader from "#module-loader";
-import type Route from "#Route";
+import type RouteExport from "#RouteExport";
 import type RouteSpecial from "#RouteSpecial";
-import type AsyncLocalStorage from "@rcompat/async/context";
+import is from "@rcompat/assert/is";
 import dim from "@rcompat/cli/color/dim";
 import crypto from "@rcompat/crypto";
 import FileRef from "@rcompat/fs/FileRef";
@@ -20,7 +20,6 @@ import { html } from "@rcompat/http/mime";
 import serve from "@rcompat/http/serve";
 import type Server from "@rcompat/http/Server";
 import Status from "@rcompat/http/Status";
-import is from "@rcompat/assert/is";
 import empty from "@rcompat/record/empty";
 import entries from "@rcompat/record/entries";
 import get from "@rcompat/record/get";
@@ -133,7 +132,7 @@ export interface ServeApp extends App {
   stop(): void;
   server(): Server;
   mode: Mode;
-  router: ReturnType<typeof Router.init<Route, RouteSpecial>>;
+  router: ReturnType<typeof Router.init<RouteExport, RouteSpecial>>;
   fonts: unknown[];
   target(_: any): void;
   get url(): string;
@@ -314,7 +313,7 @@ export default async (rootfile: string, build: Options): Promise<ServeApp> => {
       return server;
     },
     target(_: any) {},
-    router: Router.init<Route, RouteSpecial>({
+    router: Router.init<RouteExport, RouteSpecial>({
         import: true,
         extensions: [".js"],
         specials: {

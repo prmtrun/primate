@@ -11,6 +11,7 @@ export default (request: Request): RequestFacade => {
     PartialDictionary<string>;
 
   return {
+    body: null,
     request,
     url,
     query: Object.fromEntries(url.searchParams),

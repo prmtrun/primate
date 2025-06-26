@@ -2,9 +2,9 @@ import type Body from "#Body";
 import mismatched_body from "#error/mismatched-body";
 import no_route_to_path from "#error/no-route-to-path";
 import type RequestFacade from "#RequestFacade";
-import type Route from "#Route";
 import type RouteSpecial from "#RouteSpecial";
 import type { ServeApp } from "#serve/app";
+import type Verb from "#Verb";
 import BodyParser from "@rcompat/http/body";
 import entries from "@rcompat/record/entries";
 
@@ -32,7 +32,8 @@ export default async (app: ServeApp, facade: RequestFacade) => {
   const $request_body_parse = app.config("request.body.parse");
   const $location = app.config("location");
 
-  const index = (path: string) => `${$location.routes}${path === "/" ? "/index" : path}`;
+  const index = (path: string) =>
+    `${$location.routes}${path === "/" ? "/index" : path}`;
 
   const pathname = normalize(url.pathname);
   const route = app.router.match(request) ??
@@ -45,10 +46,10 @@ export default async (app: ServeApp, facade: RequestFacade) => {
   const { guards = [], errors = [], layouts = [] } = entries(matched.specials)
     .map(([key, value]) => [`${key}s`, value]).get();
 
-  const handler = matched.file.default[request.method.toLowerCase() as keyof Route["default"]];
+  const handler = matched.file.default[request.method.toLowerCase() as Verb];
 
   return {
-    body: body as Body,
+    body,
     path,
     guards: guards as RouteSpecial[],
     errors: errors as RouteSpecial[],

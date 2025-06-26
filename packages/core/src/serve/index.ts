@@ -2,7 +2,7 @@ import type Asset from "#asset";
 import type { Config } from "#config";
 import defaults from "#config";
 import type Mode from "#Mode";
-import type Route from "#Route";
+import type RouteExport from "#RouteExport";
 import type RouteSpecial from "#RouteSpecial";
 import override from "@rcompat/record/override";
 import type Dictionary from "@rcompat/type/Dictionary";
@@ -17,7 +17,7 @@ type Import = Dictionary & {
 };
 
 export type BuildFiles = {
-  routes: [string, Route | RouteSpecial][];
+  routes: [string, RouteExport | RouteSpecial][];
   locales?: [string, {
     default: Dictionary<string>;
   }][];

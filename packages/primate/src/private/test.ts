@@ -1,4 +1,4 @@
-import verbs from "@primate/core/http/verbs";
+import verbs from "@primate/core/verbs";
 import type Dictionary from "@rcompat/type/Dictionary";
 
 export type Body = string | Dictionary<string> | Dictionary<string>[];

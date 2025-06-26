@@ -1,5 +1,5 @@
 import type { BuildAppHook } from "@primate/core/hook";
-import verbs from "@primate/core/http/verbs";
+import verbs from "@primate/core/verbs";
 import assert from "@rcompat/assert";
 import type FileRef from "@rcompat/fs/FileRef";
 
