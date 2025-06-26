@@ -1,10 +1,11 @@
-import Database from "@primate/core/db/Database";
+import typemap from "#typemap";
+import type Database from "@primate/core/db/Database";
 import type Store from "@primate/core/db/Store";
-import type Client from "#Client";
-import type EO from "@rcompat/type/EO";
-import runtime from "@rcompat/runtime";
 import maybe from "@rcompat/assert/maybe";
 import entries from "@rcompat/record/entries";
+import type Client from "@rcompat/sqlite";
+import type EO from "@rcompat/type/EO";
+import type DataType from "pema/DataType";
 
 type CreateOptions = {
   limit?: number;
@@ -16,8 +17,6 @@ type ReadOptions = {
   count?: boolean;
   limit?: number;
 };
-
-const is_bun = (runtime as "node" | "deno" | "bun") === "bun";
 
 const make_sort = ({ sort = {} } = {}) => {
   maybe(sort).object();
@@ -38,22 +37,35 @@ const predicate = (criteria: EO) => {
 
   return { where, bindings: criteria };
 };
+type Description = Record<string, keyof DataType>;
 
-export default class SqliteDatabase extends Database {
+export default class SqliteDatabase implements Database {
   #client: Client;
-  #connection: any;
 
   constructor(client: Client) {
-    super();
-
     this.#client = client;
   }
 
-  async connection() {
-    if (this.#connection === undefined) {
-      this.#connection = await this.#client.acquire();
-    }
-    return this.#connection;
+  #new(name: string, description: Description) {
+    const body = Object.entries(description)
+      .map(entry => {
+        const [column, value] = entry;
+        return `"${column}" ${typemap(value)}`;
+      }).join(",");
+    const query = `create table if not exists ${name} (${body})`;
+    this.#client.prepare(query).run();
+  }
+
+  #drop(name: string) {
+    const query = `drop table if exists ${name}`;
+    this.#client.prepare(query).run();
+  }
+
+  get schema() {
+    return {
+      create: this.#new.bind(this),
+      delete: this.#drop.bind(this),
+    };
   }
 
   async create(_store: Store,
@@ -71,10 +83,7 @@ export default class SqliteDatabase extends Database {
     const { where, bindings } = predicate(criteria);
     const select = projection.length === 0 ? "*" : projection.join(", ");
     const query = `select ${select} from ${store.name} ${where} ${sorting};`;
-    const statement = (await this.connection()).prepare(query);
-    if (!is_bun) {
-      statement.safeIntegers(true);
-    }
+    const statement = this.#client.prepare(query);
     const results: Record<string, unknown>[] = statement.all(bindings);
     return results.map(result =>
       entries(result).filter(([, value]) => value !== null).get());

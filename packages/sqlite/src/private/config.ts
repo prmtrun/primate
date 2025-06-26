@@ -1,8 +1,6 @@
-import Client from "#Client";
 import Database from "#Database";
+import Client from "@rcompat/sqlite";
 
-export default (database: string) => {
-  const client = new Client(database);
-
-  return new Database(client);
-};
+export default (path: string) => new Database(new Client(path, {
+  safeIntegers: true,
+}));

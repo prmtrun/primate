@@ -1,6 +1,8 @@
 //import type EO from "@rcompat/type/EO";
+import type Id from "#Id";
 
 type DataType = {
+  id: Id;
   //array: unknown[];
   blob: Blob;
   boolean: boolean;
@@ -13,7 +15,6 @@ type DataType = {
   i32: number;
   i64: bigint;
   //json: EO;
-  primary: string;
   string: string;
   time: Date;
   u8: number;

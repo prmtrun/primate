@@ -1,6 +1,8 @@
 import type Database from "#db/Database";
 import type EO from "@rcompat/type/EO";
 import type Store from "#db/Store";
+import type Dictionary from "@rcompat/type/Dictionary";
+import type PartialDictionary from "@rcompat/type/PartialDictionary";
 
 type Projection = EO[] | null;
 type Criteria = EO;
@@ -13,6 +15,29 @@ type CreateOptions = {
 };
 
 export default class InMemoryDatabase implements Database {
+  #collections: PartialDictionary<Dictionary> = {};
+
+  #new(name: string) {
+    if (this.#collections[name] !== undefined) {
+      throw new Error(`collection ${name} already exists`);
+    }
+    this.#collections[name] = {};
+  }
+
+  #drop(name: string) {
+    if (this.#collections[name] === undefined) {
+      throw new Error(`collection ${name} doesn't exist`);
+    }
+    delete this.#collections[name];
+  }
+
+  get schema() {
+    return {
+      create: this.#new,
+      delete: this.#drop,
+    };
+  }
+
   async create(
     _store: Store,
     _documents: Document[],

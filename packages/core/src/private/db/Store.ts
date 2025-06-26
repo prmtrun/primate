@@ -1,13 +1,13 @@
 import type Changes from "#db/Changes";
 import type Database from "#db/Database";
 import type Document from "#db/Document";
-import type Id from "#db/Id";
 import InMemoryDatabase from "#db/InMemoryDatabase";
 import Query from "#db/Query";
 import derive from "#db/symbol/derive";
 import type Types from "#db/Types";
 import is from "@rcompat/assert/is";
 import maybe from "@rcompat/assert/maybe";
+import type Id from "pema/Id";
 import type InferStore from "pema/InferStore";
 import type StoreSchema from "pema/StoreSchema";
 import StoreType from "pema/StoreType";
@@ -55,15 +55,14 @@ export default class Store<S extends StoreSchema = StoreSchema> {
   [derive](name: string, db: Database) {
     const _name = this.#config.name;
 
-    return new Store(this.#schema, { name: _name ?? name, db });
-  }
-
-  get #db() {
-    return this.#config.db ?? new InMemoryDatabase();
+    return new Store(this.#schema, {
+      name: this.#config.name ?? name,
+      db: this.#config.db ?? db,
+    });
   }
 
   get db() {
-    return this.#config.db;
+    return this.#config.db ?? new InMemoryDatabase();
   }
 
   get types() {
@@ -91,7 +90,7 @@ export default class Store<S extends StoreSchema = StoreSchema> {
 
     const options = { count: true };
 
-    const { length } = (await this.#db.read(this, { id }, null, options));
+    const { length } = (await this.db.read(this, { id }, null, options));
 
     return length === 1;
   }
@@ -108,7 +107,7 @@ export default class Store<S extends StoreSchema = StoreSchema> {
     // assert (await this.count(key)) === 1 const n = this.name;
     const options = { limit: 1 };
 
-    const document = await this.#db.read(this, { id }, null, options);
+    const document = await this.db.read(this, { id }, null, options);
 
     return this.#type.validate(document);
   }
@@ -125,7 +124,7 @@ export default class Store<S extends StoreSchema = StoreSchema> {
 
     const validated = this.#type.validate(document);
 
-    const [_id] = await this.#db.create(this, []);
+    const [_id] = await this.db.create(this, []);
 
 //    validated.id = id;
 
@@ -181,7 +180,7 @@ export default class Store<S extends StoreSchema = StoreSchema> {
     is(criteria).object();
     maybe(fields).object();
 
-    const result = await this.#db.read(this, {});
+    const result = await this.db.read(this, {});
 
     return result as any;
   };

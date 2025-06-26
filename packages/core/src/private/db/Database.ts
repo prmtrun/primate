@@ -1,5 +1,7 @@
 import type Store from "#db/Store";
 import type EO from "@rcompat/type/EO";
+import type MaybePromise from "@rcompat/type/MaybePromise";
+import type DataType from "pema/DataType";
 
 type Criteria = EO;
 type Projection = EO[] | null;
@@ -12,34 +14,35 @@ type CreateOptions = {
   limit?: number;
 };
 type Document = EO;
-
-type SchemaFacade = {
-  create(schema: string, description: EO): void;
-  drop(schema: string): void;
-};
+type Description = Record<string, keyof DataType>;
 
 export default abstract class Database {
-//  abstract schema: SchemaFacade;
+  abstract schema: {
+    create(name: string, description: Description): MaybePromise<void>;
+    delete(name: string ): MaybePromise<void>;
+  };
+
   abstract create(
     store: Store,
     documents: Document[],
     options?: CreateOptions,
-  ): Promise<Document[]>;
+  ): MaybePromise<Document[]>;
 
   abstract read(
     store: Store,
     criteria: Criteria,
     projection?: Projection,
     options?: ReadOptions,
-  ): Promise<Document[]>;
+  ): MaybePromise<Document[]>;
 
   abstract update(
     store: Store,
     criteria: Criteria,
-    set: Document): Promise<number>;
+    set: Document
+  ): MaybePromise<number>;
 
   abstract delete(
     store: Store,
     criteria: Criteria,
-  ): Promise<void>;
+  ): MaybePromise<void>;
 };

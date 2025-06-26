@@ -12,7 +12,7 @@ export default (config: Config) => {
 
   return {
     wrap(name: string, store: Store) {
-      return store[derive](name, store.db ?? drivers.default);
+      return store[derive](name, drivers.default);
     },
   };
 };
