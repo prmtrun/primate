@@ -178,6 +178,7 @@ export default db.wrap("${file.base}", store);`);
   const manifest_data = {
     ...await manifest() as Dictionary,
     imports: {
+      "#locale/*": "./locales/*.js",
       "#route/*": "./routes/*.js",
       "#stage/route/*": "./stage/routes/*.js",
       "#store/*": "./stores/*.js",

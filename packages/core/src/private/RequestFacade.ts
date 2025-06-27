@@ -5,6 +5,7 @@ import type PartialDictionary from "@rcompat/type/PartialDictionary";
 type PartialStringDictionary = PartialDictionary<string>;
 
 type RequestFacade = Dictionary<Dictionary | unknown> & {
+  context: Dictionary;
   request: Request;
   url: URL;
   pass(to: string): Promise<Response>;

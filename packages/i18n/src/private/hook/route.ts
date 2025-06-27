@@ -16,6 +16,7 @@ export default (manager: Manager): RequestHook => (request, next) => {
     ?? manager.locale;
 
   return next({ ...request, context: {
+    ...request.context,
     i18n: { locale, locales: manager.locales } },
   });
 };

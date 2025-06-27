@@ -11,6 +11,7 @@ export default (request: Request): RequestFacade => {
     PartialDictionary<string>;
 
   return {
+    context: {},
     body: null,
     request,
     url,

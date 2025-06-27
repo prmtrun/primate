@@ -6,14 +6,13 @@ import type { BuildAppHook } from "@primate/core/hook";
 const repository = "locales";
 
 export default (manager: Manager): BuildAppHook => async (app, next) => {
-  const location = app.config("location");
   const root = app.root.join(repository);
   if (!await root.exists()) {
     no_local_directory(root);
     return next(app);
   }
 
-  const base = app.path.build.join(location.server, repository);
+  const base = app.path.build.join(repository);
   await base.create();
 
   let has_default_locale = false;
@@ -32,7 +31,7 @@ export default (manager: Manager): BuildAppHook => async (app, next) => {
     return next(app);
   }
 
-  app.server_build.push("locales");
+  app.server_build.push("locale");
 
   return next(app);
 };
