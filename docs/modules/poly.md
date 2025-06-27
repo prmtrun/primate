@@ -1,7 +1,6 @@
 # Poly
 
-This handler module supports SSR and hydration and serves Poly (Svelte 4) 
-components with the `.poly` extension.
+This module serves Poly (Svelte 4) components using the `.poly` extension.
 
 ## Install
 
@@ -47,7 +46,7 @@ Create a Poly component in `components`.
 Serve it from a route.
 
 ```js caption=routes/poly.js
-import view from "primate/handler/view";
+import view from "primate/view";
 
 const posts = [{
   id: 1,

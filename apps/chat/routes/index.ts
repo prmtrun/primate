@@ -1,5 +1,5 @@
-import view from "primate/handler/view";
 import route from "primate/route";
+import view from "primate/view";
 
 export default route({
   get() {

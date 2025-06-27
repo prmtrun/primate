@@ -1,6 +1,6 @@
 # Eta 
 
-This handler module serves Eta components with the `.eta` extension.
+This module serves Eta components using the `.eta` extension.
 
 ## Install
 
@@ -36,7 +36,7 @@ Create an Eta component in `components`.
 Serve it from a route.
 
 ```js caption=routes/eta.js
-import view from "primate/handler/view";
+import view from "primate/view";
 
 const posts = [{
   id: 1,

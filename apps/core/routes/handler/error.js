@@ -1,4 +1,4 @@
-import error from "primate/handler/error";
+import error from "primate/error";
 
 export default {
   get() {

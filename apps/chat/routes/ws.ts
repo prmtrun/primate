@@ -1,6 +1,6 @@
 import uint from "pema/uint";
-import ws from "primate/handler/ws";
 import route from "primate/route";
+import ws from "primate/ws";
 
 export default route({
   get(request) {

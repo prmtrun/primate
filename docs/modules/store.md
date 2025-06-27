@@ -166,7 +166,7 @@ saving it. Normally though, you wouldn't call `validate` directly but have
 `insert` or `update` call it for you.
 
 ```js caption=routes/create-user.js
-import redirect from "primate/handler/redirect";
+import redirect from "primate/redirect";
 
 export default {
   post(request) {

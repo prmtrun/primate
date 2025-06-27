@@ -16,7 +16,7 @@ with an error route file rendering a Svelte component (`@primate/svelte` must
 be installed and loaded in the project).
 
 ```js caption=routes/+error.js
-import view from "primate/handler/view";
+import view from "primate/view";
 
 export default request => view("ErrorPage.svelte");
 ```
@@ -54,11 +54,11 @@ case it does not exist, Primate will fall back to its default `error.html`.
 ```
 
 Like normal routes, error routes can use a different error page if desired, by
-passing a `page` property to the third handler parameter. The page itself must
+passing a `page` property to the third parameter. The page itself must
 be located under `pages`.
 
 ```js caption=routes/+error.js
-import view from "primate/handler/view";
+import view from "primate/view";
 
 export default request => view("ErrorPage.svelte", {}, {
   page: "other-error.html",

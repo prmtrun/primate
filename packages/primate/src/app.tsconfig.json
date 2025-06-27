@@ -13,6 +13,7 @@
     "paths": {
       "#component/*": ["components/*"],
       "#store/*": ["stores/*"],
+      "#config/*": ["config/*"],
       "#app": ["config/app.ts", "config/app.js"],
       "#session": ["config/session.ts", "config/session.js"],
       "#db": ["config/db.ts", "config/db.js"]

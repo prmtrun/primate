@@ -1,6 +1,6 @@
 # Ruby
 
-This backend introduces support for routes written in Ruby.
+This module adds support for writing routes in Ruby.
 
 ## Install
 

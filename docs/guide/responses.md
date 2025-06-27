@@ -30,8 +30,8 @@ them the string "Donald" in plain text.
 To use this handler explicitly, import and use the `text` function.
 
 ```js caption=routes/plain-text.js
-import text from "primate/handler/text";
-import Status from "@rcompat/http/Status";
+import text from "primate/text";
+import Status from "primate/http/Status";
 
 export default {
   post(request) {
@@ -122,8 +122,8 @@ easier to use the explicit `redirect` handler to redirect to paths within the
 same app.
 
 ```js caption=routes/redirect.js
-import redirect from "primate/handler/redirect";
-import Status from "@rcompat/http/Status";
+import redirect from "primate/redirect";
+import Status from "primate/http/Status";
 
 export default {
   get() {
@@ -164,7 +164,7 @@ Create an HTML component in `components/hello.html`.
 And a route to serve it.
 
 ```js caption=routes/view.js
-import view from "primate/handler/view";
+import view from "primate/view";
 
 export default {
   get() {
@@ -186,7 +186,7 @@ In addition to the HTML frontend, Primate features many known
 You can pass props (data) to your view handler.
 
 ```js caption=routes/view-props.js
-import view from "primate/handler/view";
+import view from "primate/view";
 
 export default {
   get() {
@@ -214,7 +214,7 @@ To use a different HTML page to embed your component instead of [the
 default][default-page], pass in a differing `page` string property.
 
 ```js caption=routes/view-page.js
-import view from "primate/handler/view";
+import view from "primate/view";
 
 export default {
   get() {
@@ -232,7 +232,7 @@ You may sometimes want to serve only the component HTML (without the encasing
 page). For that pass in the boolean property `partial` set to `true`.
 
 ```js caption=routes/view-partial.js
-import view from "primate/handler/view";
+import view from "primate/view";
 
 export default {
   get() {
@@ -250,7 +250,7 @@ To replace any placeholders of the form `%placeholder%` in your rendered HTML,
 pass any an object property `placeholders`.
 
 ```js caption=routes/view-placeholders.js
-import view from "primate/handler/view";
+import view from "primate/view";
 
 export default {
   get() {
@@ -271,7 +271,7 @@ The `error` handler allows you to generate an error (typically with a 4xx or
 `404 Not Found` using the content type `text/html`.
 
 ```js caption=routes/error.js
-import error from "primate/handler/error";
+import error from "primate/error";
 
 export default {
   get() {
@@ -285,8 +285,8 @@ A GET request to `/error` will return a `404 Not Found` response.
 You can customize the body and the status of this handler.
 
 ```js caption=routes/server-error.js
-import error from "primate/handler/error";
-import Status from "@rcompat/http/Status";
+import error from "primate/error";
+import Status from "primate/http/Status";
 
 export default {
   get() {
@@ -303,7 +303,7 @@ body `Internal Server Error`.
 You can upgrade any `GET` route to a WebSocket route with the `ws` handler.
 
 ```js caption=routes/ws.js
-import ws from "primate/handler/ws";
+import ws from "primate/ws";
 
 export default {
   get(request) {
@@ -367,11 +367,11 @@ up to a given number of messages, the default being 20.
 
 ## Server-sent events
 
-Similarly to `ws`, you can use the `sse` handler to upgrade a `GET` request to
+Similarly to `ws`, you can use the `sse` to upgrade a `GET` request to
 stream out server-sent events to the client.
 
 ```js caption=routes/sse.js
-import sse from "primate/handler/sse";
+import sse from "primate/sse";
 
 const passed = start_time => Math.floor((Date.now() - start_time) / 1000);
 
@@ -411,7 +411,7 @@ The client subscribes to this event and prints it to the console.
 This client is then served using another route.
 
 ```js caption=routes/sse-client.js
-import view from "primate/handler/view";
+import view from "primate/view";
 
 export default {
   get() {
@@ -426,7 +426,7 @@ Lastly, for a custom response status, you can return a `Response` object from a
 route.
 
 ```js caption=routes/response.js
-import Status from "@rcompat/http/Status";
+import Status from "primate/http/Status";
 
 export default {
   get() {

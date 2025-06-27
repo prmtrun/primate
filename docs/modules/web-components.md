@@ -1,6 +1,6 @@
 # Web Components
 
-This handler module serves web components with the `.webc` extension.
+This module serves web components using the `.webc` extension.
 
 ## Install
 
@@ -64,7 +64,7 @@ And another component for displaying post links.
 Create a route and serve the `post-index` component.
 
 ```js caption=routes/webc.js
-import view from "primate/handler/view";
+import view from "primate/view";
 
 const posts = [{
   id: 1,

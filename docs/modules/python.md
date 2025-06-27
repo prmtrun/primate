@@ -1,6 +1,6 @@
 # Python
 
-This backend introduces support for routes written in Python, using Pyodide.
+This module adds support for writing routes in Python.
 
 ## Install
 

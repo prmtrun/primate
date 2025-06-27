@@ -1,6 +1,6 @@
 # Voby
 
-This handler module serves Voby components with the `.voby` extension.
+This module serves Voby components using the `.voby` extension.
 
 ## Install
 
@@ -36,7 +36,7 @@ export default ({ posts, title }) => {
 Serve it from a route.
 
 ```js caption=routes/voby.js
-import view from "primate/handler/view";
+import view from "primate/view";
 
 const posts = [{
   id: 1,

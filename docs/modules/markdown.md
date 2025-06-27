@@ -1,6 +1,6 @@
 # Markdown
 
-This handler module serves Markdown components with the `.md` extension.
+This module serves Markdown components using the `.md` extension.
 
 ## Install
 
@@ -34,7 +34,7 @@ This is the **first** post
 Serve it from a route.
 
 ```js caption=routes/markdown.js
-import view from "primate/handler/view";
+import view from "primate/view";
 
 export default {
   get() {

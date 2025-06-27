@@ -1,7 +1,6 @@
 # Vue
 
-This handler module supports SSR and serves Vue SFC components with the `.vue`
-extension.
+This module serves Vue SFC components using the `.vue` extension.
 
 ## Install
 
@@ -37,7 +36,7 @@ Create a SFC component in `components`.
 Serve it from a route.
 
 ```js caption=routes/vue.js
-import view from "primate/handler/view";
+import view from "primate/view";
 
 const posts = [{
   id: 1,

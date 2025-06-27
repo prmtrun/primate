@@ -1,10 +1,11 @@
 import session from "#session";
+import route from "primate/route";
 
-export default {
+export default route({
   get() {
     if (session.new) {
       return "no session";
     }
     return "session";
   },
-};
+});

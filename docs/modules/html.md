@@ -1,6 +1,6 @@
 # HTML
 
-This handler module serves HTML components with the `.html` extension.
+This module serves HTML components using the `.html` extension.
 
 ## Install
 
@@ -38,7 +38,7 @@ ${posts.map(post => `
 Serve it from a route.
 
 ```js caption=routes/html.js
-import view from "primate/handler/view";
+import view from "primate/view";
 
 const posts = [{
   id: 1,

@@ -1,4 +1,4 @@
-import redirect from "primate/handler/redirect";
+import redirect from "primate/redirect";
 
 export default {
   get() {

@@ -74,7 +74,7 @@ and redirect users who have submitted the form to a success page. This requires
 first changing the previous route to show a form.
 
 ```js caption=routes/index.js
-import view from "primate/handler/view";
+import view from "primate/view";
 
 export default {
   get() {
@@ -108,8 +108,8 @@ Next we need to handle the form submission. We'll do that by adding a `post`
 function to our route.
 
 ```js caption=routes/index.js
-import view from "primate/handler/view";
-import redirect from "primate/handler/redirect";
+import view from "primate/view";
+import redirect from "primate/redirect";
 
 export default {
   get() {
@@ -175,7 +175,7 @@ svelte@4`.
 Now change your route to serve a Svelte component.
 
 ```js caption=routes/index.js
-import view from "primate/handler/view";
+import view from "primate/view";
 
 export default {
   get() {

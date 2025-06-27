@@ -1,7 +1,6 @@
 # Angular
 
-This handler module supports SSR and hydration and serves Angular components
-with the `.component.ts` extension.
+This module serves Angular components using the `.component.ts` extension.
 
 ## Install
 
@@ -52,7 +51,7 @@ export default class PostIndex {
 Serve it from a route.
 
 ```js caption=routes/angular.js
-import view from "primate/handler/view";
+import view from "primate/view";
 
 const posts = [{
   id: 1,

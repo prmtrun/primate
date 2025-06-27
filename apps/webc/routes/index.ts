@@ -1,4 +1,4 @@
-import view from "primate/handler/view";
+import view from "primate/view";
 
 const posts = [{
   id: 1,
@@ -7,6 +7,6 @@ const posts = [{
 
 export default {
   get() {
-    return view("index.svelte", { posts });
+    return view("post-index.webc", { posts });
   },
 };

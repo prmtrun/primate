@@ -1,7 +1,6 @@
 # Svelte
 
-This handler module supports SSR and hydration and serves Svelte components
-with the `.svelte` extension.
+This module serves Svelte components using the `.svelte` extension.
 
 ## Install
 
@@ -47,7 +46,7 @@ Create a Svelte component in `components`.
 Serve it from a route.
 
 ```js caption=routes/svelte.js
-import view from "primate/handler/view";
+import view from "primate/view";
 
 const posts = [{
   id: 1,

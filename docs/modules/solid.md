@@ -1,7 +1,6 @@
 # Solid
 
-This handler module supports SSR and hydration and serves Solid (JSX)
-components with the `.jsx` extension.
+This module serves Solid (JSX) components using the `.jsx` extension.
 
 ## Install
 
@@ -57,7 +56,7 @@ export default function PostIndex(props) {
 Serve it from a route.
 
 ```js caption=routes/solid.js
-import view from "primate/handler/view";
+import view from "primate/view";
 
 const posts = [{
   id: 1,

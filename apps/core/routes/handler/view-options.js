@@ -1,4 +1,4 @@
-import view from "primate/handler/view";
+import view from "primate/view";
 
 export default {
   get() {

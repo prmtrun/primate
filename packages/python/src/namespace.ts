@@ -1,9 +1,9 @@
 import borrow from "#borrow";
 import type ResponseFunction from "@primate/core/ResponseFunction";
-import error from "primate/handler/error";
-import redirect from "primate/handler/redirect";
-import view from "primate/handler/view";
 import session from "primate/config/session";
+import error from "primate/error";
+import redirect from "primate/redirect";
+import view from "primate/view";
 import type { PyProxy } from "pyodide/ffi";
 
 type View = typeof view;

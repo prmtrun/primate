@@ -1,7 +1,6 @@
 # Marko
 
-This handler module supports SSR and serves Marko components with the `.marko`
-extension.
+This module serves Marko components using the `.marko` extension.
 
 ## Install
 
@@ -39,7 +38,7 @@ Create a Marko component in `components`.
 Serve it from a route.
 
 ```js caption=routes/marko.js
-import view from "primate/handler/view";
+import view from "primate/view";
 
 const posts = [{
   id: 1,

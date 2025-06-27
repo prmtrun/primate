@@ -1,6 +1,6 @@
 # Handlebars
 
-This handler module serves Handlebars components with the `.hbs` extension.
+This module serves Handlebars components using the `.hbs` extension.
 
 ## Install
 
@@ -36,7 +36,7 @@ Create a Handlebars component in `components`.
 Serve it from a route.
 
 ```js caption=routes/hbs.js
-import view from "primate/handler/view";
+import view from "primate/view";
 
 const posts = [{
   id: 1,

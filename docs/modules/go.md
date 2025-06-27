@@ -1,6 +1,6 @@
 # Go
 
-This backend introduces support for routes written in Golang.
+This module adds support for writing routes in Golang.
 
 ## Install
 

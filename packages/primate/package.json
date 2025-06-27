@@ -48,10 +48,6 @@
   },
   "exports": {
     "./tsconfig": "./lib/app.tsconfig.json",
-    "./handler/*": {
-      "apekit": "./src/handlers/*.ts",
-      "default": "./lib/handlers/*.js"
-    },
     "./runtime/*": {
       "apekit": "./src/runtime/*.ts",
       "default": "./lib/runtime/*.js"

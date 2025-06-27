@@ -31,7 +31,7 @@ Serve it with the `view` handler, passing in the name of the file you just
 created.
 
 ```js caption=routes/hello.js
-import view from "primate/handler/view";
+import view from "primate/view";
 
 export default {
   get() {
@@ -79,7 +79,7 @@ page, especially if you're replacing some parts of the page on the frontend
 handler.
 
 ```js caption=routes/partial-hello.js
-import view from "primate/handler/view";
+import view from "primate/view";
 
 export default {
   get() {

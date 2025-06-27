@@ -1,6 +1,6 @@
 # HTMX
 
-This handler module serves HTMX components with the `.htmx` extension.
+This module serves HTMX components using the `.htmx` extension.
 
 ## Install
 
@@ -38,7 +38,7 @@ ${posts.map(post => `
 Serve it from a route.
 
 ```js caption=routes/htmx.js
-import view from "primate/handler/view";
+import view from "primate/view";
 
 const posts = [{
   id: 1,

@@ -1,7 +1,6 @@
 # React
 
-This handler module supports SSR and hydration and serves React (JSX)
-components with the `.jsx` extension.
+This module serves React (JSX) components using the `.jsx` extension.
 
 ## Install
 
@@ -39,7 +38,7 @@ export default function PostIndex({ posts }) {
 Serve it from a route.
 
 ```js caption=routes/react.js
-import view from "primate/handler/view";
+import view from "primate/view";
 
 const posts = [{
   id: 1,
