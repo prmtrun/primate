@@ -37,7 +37,7 @@ const guard = (app: ServeApp, guards: RouteSpecial[]): RequestHook => async (req
   } catch (error) {
     const _error = error as GuardError;
     if (_error.type === guard_error) {
-      return respond(_error.response)(app, {}, request);
+      return respond(_error.response)(app, {}, request) as Response;
     }
     // rethrow if not guard error
     throw error;

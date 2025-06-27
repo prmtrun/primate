@@ -1,5 +1,6 @@
 import component_error from "#error/component-error";
 import type Frontend from "#Frontend";
+import type Component from "#frontend/Component";
 import normalize from "#frontend/normalize";
 import type Props from "#frontend/Props";
 import type RequestFacade from "#RequestFacade";
@@ -28,15 +29,9 @@ type Options<Comp> = {
   render: (component: Comp, props: Props) => { body: string; head: string };
 };
 
-type Component<C> = {
-  name: string;
-  props: Props;
-  component: C;
-};
-
 const register = <C>({ app, name: rootname, ...rest }: Options<C>): Omit<Options<C>, "app" | "name"> & {
   root: C;
-  load(name: string, props: Props): Component<C>;
+  load(name: string, props: Props): Component;
 } => ({
   root: app.component<C>(`root_${rootname}.js`)!,
   load(name: string, props: Props) {
@@ -46,14 +41,14 @@ const register = <C>({ app, name: rootname, ...rest }: Options<C>): Omit<Options
   ...rest,
 });
 
-type Layout<C> = (app: ServeApp, transfer: Dictionary, request: RequestFacade)
-  => Component<C>;
+type Layout = (app: ServeApp, transfer: Dictionary, request: RequestFacade)
+  => Component;
 
 export default <C>(config: Options<C>): Frontend => {
   const { load, root, render, client } = register<C>(config);
   const normalized = normalize(config.name);
 
-  const get_names = (components: Component<C>[]) =>
+  const get_names = (components: Component[]) =>
     map(components, ({ name }) =>
       normalized(name));
 
@@ -63,7 +58,7 @@ export default <C>(config: Options<C>): Frontend => {
         return load(name, props);
 
       }
-      const components = (await Promise.all((layouts as Layout<C>[])
+      const components = (await Promise.all((layouts as Layout[])
         .map(layout => layout(app, { as_layout: true }, request))))
         /* set the actual page as the last component */
         .concat(load(name, props));

@@ -9,7 +9,6 @@ type ResponseLike = MaybePromise<
   ReadableStream |
   Blob |
   Response |
-  ResponseFunction |
-  /*throws*/void>;
+  ResponseFunction>;
 
 export { ResponseLike as default };

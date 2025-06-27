@@ -1,6 +1,6 @@
 import type RequestFacade from "#RequestFacade";
-import type RouteResponse from "#RouteResponse";
+import type ResponseLike from "#ResponseLike";
 
-export type RouteFunction = (request: RequestFacade) => RouteResponse;
+export type RouteFunction = (request: RequestFacade) => ResponseLike;
 
 export { RouteFunction as default };
