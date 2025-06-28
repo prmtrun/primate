@@ -3,14 +3,14 @@
   "private": true,
   "dependencies": {
     "@primate/frontend": "^0.15.0",
-    "@rcompat/fs": "^0.12.18",
+    "@rcompat/fs": "^0.13.2",
     "@rcompat/http": "^0.11.2",
     "@rcompat/record": "^0.7.1",
     "handlebars": "^4.7.8",
     "marked": "^12.0.2",
     "primate": "^0.31.1",
     "shiki": "^1.17.7",
-    "svelte": "^4.2.19"
+    "svelte": "^5.34.9"
   },
   "scripts": {
     "start": "scripts/start.sh"
