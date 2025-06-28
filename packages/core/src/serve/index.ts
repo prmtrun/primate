@@ -4,6 +4,7 @@ import defaults from "#config";
 import type Mode from "#Mode";
 import type RouteExport from "#RouteExport";
 import type RouteSpecial from "#RouteSpecial";
+import type SessionConfig from "#session/Config";
 import override from "@rcompat/record/override";
 import type Dictionary from "@rcompat/type/Dictionary";
 import type Schema from "pema/Schema";
@@ -35,6 +36,7 @@ export type Options = {
   target: string;
   loader: ReturnType<typeof loader>;
   assets: Asset[];
+  session_config: SessionConfig;
 };
 
 export default async (root: string, { config, ...options }: Options) =>

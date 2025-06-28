@@ -6,6 +6,6 @@ export default route({
     if (session.new) {
       return "no session";
     }
-    return "session";
+    return `session (${session.id})`;
   },
 });

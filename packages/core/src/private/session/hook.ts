@@ -15,8 +15,8 @@ const cookie: Cookie = (value, { path, secure, http_only, same_site }) =>
   `${value};${http_only};Path=${path};Secure=${secure};SameSite=${same_site}`;
 
 export default (app: ServeApp): RequestHook => async (request, next) => {
-  const { name, ...cookie_options } = app.config("session.cookie");
-  const manager = app.config("session.manager");
+  const { name, ...cookie_options } = app.session.cookie;
+  const manager = app.session.manager;
 
   const id = request.cookies[name];
   const session = manager.get(id as string);

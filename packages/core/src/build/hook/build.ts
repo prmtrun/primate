@@ -85,6 +85,8 @@ ${app.server_build.map(name => `${name}s`).map(name =>
   ).join("\n")}
 import components from "./${build_number}/components.js";
 import target from "./target.js";
+import session from "#session";
+import s_config from "primate/symbol/config";
 
 const app = await serve(import.meta.url, {
   ...target,
@@ -92,6 +94,7 @@ const app = await serve(import.meta.url, {
   files,
   components,
   mode: "${mode}",
+  session_config: session[s_config],
 });
 
 export default app;
@@ -112,14 +115,14 @@ import store from "#stage/store${file}";
 
 export default db.wrap("${file.base}", store);`);
 
+  const internal_config_path = FileRef
+   .join(import.meta.dirname, "../../private/config");
+
+  await app.stage2(internal_config_path, "config", file =>
+    `export { default } from "#stage/config${file}";`);
+
   await app.stage2(app.path.config, "config", file =>
-    `export { default } from #stage/config/${file}`);
-
-  // stage config
-  await app.stage(app.path.config, location.config);
-
-  // stage stores
-  await app.stage(app.path.stores, FileRef.join(location.server, location.stores));
+    `export { default } from "#stage/config${file}";`);
 
   const { define = {} } = app.config("build");
   const defines = Object.entries(define);

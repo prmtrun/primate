@@ -10,6 +10,7 @@ import type Mode from "#Mode";
 import module_loader from "#module-loader";
 import type RouteExport from "#RouteExport";
 import type RouteSpecial from "#RouteSpecial";
+import type SessionConfig from "#session/Config";
 import is from "@rcompat/assert/is";
 import dim from "@rcompat/cli/color/dim";
 import crypto from "@rcompat/crypto";
@@ -136,6 +137,7 @@ export interface ServeApp extends App {
   fonts: unknown[];
   target(_: any): void;
   get url(): string;
+  session: SessionConfig;
 }
 
 type Import = Dictionary & {
@@ -329,6 +331,9 @@ export default async (rootfile: string, build: Options): Promise<ServeApp> => {
     get url() {
       const { host, port } = this.config("http");
       return `http${this.secure ? "s" : ""}://${host}:${port}`;
+    },
+    get session() {
+      return build.session_config;
     },
   } as const satisfies ServeApp;
 

@@ -1,1 +1,1 @@
-export { default } from "#session/config";
+export { default } from "#session/index";

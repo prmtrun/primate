@@ -44,17 +44,6 @@ const _pema_config = schema({
       cert: union(FileRef, string).optional(),
     },
   },
-  session: {
-    manager: constructor(SessionManager)
-      .default(() => new InMemorySessionManager()),
-    implicit: boolean.default(false),
-    cookie: {
-      name: string.default("session_id"),
-      same_site: union("Strict", "Lax", "None"),
-      http_only: boolean.default(true),
-      path: string.startsWith("/").default("/"),
-    },
-  },
   request: {
     body: {
       parse: boolean.default(true),
@@ -90,16 +79,6 @@ export type Config = {
     ssl?: {
       key: Path;
       cert: Path;
-    };
-  };
-  session: {
-    manager: SessionManager<string, unknown>;
-    implicit: boolean;
-    cookie: {
-      name: string;
-      same_site: "Strict" | "Lax" | "None";
-      http_only: boolean;
-      path: `/${string}`;
     };
   };
   request: {
@@ -151,16 +130,6 @@ export default {
     csp: {},
     static: {
       root: "/",
-    },
-  },
-  session: {
-    manager: new InMemorySessionManager(),
-    implicit: false,
-    cookie: {
-      name: "session_id",
-      same_site: "Strict",
-      http_only: true,
-      path: "/",
     },
   },
   request: {

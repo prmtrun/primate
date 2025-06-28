@@ -1,8 +1,5 @@
 {
   "name": "@primate/app/chat",
-  "scripts": {
-    "test": "npx primate test"
-  },
   "dependencies": {
     "@primate/html": "workspace:^",
     "pema": "workspace:^",
