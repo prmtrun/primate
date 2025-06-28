@@ -1,10 +1,22 @@
+import DefaultType from "#DefaultType";
 import GenericType from "#GenericType";
+import schema from "#index";
 import type Infer from "#Infer";
+import type InferInputSchema from "#InferInputSchema";
 import type InferSchema from "#InferSchema";
 import OptionalType from "#OptionalType";
 import type Schema from "#Schema";
 import Validated from "#Validated";
-import schema from "#index";
+
+const all_optional = (s: object): boolean => Object.values(s).every(value => {
+  if (value instanceof OptionalType || value instanceof DefaultType) {
+    return true;
+  };
+  if (typeof value === "object" && value !== null) {
+    return all_optional(value);
+  }
+  return false;
+});
 
 export default class SchemaType<S extends Schema>
   extends GenericType<S, InferSchema<S>, "SchemaType"> {
@@ -15,12 +27,16 @@ export default class SchemaType<S extends Schema>
     this.#schema = s;
   }
 
-  optional() {
-    return new OptionalType(this);
-  }
-
   get name() {
     return "schema";
+  }
+
+  get input() {
+    return undefined as InferInputSchema<S>;
+  }
+
+  optional() {
+    return new OptionalType(this);
   }
 
   validate(x: unknown, key?: string): Infer<this> {
@@ -42,12 +58,18 @@ export default class SchemaType<S extends Schema>
     }
 
     if (typeof s === "object" && s !== null) {
-      if (typeof x !== "object" || x === null) {
-        throw new Error("Expected object");
+      let _x = x;
+      if (typeof _x !== "object" || _x === null) {
+          // Allow undefined if all fields are optional or defaulted
+        if (!all_optional(s)) {
+          throw new Error("Expected object");
+        } else {
+          _x = {};
+        }
       }
       const result: any = {};
       for (const k in s) {
-        const r = schema((s as any)[k]).validate((x as any)[k], `.${k}`);
+        const r = schema((s as any)[k]).validate((_x as any)[k], `.${k}`);
         // exclude undefined (optionals)
         if (r !== undefined) {
           result[k] = r;

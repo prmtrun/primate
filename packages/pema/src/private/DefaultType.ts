@@ -28,6 +28,10 @@ export default class DefaultType<
     return this.#schema;
   }
 
+  get input(): Infer<S> | undefined {
+    return undefined;
+  }
+
   validate(x: unknown, key?: string): Infer<this> {
     // default fallback
     if (x === undefined) {

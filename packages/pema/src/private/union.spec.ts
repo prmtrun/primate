@@ -3,6 +3,7 @@ import type BigIntType from "#BigIntType";
 import boolean from "#boolean";
 import type BooleanType from "#BooleanType";
 import type ConstructorType from "#ConstructorType";
+import type DefaultType from "#DefaultType";
 import type LiteralType from "#LiteralType";
 import string from "#string";
 import type StringType from "#StringType";
@@ -70,4 +71,23 @@ test.case("classes", assert => {
   assert(u.validate("foo")).equals("foo").type<string | Class>();
   assert(u.validate(c)).equals(c).type<string | Class>();
   assert(() => u.validate(1)).throws(`expected \`${u_e}\`, got \`1\` (number)`);
+});
+
+test.case("default", assert => {
+  const bs_def_s = union(boolean, string).default("foo");
+  const bs_def_s1 = union(boolean, string).default(() => "foo");
+  const bs_def_b = union(boolean, string).default(true);
+  const bs_def_b1 = union(boolean, string).default(() => true);
+
+  [bs_def_s, bs_def_s1, bs_def_b, bs_def_b1].forEach(type => {
+    assert(type).type<DefaultType<
+      UnionType<[BooleanType, StringType]>,
+      string | boolean>
+    >();
+  });
+
+  assert(bs_def_s.validate(undefined)).equals("foo");
+  assert(bs_def_s1.validate(undefined)).equals("foo");
+  assert(bs_def_b.validate(undefined)).equals(true);
+  assert(bs_def_b1.validate(undefined)).equals(true);
 });

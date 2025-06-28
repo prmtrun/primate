@@ -1,3 +1,4 @@
+import DefaultType from "#DefaultType";
 import expected from "#expected";
 import GenericType from "#GenericType";
 import schema from "#index";
@@ -62,12 +63,16 @@ export default class UnionType<T extends Schema[]> extends
     this.#types = types;
   }
 
+  get name() {
+    return "union";
+  }
+
   optional() {
     return new OptionalType(this);
   }
 
-  get name() {
-    return "union";
+  default(value: Infer<this> | (() => Infer<this>)) {
+    return new DefaultType(this, value);
   }
 
   validate(x: unknown, key?: string): Infer<this> {
