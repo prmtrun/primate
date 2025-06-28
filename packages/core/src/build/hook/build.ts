@@ -29,10 +29,6 @@ const pre = async (app: BuildApp, target: string) => {
   await Promise.all(["server", "client", "components"]
     .map(directory => app.runpath(directory).create()));
 
-  const router = await $router(app.path.routes,
-    [".js"].concat(Object.keys(app.bindings)));
-  app.set(symbols.layout_depth, router.depth("layout"));
-
   return app;
 };
 
@@ -103,6 +99,9 @@ export default app;
 };
 
 const post = async (app: BuildApp) => {
+  const router = await $router(app.path.routes, Object.keys(app.bindings));
+  app.set(symbols.layout_depth, router.depth("layout"));
+
   const location = app.config("location");
   const defaults = FileRef.join(import.meta.url, "../../defaults");
 

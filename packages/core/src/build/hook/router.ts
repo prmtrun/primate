@@ -17,7 +17,7 @@ export default async (directory: FileRef, extensions: string[]): Return => {
   try {
     return await Router.load({
         import: false,
-        extensions: [extensions[0]],
+        extensions,
         directory: directory.toString(),
         specials: {
           guard: { recursive: true },

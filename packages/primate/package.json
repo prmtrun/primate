@@ -30,7 +30,7 @@
     "@primate/core": "workspace:^",
     "@rcompat/args": "^0.7.0",
     "@rcompat/cli": "^0.9.0",
-    "@rcompat/fs": "^0.13.0",
+    "@rcompat/fs": "^0.13.1",
     "@rcompat/http": "~0.12.3",
     "@rcompat/package": "^0.12.0"
   },

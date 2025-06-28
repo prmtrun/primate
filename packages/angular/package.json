@@ -31,7 +31,7 @@
     "@angular/ssr": "^20.0.3",
     "@rcompat/build": "^0.12.0",
     "@rcompat/crypto": "^0.9.0",
-    "@rcompat/fs": "^0.13.0",
+    "@rcompat/fs": "^0.13.1",
     "@rcompat/record": "^0.8.0",
     "zone.js": "^0.15.1"
   },
