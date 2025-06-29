@@ -155,9 +155,11 @@ const instantiate = async <TRequest = I32, TResponse = I32>(ref: FileRef, import
      */
     websocketClose() {
       const { id } = decodeWebsocketClose(payload);
-      
-
-    }
+      assert(sockets.has(id), "Invalid socket id. Was the socket already closed?");
+      const socket = sockets.get(id)!;
+      socket.close();
+      sockets.delete(id);
+    },
   };
 
   const bytes = await ref.arrayBuffer();

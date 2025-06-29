@@ -8,3 +8,6 @@ provide let newRequest = Request.make
 provide let sendResponse = Response.send
 provide let finalizeRequest = GC.decRef
 provide let finalizeResponse = GC.decRef
+provide let websocketOpen = Response.websocketOpen
+provide let websocketClose = Response.websocketClose
+provide let websocketSend = Response.websocketSend

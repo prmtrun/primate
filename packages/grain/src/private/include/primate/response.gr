@@ -217,6 +217,7 @@ let _RESPONSE_VIEW = 3ul
 let _RESPONSE_ERROR = 4ul
 let _RESPONSE_REDIRECT = 5ul
 let _RESPONSE_URI = 6ul
+let _RESPONSE_WEB_SOCKET_UPGRADE = 7ul
 
 let _NONE = 0ul
 let _SOME = 1ul
@@ -544,5 +545,44 @@ provide let upgrade = (
   let wsId = id
   id = id +.. 1uL
   Map.set(wsId, { open, close, message }, socketMap)
+  let buffer = Buffer.make(12)
+  Buffer.addUint32(_RESPONSE_UPGRADE, buffer)
+  Buffer.addUint64(wsId, buffer)
+  Buffer.toBytes(buffer) 
+}
+
+provide let websocketOpen = () => {
+  let bytes = External.receiveBytes()
+  let wsId = Buffer.readUint64(bytes, 0n)
+
+  match (Map.get(wsId, socketMap)) {
+    Some({ open: Some(callback) }) => callback()
+  }
+  void
+}
+
+provide let websocketClose = () => {
+  let bytes = External.receiveBytes()
+  let wsId = Buffer.readUint64(bytes, 0n)
+
+  match (Map.get(wsId, socketMap)) {
+    Some({ close: Some(callback) }) => callback()
+  }
+  void
+}
+
+provide let websocketMessage = () => {
+  let bytes = External.receiveBytes()
+  let wsId = Buffer.readUint64(bytes, 0n)
+  let kind = Buffer.readUint32(bytes, 8n)
+  let size = Buffer.readUint32(bytes, 12n)
+  let payload = match (kind) {
+    0 => SocketMessageKind.StringMessage(Buffer.readString(bytes, 16n, size)),
+    1 => SocketMessageKind.BytesMessage(Buffer.readBytes(bytes, 16n, size)),
+    _ => fail "Invalid message kind",
+  }
+  match (Map.get(wsId, socketMap)) {
+    Some({ close: Some(callback) }) => callback(payload)
+  }
   void
 }
