@@ -15,6 +15,7 @@ from "runtime/unsafe/wasmi32" include WasmI32
 from "runtime/unsafe/offsets" include Offsets
 from "./external.gr" include External
 from "runtime/unsafe/tags" include Tags
+from "./websocket.gr" include WebSocket
 
 use WasmI32.{ (-) as (-.), (==) as (==.), (>>) as (>>.) }
 use Uint64.{ (+) as (+..) }
@@ -22,6 +23,11 @@ use Map.{ type Map }
 use Json.{ type Json }
 use Uri.{ type Uri }
 use Offsets.{ _BYTES_DATA_OFFSET, _BYTES_LEN_OFFSET }
+use WebSocket.{
+  type UpgradeOpenCallback,
+  type UpgradeCloseCallback,
+  type UpgradeMessageCallback,
+}
 
 provide exception InvalidPayloadException
 
@@ -511,78 +517,24 @@ provide let send = (kind: WasmI32) => {
  throw InvalidPayloadException
 }
 
-provide enum SocketMessageKind {
-  StringMessage(String),
-  BytesMessage(Bytes),
-}
-
-provide type UpgradeOpenCallback = (socket: Uint64) => Void;
-provide type UpgradeCloseCallback = (socket: Uint64) => Void;
-provide type UpgradeMessageCallback = (socket: Uint64, socketMessage: SocketMessageKind) => Void;
-
-record SocketUpgradeDefinition {
-  open: Option<UpgradeOpenCallback>,
-  close: Option<UpgradeCloseCallback>,
-  message: Option<UpgradeMessageCallback>,
-}
-
-let mut id = 0uL
-let socketMap = Map.make(): Map<Uint64, SocketUpgradeDefinition>
 
 provide let file = (
   path: String,
 ) => {
+  fail "Not implemented"
   // TODO: Return a file descriptor
   void
 }
 
-provide let upgrade = (
+provide let ws = (
   open: Option<UpgradeOpenCallback> = None,
   close: Option<UpgradeCloseCallback> = None,
   message: Option<UpgradeMessageCallback> = None,
 ) => {
   use Uint64.{ (+) as (+..) }
-  let wsId = id
-  id = id +.. 1uL
-  Map.set(wsId, { open, close, message }, socketMap)
+  let wsId = WebSocket.make({ open, close, message })
   let buffer = Buffer.make(12)
-  Buffer.addUint32(_RESPONSE_UPGRADE, buffer)
+  Buffer.addUint32(_RESPONSE_WEB_SOCKET_UPGRADE, buffer)
   Buffer.addUint64(wsId, buffer)
-  Buffer.toBytes(buffer) 
-}
-
-provide let websocketOpen = () => {
-  let bytes = External.receiveBytes()
-  let wsId = Buffer.readUint64(bytes, 0n)
-
-  match (Map.get(wsId, socketMap)) {
-    Some({ open: Some(callback) }) => callback()
-  }
-  void
-}
-
-provide let websocketClose = () => {
-  let bytes = External.receiveBytes()
-  let wsId = Buffer.readUint64(bytes, 0n)
-
-  match (Map.get(wsId, socketMap)) {
-    Some({ close: Some(callback) }) => callback()
-  }
-  void
-}
-
-provide let websocketMessage = () => {
-  let bytes = External.receiveBytes()
-  let wsId = Buffer.readUint64(bytes, 0n)
-  let kind = Buffer.readUint32(bytes, 8n)
-  let size = Buffer.readUint32(bytes, 12n)
-  let payload = match (kind) {
-    0 => SocketMessageKind.StringMessage(Buffer.readString(bytes, 16n, size)),
-    1 => SocketMessageKind.BytesMessage(Buffer.readBytes(bytes, 16n, size)),
-    _ => fail "Invalid message kind",
-  }
-  match (Map.get(wsId, socketMap)) {
-    Some({ close: Some(callback) }) => callback(payload)
-  }
-  void
+  Buffer.toBytes(buffer)
 }

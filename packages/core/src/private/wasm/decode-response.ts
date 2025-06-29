@@ -10,6 +10,7 @@ import decodeOption from "./decode-option.js";
 import openWebsocket from "./open-websocket.js";
 import Dictionary from "#frontend/Props";
 import type BufferView from "@rcompat/bufferview";
+import ResponseFunction from "#ResponseFunction";
 
 type MaybeRedirectionStatus = Parameters<typeof redirect>[1];
 
@@ -43,7 +44,7 @@ type DecodedResponse =
   }
   | {
     type: "web_socket_upgrade";
-    callback: (api: Instantiation) => void;
+    callback: (api: Instantiation) => ResponseFunction;
   }
 
 const decodeResponse = (source: BufferView): DecodedResponse => {

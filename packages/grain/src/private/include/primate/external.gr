@@ -29,6 +29,12 @@ provide foreign wasm newSession:
 provide foreign wasm getSession:
   () => Void from "primate"
 
+provide foreign wasm websocketSend:
+  () => Void from "primate"
+
+provide foreign wasm websocketClose:
+  () => Void from "primate"
+
 @unsafe
 provide let receiveString = () => {
   use WasmI32.{ (+), fromGrain }

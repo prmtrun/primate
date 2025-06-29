@@ -4,7 +4,7 @@ import MaybePromise from "@rcompat/type/MaybePromise";
 import assert from "@rcompat/assert";
 import RequestFacade from "#RequestFacade";
 import ResponseLike from "#ResponseLike";
-import session from "#session/config";
+import session from "#session/index";
 import encodeSession from "#wasm/encode-session";
 import encodeRequest from "#wasm/encode-request";
 import decodeResponse from "#wasm/decode-response";
