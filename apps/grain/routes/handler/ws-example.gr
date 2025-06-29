@@ -1,0 +1,5 @@
+module WsExample
+
+provide let get = (req: Request) => {
+  view("ws-example.html")
+}
