@@ -10,7 +10,7 @@ import type Validated from "#Validated";
 import type ImpliedOptional from "@rcompat/type/ImpliedOptional";
 import type UndefinedToOptional from "@rcompat/type/UndefinedToOptional";
 
-type InferInputSchema<S, Depth extends number = 2> =
+type InferInputSchema<S, Depth extends number = 3> =
   [Depth] extends [never] ? never :
   S extends DefaultType<infer _, unknown> ? Infer<_> | undefined :
   S extends Validated<unknown> ? Infer<S> :

@@ -1,38 +1,35 @@
-import type Infer from "#Infer";
+import type DataType from "#DataType";
 import PrimitiveType from "#PrimitiveType";
 import type Storeable from "#Storeable";
-import error from "#error";
-import expected from "#expected";
-import is_uint from "#is-uint";
-import assert from "@rcompat/assert";
+import type UintDataType from "#UintDataType";
+import type Validator from "#Validator";
+import integer from "#validator/integer";
+import range from "#validator/range";
+import values from "#validator/values";
 
-export default class UintType
-  extends PrimitiveType<number | bigint, "UintType">
-  implements Storeable<"u64"> {
+export default class UintType<T extends UintDataType = "u32">
+  extends PrimitiveType<number, "UintType">
+  implements Storeable<T> {
+  #datatype: T;
 
-  constructor() {
-    super("uint");
+  constructor(datatype: T, validators: Validator<DataType[T]>[] = []) {
+    super("number", [integer, ...validators]);
+    this.#datatype = datatype;
   }
 
   get datatype() {
-    return "u64" as const;
+    return this.#datatype;
   }
 
-  normalize(value: number | bigint) {
-    assert(is_uint(value));
-
-    if (typeof value === "number") {
-      return BigInt(value);
-    }
-
+  normalize(value: number) {
     return value;
   }
 
-  validate(x: unknown, key?: string): Infer<this> {
-    if (!is_uint(x)) {
-      throw new Error(error(expected("uint", x), key));
-    }
+  values(anyof: Record<string, number>) {
+    return new UintType(this.#datatype, [...this.validators, values(anyof)]);
+  }
 
-    return x as Infer<this>;
+  range(from: number, to: number) {
+    return new UintType(this.#datatype, [...this.validators, range(from, to)]);
   }
 }

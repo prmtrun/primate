@@ -14,13 +14,16 @@ type DataType = {
   i16: number;
   i32: number;
   i64: bigint;
+  i128: bigint;
   //json: EO;
   string: string;
   time: Date;
+  isotime: string;
   u8: number;
   u16: number;
   u32: number;
   u64: bigint;
+  u128: bigint;
 };
 
 export type { DataType as default };
