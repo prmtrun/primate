@@ -145,6 +145,7 @@ const instantiate = async <TRequest = I32, TResponse = I32>(ref: FileRef, import
      */
     websocketSend() {
       const { id, message } = decodeWebsocketSendMessage(payload);
+      console.log(id, message);
       assert(sockets.has(id), "Invalid socket id. Was the socket already closed?");
       const socket = sockets.get(id)!;
       socket.send(message);
