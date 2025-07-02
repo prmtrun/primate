@@ -61,7 +61,6 @@ const decodeResponse = (source: BufferView): DecodedResponse => {
     || responseKind === RESPONSE_WEB_SOCKET_UPGRADE,
     "Invalid response kind.",
   );
-
   switch (responseKind) {
     case RESPONSE_TEXT: {
       const text = decodeString(source);
@@ -126,7 +125,7 @@ const decodeResponse = (source: BufferView): DecodedResponse => {
       return {
         type: "web_socket_upgrade",
         callback: openWebsocket(id),
-      }
+      };
     }
   }
 };

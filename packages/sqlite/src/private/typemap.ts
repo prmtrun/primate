@@ -20,6 +20,9 @@ const types: Record<keyof DataType, string> = {
   u16: "integer",
   u32: "integer",
   u64: "integer",
+  u128: "_",
+  i128: "_",
+  isotime: "_",
 };
 
 export default (value: keyof typeof types) => types[value];

@@ -50,7 +50,6 @@ export default (config: GrainConfiguration): BuildAppHook => (app, next) => {
     await grain.write(`${code}\n${postlude}`);
     const wasm = grain.bare(".wasm");
     const commandText = compileGrainFileCommand(wasm, grain);
-    console.log(commandText);
     await execute(commandText, { cwd: `${grain.directory}` });
 
     const bootstrapFile = grain.bare(".gr.js");
