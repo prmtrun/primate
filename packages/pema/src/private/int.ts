@@ -1,3 +1,1 @@
-import IntType from "#IntType";
-
-export default new IntType();
+export { default } from "#i32";

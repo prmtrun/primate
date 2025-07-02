@@ -43,7 +43,6 @@
     "@primate/native": "workspace:^",
     "@primate/python": "workspace:^",
     "@primate/react": "workspace:^",
-    "@primate/schema": "workspace:^",
     "@primate/solid": "workspace:^",
     "@primate/sqlite": "workspace:^",
     "@primate/store": "workspace:^",

@@ -41,6 +41,43 @@ test.case("endsWith", assert => {
   assert(() => ew.validate("foo")).throws(`"foo" does not end with "/"`);
 });
 
+test.case("email", assert => {
+  const email = string.email();
+  assert(email).type<StringType>();
+
+  [
+    "4d0996 b-BDA9-4f95-ad7c-7075b10d4ba6",
+    "a@b",
+    "c.com",
+  ].forEach(fail => {
+    assert(() => email.validate(fail)).throws(`"${fail}" is not a valid email`);
+  });
+
+  const pass = "John.Doe@example.com";
+  [pass, pass.toLowerCase(), pass.toUpperCase()].forEach(passing => {
+    assert(email.validate(passing)).equals(passing);
+  });
+
+});
+
+test.case("uuid", assert => {
+  const uuid = string.uuid();
+  assert(uuid).type<StringType>();
+
+  [
+    "4d0996 b-BDA9-4f95-ad7c-7075b10d4ba6",
+    "4d0996db-BD$9-4f95-ad7c-7075b10d4ba6",
+    "4d0996db-BDA9-%f95-ad7c-7075b10d4ba6",
+  ].forEach(fail => {
+    assert(() => uuid.validate(fail)).throws(`"${fail}" is not a valid UUID`);
+  });
+
+  const pass = "4d0996db-BDA9-4f95-ad7c-7075b10d4ba6";
+  [pass, pass.toLowerCase(), pass.toUpperCase()].forEach(passing => {
+    assert(uuid.validate(passing)).equals(passing);
+  });
+});
+
 test.case("combined validators", assert => {
   const sew = string.startsWith("/").endsWith(".");
 

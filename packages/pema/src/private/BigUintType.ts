@@ -1,12 +1,12 @@
-import type BigIntDataType from "#BigIntDataType";
+import type BigUintDataType from "#BigUintDataType";
 import PrimitiveType from "#PrimitiveType";
 import type Storeable from "#Storeable";
 import type Validator from "#Validator";
 import range from "#validator/range";
 import values from "#validator/values";
 
-export default class BigIntType<T extends BigIntDataType = "i64">
-  extends PrimitiveType<bigint, "BigIntType">
+export default class BigUintType<T extends BigUintDataType = "u64">
+  extends PrimitiveType<bigint, "BigUintType">
   implements Storeable<T> {
   #datatype: T;
 
@@ -24,10 +24,10 @@ export default class BigIntType<T extends BigIntDataType = "i64">
   }
 
   values(anyof: Record<string, bigint>) {
-    return new BigIntType(this.#datatype, [...this.validators, values(anyof)]);
+    return new BigUintType(this.#datatype, [...this.validators, values(anyof)]);
   }
 
   range(from: bigint, to: bigint) {
-    return new BigIntType(this.#datatype, [...this.validators, range(from, to)]);
+    return new BigUintType(this.#datatype, [...this.validators, range(from, to)]);
   }
 }

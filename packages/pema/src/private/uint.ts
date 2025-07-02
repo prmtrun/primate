@@ -1,3 +1,1 @@
-import UintType from "#UintType";
-
-export default new UintType();
+export { default } from "#u32";

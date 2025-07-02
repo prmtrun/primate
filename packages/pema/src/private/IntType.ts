@@ -1,38 +1,34 @@
-import type Infer from "#Infer";
+import type IntDataType from "#IntDataType";
 import PrimitiveType from "#PrimitiveType";
 import type Storeable from "#Storeable";
-import error from "#error";
-import expected from "#expected";
-import is_int from "#is-int";
-import assert from "@rcompat/assert";
+import type Validator from "#Validator";
+import integer from "#validator/integer";
+import range from "#validator/range";
+import values from "#validator/values";
 
-export default class IntType
-  extends PrimitiveType<number | bigint, "IntType">
-  implements Storeable<"i64"> {
+export default class IntType<T extends IntDataType = "i32">
+  extends PrimitiveType<number, "IntType">
+  implements Storeable<T> {
+  #datatype: T;
 
-  constructor() {
-    super("int");
+  constructor(datatype: T, validators: Validator<number>[] = []) {
+    super("number", [integer, ...validators]);
+    this.#datatype = datatype;
   }
 
   get datatype() {
-    return "i64" as const;
+    return this.#datatype;
   }
 
-  normalize(value: number | bigint) {
-    assert(is_int(value));
-
-    if (typeof value === "number") {
-      return BigInt(value);
-    }
-
+  normalize(value: number) {
     return value;
   }
 
-  validate(x: unknown, key?: string): Infer<this> {
-    if (!is_int(x)) {
-      throw new Error(error(expected("int", x), key));
-    }
+  values(anyof: Record<string, number>) {
+    return new IntType(this.#datatype, [...this.validators, values(anyof)]);
+  }
 
-    return x as Infer<this>;
+  range(from: number, to: number) {
+    return new IntType(this.#datatype, [...this.validators, range(from, to)]);
   }
 }
