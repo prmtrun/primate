@@ -9,13 +9,12 @@ export default (websocketId: bigint) =>
     console.log("Websocket id:", websocketId);
     return websocket({
       open(socket) {
-        console.log("Socket id: " + websocketId);
         const socketOpenPayload = encodeWebsocketOpen(websocketId);
         api.sockets.set(websocketId, socket);
         api.setPayload(socketOpenPayload);
         api.exports.websocketOpen();
       },
-      message(_socket: WebSocket, message) {
+      message(_socket, message) {
         const socketMessagePayload = encodeWebsocketMessage(websocketId, message);
         api.setPayload(socketMessagePayload);
         api.exports.websocketMessage();
