@@ -35,6 +35,12 @@ provide foreign wasm websocketSend:
 provide foreign wasm websocketClose:
   () => Void from "primate"
 
+provide foreign wasm getStore:
+  () => WasmI32 from "primate"
+
+provide foreign wasm getStoreValue:
+  () => Void from "primate"
+
 @unsafe
 provide let receiveString = () => {
   use WasmI32.{ (+), fromGrain }

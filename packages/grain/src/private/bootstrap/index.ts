@@ -1,9 +1,13 @@
-import FileRef from "@rcompat/fs/FileRef";
+
 import instantiate from "@primate/core/wasm/instantiate";
 
-const wasmRef = new FileRef("__FILE_NAME__");
 
-const instantiated = await instantiate<number, number>(wasmRef);
+
+const instantiated = await instantiate({
+  wasmFile: "__FILE_NAME__",
+  storeFolder: "__STORES_FOLDER__",
+  imports: {}, // custom imports if necessary
+});
 
 const api = instantiated.api
 

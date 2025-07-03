@@ -517,7 +517,6 @@ provide let send = (kind: WasmI32) => {
  throw InvalidPayloadException
 }
 
-
 provide let file = (
   path: String,
 ) => {
