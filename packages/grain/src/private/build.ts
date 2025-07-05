@@ -51,9 +51,12 @@ export default (config: GrainConfiguration): BuildAppHook => (app, next) => {
     const wasm = grain.bare(".wasm");
     const commandText = compileGrainFileCommand(wasm, grain);
     await execute(commandText, { cwd: `${grain.directory}` });
-
+    const storesFolderRef = app.root.join("stores");
+    
     const bootstrapFile = grain.bare(".gr.js");
-    const bootstrapCode = (await grainBootstrap.text()).replace("__FILE_NAME__", wasm.path);
+    const bootstrapCode = (await grainBootstrap.text())
+      .replace("__FILE_NAME__", wasm.path)
+      .replace("__STORES_FOLDER__", storesFolderRef.path);
     await bootstrapFile.write(bootstrapCode);
   });
 

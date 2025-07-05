@@ -6,7 +6,6 @@ import encodeWebsocketClose from "./encode-websocket-close.js";
 
 export default (websocketId: bigint) =>
   (api: Instantiation) => {
-    console.log("Websocket id:", websocketId);
     return websocket({
       open(socket) {
         const socketOpenPayload = encodeWebsocketOpen(websocketId);

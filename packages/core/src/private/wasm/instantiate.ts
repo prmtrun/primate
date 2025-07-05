@@ -88,15 +88,16 @@ const instantiate = async <TRequest = I32, TResponse = I32>(args: InstantiatePro
   
   let id = 0;
 
-  
-  for (const store of await storesFolderRef.glob("**/*.js")) {
-    const storeName = store.debase(storesFolderRef.path).path.slice(0, -".js".length);
-    const storeInstance = await store.import("default");
-    const storeId = id++;
-    
-    stores[storeName] = storeInstance;
-    idToStore.set(storeId, storeInstance);
-    nameToId.set(storeName, storeId);
+  if (await storesFolderRef.exists()) {
+    for (const store of await storesFolderRef.glob("**/*.js")) {
+      const storeName = store.debase(storesFolderRef.path).path.slice(0, -".js".length);
+      const storeInstance = await store.import("default");
+      const storeId = id++;
+      
+      stores[storeName] = storeInstance;
+      idToStore.set(storeId, storeInstance);
+      nameToId.set(storeName, storeId);
+    }
   }
 
   // default payload is set to an empty buffer via setPayloadBuffer
