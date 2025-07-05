@@ -1,3 +1,3 @@
 {
-  "extends": "apekit/tsconfig"
+	"extends": "apekit/tsconfig"
 }
