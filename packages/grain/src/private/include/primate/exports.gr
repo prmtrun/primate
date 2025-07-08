@@ -3,7 +3,6 @@ module Exports
 from "runtime/gc" include GC
 from "./request.gr" include Request
 from "./response.gr" include Response
-from "./store.gr" include Store
 from "./websocket.gr" include WebSocket
 
 provide let newRequest = Request.make
@@ -13,4 +12,3 @@ provide let finalizeResponse = GC.decRef
 provide let websocketOpen = WebSocket.websocketOpen
 provide let websocketClose = WebSocket.websocketClose
 provide let websocketMessage = WebSocket.websocketMessage
-provide let getStoreValueDone = Store.getStoreValueDone

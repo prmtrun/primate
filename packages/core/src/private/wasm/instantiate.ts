@@ -66,7 +66,7 @@ export type Instantiation<TRequest = I32, TResponse = I32> = {
 
 export type InstantiateProps = {
   wasmFile: string,
-  storesFolder: string,
+  // storesFolder: string,
   imports?: WebAssembly.Imports,
 };
 
@@ -79,26 +79,29 @@ export type InstantiateProps = {
  */
 const instantiate = async <TRequest = I32, TResponse = I32>(args: InstantiateProps) => {
   const wasmFileRef = new FileRef(args.wasmFile);
-  const storesFolderRef = new FileRef(args.storesFolder);
+  // TODO: Add getStores() functionality
+  // const storesFolderRef = new FileRef(args.storesFolder);
   const wasmImports = args.imports;
 
   const stores = {} as Record<string, Store>;
   const idToStore = new Map<number, Store>();
   const nameToId = new Map<string, number>();
   
-  let id = 0;
-
-  if (await storesFolderRef.exists()) {
-    for (const store of await storesFolderRef.glob("**/*.js")) {
-      const storeName = store.debase(storesFolderRef.path).path.slice(0, -".js".length);
-      const storeInstance = await store.import("default");
-      const storeId = id++;
-      
-      stores[storeName] = storeInstance;
-      idToStore.set(storeId, storeInstance);
-      nameToId.set(storeName, storeId);
-    }
-  }
+  /**
+   * 
+   *  let id = 0;
+   *  if (await storesFolderRef.exists()) {
+   *    for (const store of await storesFolderRef.glob("...GLOB_GOES_HERE...")) {
+   *      const storeName = store.debase(storesFolderRef.path).path.slice(0, -".js".length);
+   *      const storeInstance = await store.import("default");
+   *      const storeId = id++;
+   *      
+   *      stores[storeName] = storeInstance;
+   *      idToStore.set(storeId, storeInstance);
+   *      nameToId.set(storeName, storeId);
+   *    }
+   *  }
+   */
 
   // default payload is set to an empty buffer via setPayloadBuffer
   let payload = new Uint8Array(0) as Uint8Array;
@@ -135,47 +138,6 @@ const instantiate = async <TRequest = I32, TResponse = I32>(args: InstantiatePro
       const currentSession = session();
       const encodedSession = encodeSession(currentSession);
       payload = encodedSession;
-    },
-
-    /**
-     * Get the store provided by the storeName given in the payload.
-     * 
-     * @returns {number}
-     */
-    getStore() {
-      const bufferView = new BufferView(received);
-      const length = bufferView.readU32();
-      const storeName = bufferView.read(length);
-      const id = nameToId.get(storeName);
-      assert(typeof id === "number", `Store id for ${storeName} does not exist.`);
-      return id;
-    },
-
-    /**
-     * Obtain a value from a given store store.
-     */
-    getStoreValue() {
-      const bufferView = new BufferView(received);
-      const storeId = bufferView.readU32();
-      const callbackId = bufferView.readU64();
-      const keyLength = bufferView.readU32();
-      const key = bufferView.read(keyLength);
-
-      const store = idToStore.get(storeId);
-
-      assert(!!store, `Store name for ${storeId} does not exist.`);
-      store!.get(key).then((value) => {
-        const valueString = JSON.stringify(value);
-        const valueLength = utf8size(valueString);
-        const payload = new Uint8Array(8 + 4 + valueLength);
-        const bufferView = new BufferView(payload);
-
-        bufferView.writeU64(callbackId);
-        bufferView.writeU32(valueLength);
-        bufferView.write(valueString);
-        setPayload(payload);
-        exports.getStoreValueDone();
-      });
     },
 
     /**
